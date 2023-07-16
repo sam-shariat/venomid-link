@@ -1,0 +1,61 @@
+:root {
+  --darkGradient: radial-gradient(
+    farthest-corner at 60% 55%,
+    #201e1d 10%,
+    #241925 45%,
+    #261d24 60%,
+    #1e2823 90%
+  );
+  --lightGradient: radial-gradient(
+    farthest-corner at 60% 55%,
+    #e5dedc 10%,
+    #e7e1e7 45%,
+    #ebe6ea 60%,
+    #dfe5e2 90%
+  );
+  --lightLinearGradient: linear-gradient(
+    to right,
+    #e5dedc 10%,
+    #e7e1e7 45%,
+    #ebe6ea 60%,
+    #dfe5e2 90%
+  );
+  --white: #f3f3f3;
+  --dark: #101212;
+  --lightGrey: #d5d5d5;
+  --red1: #c84949;
+  --venom0: #4acf8d;
+  --venom1: #43bb7f;
+  --venom2: #3aa16e;
+  --venom3: #30875b;
+  --purple0: #9c4acf;
+  --purple1: #8b43bb;
+  --purple2: #8b3aa1;
+  --purple3: #763087;
+  --blue0: #00c8f0;
+  --blue1: #00b8dd;
+  --blue2: #0098b6;
+  --blue3: #00849e;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  scrollbar-color: #19191b #383838 !important;
+  scrollbar-width: thin !important;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #19191b;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #383838;
+  border-radius: 100px;
+}
