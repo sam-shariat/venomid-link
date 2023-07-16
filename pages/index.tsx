@@ -63,10 +63,15 @@ const LinkPage: NextPage = () => {
 
     // Execute the get method `getTimestamp` on the latest account's state
     const getInfoByNameResponse = await collectionAccount.run('getInfoByName', { name: _name });
-    console.log(
-      'getInfoByNameResponse',
-      Number.parseInt(getInfoByNameResponse.decoded.output.value0 ?? 0).toString()
-    );
+
+    if(getInfoByNameResponse){
+      console.log(
+        'getInfoByNameResponse',
+        getInfoByNameResponse?.decoded?.output.value0
+      );
+    } else {
+      console.log('error in getInfoByName')
+    }
   }
 
   useEffect(() => {
