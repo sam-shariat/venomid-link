@@ -18,14 +18,13 @@ export const TonClientContext = createContext(initial)
 
 export const TonClientContextProvider: React.FC<TonClientContextProviderProps> = ({children, config}) => {
     const [state, setState] = useState<ITonClientContext>(initial)
-
+    libWebSetup({
+        disableSeparateWorker: true,
+    })
+    TonClient.useBinaryLibrary(libWeb as any)
     // In development, React renders twice when Strict Mode is enabled: https://reactjs.org/docs/strict-mode.html
     // That's why it must be limited to a single mount run
     useMountEffectOnce(() => {
-        libWebSetup({
-            disableSeparateWorker: true,
-        })
-        TonClient.useBinaryLibrary(libWeb as any)
         setState({client: new TonClient(config)})
     })
 
