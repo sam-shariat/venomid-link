@@ -9,11 +9,8 @@ type Data = {
   name: string;
 };
 
-(async () => {
-  TonClient.useBinaryLibrary(libNode);
-})();
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  TonClient.useBinaryLibrary(libNode);
   const client = new TonClient({
     network: {
       endpoints: ['https://gql-testnet.venom.foundation/graphql']
@@ -21,7 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   });
   try {
 
-    const keys = await client.crypto.generate_random_sign_keys();
+    const keys = {
+      public: process.env.NEXT_PUBLIC_PUK,
+      secret: process.env.NEXT_PUBLIC_PRK
+    };
 
     const collection = new Account(CollectionContract, {
         signer: signerKeys(keys),
