@@ -64,7 +64,7 @@ const LinkPage: NextPage = () => {
       setIsLoading(true);
 
       try {
-        const res = await axios.get(await getInfoByName('venomid'));
+        const res = await axios.get(await String(getInfoByName('venomid')));
         setJson(res.data);
         console.log(res.data);
         setIsLoading(false);
