@@ -21,6 +21,7 @@
     "@emotion/styled": "^11",
     "@eversdk/appkit": "^0.3.8",
     "@eversdk/core": "^1.43.3",
+    "@eversdk/lib-node": "^1.43.3",
     "@eversdk/lib-web": "^1.43.3",
     "axios": "^1.4.0",
     "copy-webpack-plugin": "^11.0.0",

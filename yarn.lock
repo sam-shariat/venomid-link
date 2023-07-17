@@ -948,6 +948,11 @@
   resolved "https://registry.yarnpkg.com/@eversdk/core/-/core-1.43.3.tgz#2e28fbb280830a68e0ce89588c1dc8b85914f9d6"
   integrity sha512-iv+aJfO39DwOoTgSL3T3nuWKR6ngdlqHQrR7OG5haM7ym7txWjMGLHQMzocj200DP8DJnEVlViJX63067X+P2A==
 
+"@eversdk/lib-node@^1.43.3":
+  version "1.43.3"
+  resolved "https://registry.yarnpkg.com/@eversdk/lib-node/-/lib-node-1.43.3.tgz#02a852d67b1afd2fa569438980a440156e340243"
+  integrity sha512-UOcrE7A3nqB4AR83In/RvRHsd4HhSjo2gBraTfkA6mTI7TbNKjSrgzH+XtSAeHxoNWoSKwwBjO8NTdjXgOgjZA==
+
 "@eversdk/lib-web@^1.43.3":
   version "1.43.3"
   resolved "https://registry.yarnpkg.com/@eversdk/lib-web/-/lib-web-1.43.3.tgz#d2ed980c349e65cd33a70ebb52b978463e6ff46f"
