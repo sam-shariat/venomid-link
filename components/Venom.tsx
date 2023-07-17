@@ -26,7 +26,7 @@ const Venom = ({ srcUrl, size }: Props) => {
       whileTap={{ cursor: 'grabbing' }}
       src={srcUrl}
       width={size ? size : "xs"}
-      boxShadow={srcUrl.includes('.png') || srcUrl.includes('.svg') ? 'none' : '0 0 3px #00000080'}
+      boxShadow={srcUrl.includes('.png') || srcUrl.includes('.gif') || srcUrl.includes('.svg') ? 'none' : '0 0 3px #00000080'}
       zIndex={99}
       mb={5}
       alt="netspot"

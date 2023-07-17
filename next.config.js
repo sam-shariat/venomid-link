@@ -5,7 +5,7 @@ const nextConfig = {
   transpilePackages: ['@eversdk/lib-web'],
   webpack(config) {
     config.output.webassemblyModuleFilename = './eversdk.wasm';
-    config.experiments = { asyncWebAssembly: true };
+    config.experiments = { asyncWebAssembly: true, layers: true };
     return config;
   },
 };

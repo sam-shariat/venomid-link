@@ -51,24 +51,18 @@ export default function Header() {
       <Container maxW="container.lg">
         <Flex justifyContent="space-between">
           <HStack>
-            {!notMobile && (
+            {/* {!notMobile && (
               <IconButton aria-label='venomid-mobile-menu' variant="ghost" onClick={onOpen}>
                 <RiMenu2Fill />
               </IconButton>
-            )}
+            )} */}
             <NextLink href="/" passHref>
               <Button id="venomidmanagelogo" color="var(--venom1)" fontWeight="bold" variant="ghost" gap={2} px={2}>
                 <Logo />
-                <Text>{notMobile ? 'VenomID' : 'VID'}.Tools</Text>
+                <Text>{notMobile ? 'VenomID' : 'VID'}</Text>
               </Button>
             </NextLink>
-            {notMobile && (
-              <NextLink href="https://venomid.network" passHref>
-                <Button variant='outline' textAlign="left" borderWidth={1} borderColor="grey">
-                  Claim Venom ID
-                </Button>
-              </NextLink>
-            )}
+            
             {/* {notMobile && (
               <NextLink href="https://venomid.network/#profile" passHref>
                 <Button variant="ghost" textAlign="left">
@@ -93,14 +87,13 @@ export default function Header() {
           </HStack>
           <HStack dir="ltr">
           
-            <ConnectButton />
-            {notMobile && (
+            {/* <ConnectButton /> */}
+            
               <IconButton
                 aria-label="theme"
                 onClick={()=> {setColorM(colorMode === 'light' ? 'dark' : 'light'); toggleColorMode()} }
                 icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunFill />}
               />
-            )}
           </HStack>
         </Flex>
       </Container>

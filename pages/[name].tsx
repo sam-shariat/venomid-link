@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import axios from 'axios';
 import Head from 'next/head';
-import { CollectionContract } from 'abi/CollectionContract';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Button,
   Container,
@@ -22,8 +22,7 @@ import {
   ETHERSCAN_ADDRESS,
   SITE_DESCRIPTION,
   SITE_TITLE,
-  VENOMSCAN_NFT,
-  CONTRACT_ADDRESS,
+  VENOMSCAN_NFT
 } from 'core/utils/constants';
 
 const LinkPage: NextPage = () => {
@@ -40,7 +39,8 @@ const LinkPage: NextPage = () => {
     lineIcons: false,
   });
   const [isLoading, setIsLoading] = useState(true);
-
+  const router = useRouter();
+  const name = router.query.name ? String(router.query.name) : '';
   async function getInfoByName(_name: string) {
     try {
       const res = await axios.get('http://localhost:3000/api/name?name=' + _name);
@@ -59,7 +59,7 @@ const LinkPage: NextPage = () => {
       setIsLoading(true);
 
       try {
-        const res = await axios.get(await getInfoByName('venomid'));
+        const res = await axios.get(await getInfoByName(name));
         setJson(res.data);
         console.log(res.data);
         setIsLoading(false);
@@ -68,8 +68,10 @@ const LinkPage: NextPage = () => {
         setIsLoading(false);
       }
     }
-    getProfileJson();
-  }, []);
+    if(name.length > 2){
+        getProfileJson();
+    }
+  }, [name]);
   return (
     <>
       <Head>
