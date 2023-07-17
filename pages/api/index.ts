@@ -10,26 +10,28 @@ type Data = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  
+  // @ts-ignore: Unreachable code error
   TonClient.useBinaryLibrary(libNode);
   const client = new TonClient({
     network: {
-      endpoints: ['https://gql-testnet.venom.foundation/graphql']
+      endpoints: ['https://gql-testnet.venom.foundation/graphql'],
     },
   });
-  try {
 
+  try {
     const keys = {
       public: process.env.NEXT_PUBLIC_PUK,
-      secret: process.env.NEXT_PUBLIC_PRK
+      secret: process.env.NEXT_PUBLIC_PRK,
     };
 
     const collection = new Account(CollectionContract, {
-        signer: signerKeys(keys),
-        client,
-        address: CONTRACT_ADDRESS
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS,
     });
 
-    let response = await collection.run("getInfoByName", { name: 'sam'});
+    let response = await collection.run('getInfoByName', { name: 'sam' });
     res.status(200).json(response);
   } catch (err) {
     console.error(err);
