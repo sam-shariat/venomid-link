@@ -1,15 +1,11 @@
 import { CONTRACT_ADDRESS } from 'core/utils/constants';
-import type { NextApiRequest, NextApiResponse } from 'next';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
 const { CollectionContract } = require('abi/CollectionContract');
 
-type Data = {
-  name: string;
-};
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(req, res) {
   
   // @ts-ignore: Unreachable code error
   TonClient.useBinaryLibrary(libNode);
