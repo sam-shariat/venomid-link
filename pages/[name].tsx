@@ -25,6 +25,11 @@ import {
   VENOMSCAN_NFT
 } from 'core/utils/constants';
 
+
+interface Attribute {
+    trait_type:string;
+    value:string;
+}
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
@@ -45,8 +50,8 @@ const LinkPage: NextPage = () => {
     try {
       const res = await axios.get('http://localhost:3000/api/name?name=' + _name);
       if (res) {
-        console.log(res.data.nftJson.attributes?.find((att) => att.trait_type === 'DATA')?.value)
-        return 'https://ipfs.io/ipfs/'+ res.data.nftJson.attributes?.find((att) => att.trait_type === 'DATA')?.value;
+        console.log(res.data.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value)
+        return 'https://ipfs.io/ipfs/'+ res.data.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value;
       }
     } catch (e) {
       console.log('error loading name');
@@ -59,7 +64,7 @@ const LinkPage: NextPage = () => {
       setIsLoading(true);
 
       try {
-        const res = await axios.get(await getInfoByName(name));
+        const res = await axios.get(String(await getInfoByName(name)));
         setJson(res.data);
         console.log(res.data);
         setIsLoading(false);
