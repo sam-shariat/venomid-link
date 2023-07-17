@@ -25,9 +25,9 @@ import {
   VENOMSCAN_NFT,
   CONTRACT_ADDRESS,
 } from 'core/utils/constants';
-import { signerKeys, TonClient } from '@eversdk/core';
-import { Account } from '@eversdk/appkit';
-import { TonClientContext } from 'components/Provider/TonProvider';
+// import { signerKeys, TonClient } from '@eversdk/core';
+// import { Account } from '@eversdk/appkit';
+// import { TonClientContext } from 'components/Provider/TonProvider';
 
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
@@ -43,36 +43,38 @@ const LinkPage: NextPage = () => {
     lineIcons: false,
   });
   const [isLoading, setIsLoading] = useState(true);
-  const { client } = useContext(TonClientContext);
+  // const { client } = useContext(TonClientContext);
 
-  useEffect(() => {
-    (async () => {
-      if (client) {
-        await getInfoByName('sam',client);
-      }
-    })();
-  }, [client]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (client) {
+  //       await getInfoByName('sam',client);
+  //     }
+  //   })();
+  // }, [client]);
   
-  async function getInfoByName(_name: string,client: TonClient) {
-    console.log('getting name info ');
-    console.log(await client.crypto.generate_random_sign_keys());
-    const collectionAccount = new Account(CollectionContract, {
-      signer: signerKeys(await client.crypto.generate_random_sign_keys()),
-      address: CONTRACT_ADDRESS,
-    });
+  // async function getInfoByName(_name: string,client: TonClient) {
+  //   console.log('getting name info ');
+  //   console.log(await client.crypto.generate_random_sign_keys());
+  //   const collectionAccount = new Account(CollectionContract, {
+  //     signer: signerKeys(await client.crypto.generate_random_sign_keys()),
+  //     address: CONTRACT_ADDRESS,
+  //   });
 
-    // Execute the get method `getTimestamp` on the latest account's state
-    const getInfoByNameResponse = await collectionAccount.run('getInfoByName', { name: _name });
+  //   console.log(collectionAccount)
 
-    if(getInfoByNameResponse){
-      console.log(
-        'getInfoByNameResponse',
-        getInfoByNameResponse?.decoded?.output.value0
-      );
-    } else {
-      console.log('error in getInfoByName')
-    }
-  }
+  //   // Execute the get method `getTimestamp` on the latest account's state
+  //   const getInfoByNameResponse = await collectionAccount.run('getInfoByName', { name: _name });
+  //   console.log(getInfoByNameResponse)
+  //   if(getInfoByNameResponse){
+  //     console.log(
+  //       'getInfoByNameResponse',
+  //       getInfoByNameResponse?.decoded?.output.value0
+  //     );
+  //   } else {
+  //     console.log('error in getInfoByName')
+  //   }
+  // }
 
   useEffect(() => {
     async function getProfileJson() {
