@@ -9,6 +9,7 @@ let client = null;
 
 async function getClient() {
   if (!client) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     TonClient.useBinaryLibrary(libNode);
     client = new TonClient({
       network: {
