@@ -27,7 +27,7 @@ const Avatar = ({url,alt} : Props) => {
       whileTap={{ cursor: 'grabbing' }}
       src={url}
       width="3xs"
-      boxShadow={url.includes('.png') || url.includes('.gif') || url.includes('.svg') ? "none" : "0 0 20px #00000070"}
+      //boxShadow={url.includes('.png') || url.includes('.gif') || url.includes('.svg') ? "none" : "0 0 20px #00000070"}
       my={5}
       zIndex={100}
       alt={alt ? alt : "VID Profile Image"}
