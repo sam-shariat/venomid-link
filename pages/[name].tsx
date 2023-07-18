@@ -63,7 +63,6 @@ const LinkPage: NextPage = () => {
   useEffect(() => {
     async function getProfileJson() {
       setIsLoading(true);
-
       try {
         const res = await axios.get(String(await getInfoByName(name)));
         setJson(res.data);
