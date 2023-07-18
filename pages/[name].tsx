@@ -49,22 +49,28 @@ const LinkPage: NextPage = () => {
   const name = router.query.name ? String(router.query.name) : '';
   async function getInfoByName(_name: string) {
     try {
-      const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
-      if (res) {
-        console.log(res.data.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value)
-        return 'https://ipfs.io/ipfs/'+ res.data.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value;
+        //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
+        return await fetch('/api/name/?name=' + _name)
+        .then((res) => res.json())
+        .then((jsonData) => {
+          return 'https://ipfs.io/ipfs/'+ jsonData.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value;
+        }).catch((e)=> {
+            console.log(e);
+            return 'error';
+        })
+      } catch (e) {
+        console.log('error loading name');
+        setIsLoading(false);
+        return 'error';
       }
-    } catch (e) {
-      console.log('error loading name');
-      setIsLoading(false);
-    }
   }
 
   useEffect(() => {
     async function getProfileJson() {
       setIsLoading(true);
+      const jsonUrl = await getInfoByName(name);
       try {
-        const res = await axios.get(String(await getInfoByName(name)));
+        const res = await axios.get(jsonUrl);
         setJson(res.data);
         console.log(res.data);
         setIsLoading(false);
