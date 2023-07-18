@@ -49,7 +49,7 @@ const LinkPage: NextPage = () => {
 
   async function getInfoByName(_name: string) {
     try {
-      const res = await axios.get(SITE_PROFILE_URL + 'api/name?name=' + _name);
+      const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
       if (res) {
         console.log(res.data.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value)
         return 'https://ipfs.io/ipfs/'+ res.data.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value;
