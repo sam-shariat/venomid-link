@@ -69,7 +69,7 @@ const LinkPage: NextPage = () => {
       const jsonUrl = await getInfoByName('venomid');
       console.log(jsonUrl);
       try {
-        const res = await axios.get(jsonUrl);
+        const res = await axios.get(String(jsonUrl));
         setJson(res.data);
         console.log(res.data);
         setIsLoading(false);

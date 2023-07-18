@@ -70,7 +70,7 @@ const LinkPage: NextPage = () => {
       setIsLoading(true);
       const jsonUrl = await getInfoByName(name);
       try {
-        const res = await axios.get(jsonUrl);
+        const res = await axios.get(String(jsonUrl));
         setJson(res.data);
         console.log(res.data);
         setIsLoading(false);
