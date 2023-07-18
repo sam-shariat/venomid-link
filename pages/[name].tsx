@@ -21,6 +21,7 @@ import {
   BTCSCAN_ADDRESS,
   ETHERSCAN_ADDRESS,
   SITE_DESCRIPTION,
+  SITE_PROFILE_URL,
   SITE_TITLE,
   VENOMSCAN_NFT
 } from 'core/utils/constants';
