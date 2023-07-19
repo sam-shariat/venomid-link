@@ -6,13 +6,12 @@ Trust that your virtual identity management is secure, seamless and above all, s
 
 ## website 
 
-[venomid.network](https://venomid.network/) | Venom ID Network / Claim
-
-
-[venomid.tools](https://venomid.tools/) | Venom ID Tools / Management
+Claim: [venomid.network](https://venomid.network/)
+<br/>
+Manage: [venomid.tools](https://venomid.tools/)
 
 ## contract address on venom testnet
 [0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab](https://testnet.venomscan.com/accounts/0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab)
 
 ## smart contracts source code
-[https://github.com/sam-shariat/venomid](https://github.com/sam-shariat/venomid)
+[https://github.com/sam-shariat/venomid](https://github.com/sam-shariat/venomid) 
