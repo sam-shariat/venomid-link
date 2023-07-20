@@ -23,6 +23,7 @@
     "@eversdk/core": "^1.43.3",
     "@eversdk/lib-node": "^1.43.3",
     "@eversdk/lib-web": "^1.43.3",
+    "@vercel/analytics": "^1.0.1",
     "axios": "^1.4.0",
     "copy-webpack-plugin": "^11.0.0",
     "everscale-standalone-client": "^2.1.20",

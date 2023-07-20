@@ -7,6 +7,7 @@ import { initVenomConnect } from 'components/venomConnect/configure';
 // import { TonClientContextProvider } from 'components/Provider/TonProvider';
 // import { ClientConfig } from "@eversdk/core"
 import '../styles/globals.css';
+import { Analytics } from '@vercel/analytics/react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useDirectionSetter();
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <VenomConfig initVenomConnect={initVenomConnect}>
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </VenomConfig>
       {/* </TonClientContextProvider> */}
