@@ -87,18 +87,18 @@ const LinkPage: NextPage = () => {
     <>
       <Head>
         <title>
-          {json !== undefined && !isLoading ? json.name : SITE_TITLE} |{' '}
-          {json !== undefined && !isLoading ? json.bio : SITE_DESCRIPTION}
+          {json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE} |{' '}
+          {json !== undefined && !isLoading && json.bio != '' ? json.bio : SITE_DESCRIPTION}
         </title>
         <meta
           name="description"
-          content={`${json !== undefined && !isLoading ? json.name : SITE_TITLE} | ${
-            json !== undefined && !isLoading ? json.bio : SITE_DESCRIPTION
+          content={`${json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} | ${
+            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
           }`}
         />
         <link
           rel="icon"
-          href={json !== undefined && !isLoading ? json.avatar : '/logos/vidicon.svg'}
+          href={json !== undefined && !isLoading && json.avatar !== '' ? json.avatar : '/logos/vidicon.svg'}
         />
       </Head>
 

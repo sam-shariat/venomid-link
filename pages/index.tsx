@@ -24,17 +24,20 @@ import {
   SITE_TITLE,
   VENOMSCAN_NFT,
   CONTRACT_ADDRESS,
-  SITE_PROFILE_URL,
+  SITE_URL,
 } from 'core/utils/constants';
 
 interface Attribute {
-  trait_type:string;
-  value:string;
+  trait_type: string;
+  value: string;
 }
 
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const origin =
+    typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
+
   const [json, setJson] = useState({
     name: '',
     venomAddress: '',
@@ -46,17 +49,20 @@ const LinkPage: NextPage = () => {
     lineIcons: false,
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
 
   async function getInfoByName(_name: string) {
     try {
       //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
       return await fetch('/api/name/?name=' + _name)
-      .then((res) => res.json())
-      .then((jsonData) => {
-        console.log(jsonData);
-        return 'https://ipfs.io/ipfs/'+ jsonData.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value;
-      })
+        .then((res) => res.json())
+        .then((jsonData) => {
+          console.log(jsonData);
+          return (
+            'https://ipfs.io/ipfs/' +
+            jsonData.nftJson.attributes?.find((att: Attribute) => att.trait_type === 'DATA')?.value
+          );
+        });
     } catch (e) {
       console.log('error loading name');
       setIsLoading(false);
@@ -83,20 +89,11 @@ const LinkPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>
-          {json !== undefined && !isLoading ? json.name : SITE_TITLE} |{' '}
-          {json !== undefined && !isLoading ? json.bio : SITE_DESCRIPTION}
-        </title>
-        <meta
-          name="description"
-          content={`${json !== undefined && !isLoading ? json.name : SITE_TITLE} | ${
-            json !== undefined && !isLoading ? json.bio : SITE_DESCRIPTION
-          }`}
-        />
-        <link
-          rel="icon"
-          href={json !== undefined && !isLoading ? json.avatar : '/logos/vidicon.svg'}
-        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SITE_TITLE} />
+        <meta name="twitter:description" content={SITE_DESCRIPTION} />
+        <meta name="twitter:image" content={`${origin}/vidog.png`} />
+        <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
       <Container
