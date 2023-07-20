@@ -47,6 +47,9 @@ const LinkPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const name = router.query.name ? String(router.query.name) : '';
+  const origin =
+    typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
+
   async function getInfoByName(_name: string) {
     try {
         //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
@@ -87,12 +90,11 @@ const LinkPage: NextPage = () => {
     <>
       <Head>
         <title>
-          {json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE} |{' '}
-          {json !== undefined && !isLoading && json.bio != '' ? json.bio : SITE_DESCRIPTION}
+          {json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
         </title>
         <meta
           name="description"
-          content={`${json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} | ${
+          content={`${
             json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
           }`}
         />
@@ -100,6 +102,11 @@ const LinkPage: NextPage = () => {
           rel="icon"
           href={json !== undefined && !isLoading && json.avatar !== '' ? json.avatar : '/logos/vidicon.svg'}
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE} />
+        <meta name="twitter:description" content={json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION} />
+        <meta name="twitter:image" content={json !== undefined && !isLoading && json.avatar !== '' ? json.avatar : `${origin}/vidog.png`} />
+        <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
       <Container
