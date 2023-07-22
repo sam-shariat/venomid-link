@@ -9,7 +9,20 @@ import { PrimaryName } from 'types';
 const walletAtom = atom<VenomConnect | undefined>(undefined);
 const primaryNameAtom = atom<PrimaryName>({name:''});
 const venomProviderAtom = atom<any>(undefined);
-const jsonAtom = atom<any>(undefined);
+const jsonAtom = atom<any>({
+  name: '',
+  venomAddress: '',
+  btcAddress: '',
+  ethAddress: '',
+  bio: '',
+  avatar: '',
+  socials: {},
+  links:[],
+  lineIcons: false,
+  bgColor: '',
+  color: ''
+});
+const nftJsonAtom = atom<any>(null);
 const nameAtom = atom("");
 const btcAtom = atom("");
 const ethAtom = atom("");
@@ -42,6 +55,7 @@ const localeAtom = atomWithStorage<string>('locale', 'en');
 const colorModeAtom = atomWithStorage<string>('colorM','dark');
 export {
   isConnectedAtom,
+  nftJsonAtom,
   colorModeAtom,
   useLineIconsAtom,
   lightModeAtom,

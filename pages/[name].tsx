@@ -23,27 +23,21 @@ import {
   SITE_DESCRIPTION,
   SITE_URL,
   SITE_TITLE,
-  VENOMSCAN_NFT
+  VENOMSCAN_NFT,
 } from 'core/utils/constants';
-
+import { useAtom } from 'jotai';
+import { jsonAtom, nftJsonAtom } from 'core/atoms';
 
 interface Attribute {
-    trait_type:string;
-    value:string;
+  trait_type: string;
+  value: string;
 }
+
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const [json, setJson] = useState({
-    name: '',
-    venomAddress: '',
-    btcAddress: '',
-    ethAddress: '',
-    bio: '',
-    avatar: '',
-    socials: {},
-    lineIcons: false,
-  });
+  const [json, setJson] = useAtom(jsonAtom);
+  const [nftJson, setNftJson] = useAtom(nftJsonAtom);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const name = router.query.name ? String(router.query.name) : '';
@@ -52,40 +46,80 @@ const LinkPage: NextPage = () => {
 
   async function getInfoByName(_name: string) {
     try {
-        //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
-        return await fetch('/api/name/?name=' + _name)
+      //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
+      await fetch('/api/name/?name=' + _name)
         .then((res) => res.json())
         .then((jsonData) => {
-          return 'https://ipfs.io/ipfs/'+ jsonData.nftJson.attributes?.find((att:Attribute) => att.trait_type === 'DATA')?.value;
-        }).catch((e)=> {
-            console.log(e);
-            return 'error';
+          setNftJson(jsonData);
         })
-      } catch (e) {
-        console.log('error loading name');
-        setIsLoading(false);
-        return 'error';
-      }
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (e) {
+      console.log('error loading name');
+      setIsLoading(false);
+      return 'error';
+    }
   }
 
   useEffect(() => {
     async function getProfileJson() {
       setIsLoading(true);
-      const jsonUrl = await getInfoByName(name);
-      try {
-        const res = await axios.get(String(jsonUrl));
-        setJson(res.data);
-        console.log(res.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log('error getting json file');
-        setIsLoading(false);
-      }
+      await getInfoByName(name);
+      setIsLoading(false);
     }
-    if(name.length > 2){
-        getProfileJson();
+
+    if (name.length > 2) {
+      getProfileJson();
     }
   }, [name]);
+
+  useEffect(()=>{
+    async function initUI(){
+      console.log(nftJson);
+      const owner = nftJson.nftData.owner;
+      const jsonUrl = nftJson.nftJson.attributes?.find(
+        (att: Attribute) => att.trait_type === 'DATA'
+      )?.value;
+      if (jsonUrl) {
+        try {
+          const res = await axios.get(String(jsonUrl));
+          setJson(res.data);
+          console.log(res.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.log('error getting json file');
+          setJson({
+            name: name,
+            venomAddress: owner,
+            btcAddress: '',
+            ethAddress: '',
+            bio: nftJson.nftJson.description,
+            avatar: nftJson.nftJson.preview.source,
+            socials: {},
+            links: [],
+            lineIcons: false,
+          });
+        }
+      } else {
+        setJson({
+          name: name,
+          venomAddress: owner,
+          btcAddress: '',
+          ethAddress: '',
+          bio: nftJson.nftJson.description,
+          avatar: nftJson.nftJson.preview.source,
+          socials: {},
+          links: [],
+          lineIcons: false,
+        });
+      }
+    }
+
+    if(nftJson){
+      initUI();
+    }
+  },[nftJson])
   return (
     <>
       <Head>
@@ -100,12 +134,31 @@ const LinkPage: NextPage = () => {
         />
         <link
           rel="icon"
-          href={json !== undefined && !isLoading && json.avatar !== '' ? json.avatar : '/logos/vidicon.svg'}
+          href={
+            json !== undefined && !isLoading && json.avatar !== ''
+              ? json.avatar
+              : '/logos/vidicon.svg'
+          }
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE} />
-        <meta name="twitter:description" content={json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION} />
-        <meta name="twitter:image" content={json !== undefined && !isLoading && json.avatar !== '' ? json.avatar : `${origin}/vidog.png`} />
+        <meta
+          name="twitter:title"
+          content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
+        />
+        <meta
+          name="twitter:description"
+          content={
+            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+          }
+        />
+        <meta
+          name="twitter:image"
+          content={
+            json !== undefined && !isLoading && json.avatar !== ''
+              ? json.avatar
+              : `${origin}/vidog.png`
+          }
+        />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
