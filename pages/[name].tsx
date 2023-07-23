@@ -83,7 +83,8 @@ const LinkPage: NextPage = () => {
       )?.value;
       if (jsonUrl) {
         try {
-          const res = await axios.get(String(jsonUrl));
+          console.log(jsonUrl);
+          const res = await axios.get(String('https://ipfs.io/ipfs/'+jsonUrl));
           setJson(res.data);
           console.log(res.data);
           setIsLoading(false);

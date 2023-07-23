@@ -22,7 +22,7 @@ const jsonAtom = atom<any>({
   bgColor: '',
   color: ''
 });
-const nftJsonAtom = atom<any>(null);
+const nftJsonAtom = atom<any>(undefined);
 const nameAtom = atom("");
 const btcAtom = atom("");
 const ethAtom = atom("");
