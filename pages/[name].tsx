@@ -154,11 +154,7 @@ const LinkPage: NextPage = () => {
         />
         <meta
           name="twitter:image"
-          content={
-            json !== undefined && !isLoading && json.avatar !== ''
-              ? json.avatar
-              : `${origin}/vidog.png`
-          }
+          content={`${origin}/api/avatar?name=${name}`}
         />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
