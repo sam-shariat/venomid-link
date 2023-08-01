@@ -11,9 +11,22 @@ export interface PrimaryName {
   name?: string;
 }
 
+export interface ObjectItem {
+  key: string;
+  value?: string;
+}
+
 export interface Message {
   type: any;
   title: string;
   msg: string;
   link?: string;
+}
+
+export interface CustomLink {
+  type: string;
+  title: string;
+  url: string;
+  image: string;
+  content: string; 
 }

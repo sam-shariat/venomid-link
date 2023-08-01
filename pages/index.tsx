@@ -26,6 +26,7 @@ import {
   CONTRACT_ADDRESS,
   SITE_URL,
 } from 'core/utils/constants';
+import Links from 'components/Profile/Links';
 
 interface Attribute {
   trait_type: string;
@@ -102,7 +103,7 @@ const LinkPage: NextPage = () => {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
+        minH="95vh">
         {!isLoading ? (
           <>
             <Avatar url={json.avatar} alt={json.name + 'avatar image'} />
@@ -144,6 +145,7 @@ const LinkPage: NextPage = () => {
             <Text fontWeight="light" fontSize={notMobile ? 'xl' : 'lg'} my={8} textAlign={'center'}>
               {json.bio}
             </Text>
+            <Links json={json} />
             <Socials json={json} />
           </>
         ) : (

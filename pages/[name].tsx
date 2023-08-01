@@ -12,21 +12,24 @@ import {
   useMediaQuery,
   Center,
   Spinner,
+  Box,
   Link,
 } from '@chakra-ui/react';
 import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { Avatar, Socials } from 'components/Profile';
+import { Avatar, Socials, ProfileSkeleton } from 'components/Profile';
 import {
   BTCSCAN_ADDRESS,
   ETHERSCAN_ADDRESS,
   SITE_DESCRIPTION,
   SITE_URL,
+  SITE_CLAIM_URL,
   SITE_TITLE,
   VENOMSCAN_NFT,
 } from 'core/utils/constants';
 import { useAtom } from 'jotai';
 import { jsonAtom, nftJsonAtom } from 'core/atoms';
+import Links from 'components/Profile/Links';
 
 interface Attribute {
   trait_type: string;
@@ -39,6 +42,7 @@ const LinkPage: NextPage = () => {
   const [json, setJson] = useAtom(jsonAtom);
   const [nftJson, setNftJson] = useAtom(nftJsonAtom);
   const [isLoading, setIsLoading] = useState(true);
+  const [nameDontExist, setNameDontExist] = useState(false);
   const router = useRouter();
   const name = router.query.name ? String(router.query.name) : '';
   const origin =
@@ -74,9 +78,13 @@ const LinkPage: NextPage = () => {
     }
   }, [name]);
 
-  useEffect(()=>{
-    async function initUI(){
+  useEffect(() => {
+    async function initUI() {
       console.log(nftJson);
+      if (nftJson?.status === 'error') {
+        setNameDontExist(true);
+        return;
+      }
       const owner = nftJson.nftData.owner;
       const jsonUrl = nftJson.nftJson.attributes?.find(
         (att: Attribute) => att.trait_type === 'DATA'
@@ -84,7 +92,7 @@ const LinkPage: NextPage = () => {
       if (jsonUrl) {
         try {
           console.log(jsonUrl);
-          const res = await axios.get(String('https://ipfs.io/ipfs/'+jsonUrl));
+          const res = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
           setJson(res.data);
           console.log(res.data);
           setIsLoading(false);
@@ -117,15 +125,15 @@ const LinkPage: NextPage = () => {
       }
     }
 
-    if(nftJson){
+    if (nftJson) {
       initUI();
     }
-  },[nftJson])
+  }, [nftJson]);
   return (
     <>
       <Head>
         <title>
-          {json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
+          {json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE}
         </title>
         <meta
           name="description"
@@ -152,10 +160,7 @@ const LinkPage: NextPage = () => {
             json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
           }
         />
-        <meta
-          name="twitter:image"
-          content={`${origin}/api/avatar?name=${name}`}
-        />
+        <meta name="twitter:image" content={`${origin}/api/avatar?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
@@ -165,8 +170,8 @@ const LinkPage: NextPage = () => {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
-        {!isLoading ? (
+        minH="95vh">
+        {!isLoading && json.name !== '' && !nameDontExist && (
           <>
             <Avatar url={json.avatar} alt={json.name + 'avatar image'} />
             <Heading fontWeight="bold" fontSize="2xl" mt={2}>
@@ -204,14 +209,30 @@ const LinkPage: NextPage = () => {
                 </Link>
               )}
             </Flex>
-            <Text fontWeight="light" fontSize={notMobile ? 'xl' : 'lg'} my={8} textAlign={'center'}>
-              {json.bio}
-            </Text>
-            <Socials json={json} />
+            <Box width={notMobile ? 'md' : '100%'}>
+              <Text
+                fontWeight="light"
+                fontSize={notMobile ? 'xl' : 'lg'}
+                my={8}
+                textAlign={'center'}>
+                {json.bio}
+              </Text>
+              <Links json={json} />
+              <Socials json={json} />
+            </Box>
           </>
-        ) : (
-          <Center width={'100%'} height={150}>
-            <Spinner size="lg" />
+        )}
+
+        {isLoading && (
+         <ProfileSkeleton notMobile={notMobile}/>
+        )}
+
+        {nameDontExist && (
+          <Center width={'100%'} height={150} flexDir={'column'} gap={4}>
+            Venom ID {name} Does Not Exist
+            <Button as={Link} href={SITE_CLAIM_URL}>
+              Claim {name}.VID Now
+            </Button>
           </Center>
         )}
       </Container>

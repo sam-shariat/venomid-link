@@ -19,7 +19,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
     
-      <Header/>
+      {/* <Header/> */}
       <Seo />
       {children}
       <Footer />

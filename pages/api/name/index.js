@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     });
 
     let response = await collection.runLocal('getInfoByName', { name: String(req.query.name) });
-
+    
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
       client,
@@ -51,6 +51,7 @@ export default async function handler(req, res) {
     
   } catch (err) {
     console.error(err);
-    process.exit(1);
+    res.status(202).json({status:'error',message:'name does not exist'});
+      
   }
 }

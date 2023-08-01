@@ -62,15 +62,15 @@ export default async function handler(req, res) {
       });
       //console.log(result);
       //res.status(200).json({json:json,jsonUrl:jsonUrl, avatar:result.data.avatar});
-      res.status(200).setHeader('Content-Type', 'image/jpg').send(imageBuffer.data);
+      res.status(200).setHeader('Content-Type', 'image/jpg').setHeader('Cache-Control','public, immutable, no-transform, max-age=31536000').send(imageBuffer.data);
     } else {
-      const defaultImage = path.resolve('.', 'public/logos/vidicon.png');
+      const defaultImage = path.resolve('.', 'public/logos/vidicon.jpg');
       const imageBuffer = fs.readFileSync(defaultImage);
-      res.status(200).setHeader('Content-Type', 'image/jpg').send(imageBuffer);
+      res.status(200).setHeader('Content-Type', 'image/jpg').setHeader('Cache-Control','public, immutable, no-transform, max-age=31536000').send(imageBuffer);
     }
   } catch (err) {
-    const defaultImage = path.resolve('.', 'public/logos/vidicon.png');
+    const defaultImage = path.resolve('.', 'public/logos/vidicon.jpg');
     const imageBuffer = fs.readFileSync(defaultImage);
-    res.status(200).setHeader('Content-Type', 'image/jpg').send(imageBuffer);
+    res.status(200).setHeader('Content-Type', 'image/jpg').setHeader('Cache-Control','public, immutable, no-transform, max-age=31536000').send(imageBuffer);
   }
 }

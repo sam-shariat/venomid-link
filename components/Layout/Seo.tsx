@@ -27,6 +27,10 @@ export function Seo() {
             url: `${origin}/vidog.png`,
             alt: `${SITE_TITLE} Open Graph Image`,
           },
+          {
+            url: `${origin}/logos/vidicon.png`,
+            alt: `${SITE_TITLE} second Open Graph Image`,
+          },
         ],
       }}
       twitter={{

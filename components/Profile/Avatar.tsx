@@ -28,7 +28,8 @@ const Avatar = ({url,alt} : Props) => {
       src={url}
       width="3xs"
       //boxShadow={url.includes('.png') || url.includes('.gif') || url.includes('.svg') ? "none" : "0 0 20px #00000070"}
-      my={5}
+      my={10}
+      mt={16}
       zIndex={100}
       alt={alt ? alt : "VID Profile Image"}
       textAlign={'center'}
