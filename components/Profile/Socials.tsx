@@ -5,6 +5,7 @@ import { SocialIcon } from 'components/logos';
 import { socialsArrayAtom } from 'core/atoms';
 import SocialLink from './SocialLink';
 import { capFirstLetter, withHttps } from 'core/utils';
+import { ObjectItem } from 'types';
 
 interface Props {
   json: any;
@@ -14,7 +15,7 @@ export default function Socials({ json }: Props) {
   const [socialsArray, setSocialsArray] = useAtom(socialsArrayAtom);
 
   useEffect(() => {
-    let _socials = [];
+    let _socials: ObjectItem[] = [];
     for (const key in json.socials) {
       json.socials[key] && _socials.push({ key: key, value: json.socials[key] });
     }

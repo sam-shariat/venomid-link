@@ -33,7 +33,7 @@ import {
   RiMailLine,
   RiMailFill,
   RiPhoneLine,
-  RiPhoneFill
+  RiPhoneFill,
 } from 'react-icons/ri';
 
 interface SocialIconProps {
@@ -71,7 +71,7 @@ const SocialIcon = ({ name, line }: SocialIconProps) => {
     case 'opensea':
       return line ? <RiSailboatLine size="28" /> : <RiSailboatFill size="28" />;
     case 'zealy':
-      return line ? <Zealy/> : <Zealy/>;
+      return line ? <Zealy /> : <Zealy />;
     case 'galxe':
       return line ? <Galxe /> : <Galxe />;
     case 'email':
@@ -80,6 +80,8 @@ const SocialIcon = ({ name, line }: SocialIconProps) => {
       return line ? <RiPhoneLine size="28" /> : <RiPhoneFill size="28" />;
     case 'whatsapp':
       return line ? <RiWhatsappLine size="28" /> : <RiWhatsappFill size="28" />;
+    default:
+      return <></>;
   }
 };
 
@@ -108,7 +110,7 @@ const LinkIcon = ({ type, line }: LinkIconProps) => {
     case 'opensea':
       return line ? <RiSailboatLine size="28" /> : <RiSailboatFill size="28" />;
     case 'zealy':
-      return line ? <Zealy/> : <Zealy/>;
+      return line ? <Zealy /> : <Zealy />;
     case 'galxe':
       return line ? <Galxe /> : <Galxe />;
     case 'email':
@@ -117,6 +119,8 @@ const LinkIcon = ({ type, line }: LinkIconProps) => {
       return line ? <RiPhoneLine size="28" /> : <RiPhoneFill size="28" />;
     case 'whatsapp':
       return line ? <RiWhatsappLine size="28" /> : <RiWhatsappFill size="28" />;
+    default:
+      return <></>;
   }
 };
 export { VenomFoundation, BTC, ETH, VenomScanIcon, SocialIcon, LinkIcon, Zealy, Metamask };

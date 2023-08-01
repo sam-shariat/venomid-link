@@ -30,17 +30,6 @@ const btcAtom = atom("");
 const ethAtom = atom("");
 const bioAtom = atom("");
 const avatarAtom = atom("");
-const twitterAtom = atom("");
-const discordAtom = atom("");
-const mediumAtom = atom("");
-const youtubeAtom = atom("");
-const pinterestAtom = atom("");
-const linkedinAtom = atom("");
-const githubAtom = atom("");
-const instagramAtom = atom("");
-const openseaAtom = atom("");
-const facebookAtom = atom("");
-const telegramAtom = atom("");
 const addressAtom = atom("");
 const jsonHashAtom = atom("");
 const balanceAtom = atom('0');
@@ -75,17 +64,6 @@ export {
   bioAtom,
   avatarAtom,
   ethAtom,
-  twitterAtom,
-  discordAtom,
-  mediumAtom,
-  youtubeAtom,
-  pinterestAtom,
-  linkedinAtom,
-  githubAtom,
-  instagramAtom,
-  openseaAtom,
-  facebookAtom,
-  telegramAtom,
   balanceAtom,
   venomContractAtom,
   venomContractAddressAtom,

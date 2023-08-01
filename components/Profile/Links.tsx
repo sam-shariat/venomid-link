@@ -17,7 +17,7 @@ export default function Links({ json }: Props) {
   useEffect(() => {
     let _links: CustomLink[] = [];
     if (json?.links) {
-      json?.links.map((link) => {
+      json?.links.map((link:CustomLink) => {
         _links.push({
           type: link.type,
           title: link.title,
