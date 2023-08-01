@@ -47,7 +47,7 @@ export default function Link({ type, icon, title, url, image, content }: Props) 
       )}
       {type === 'image link' && (
         <ChakraLink borderRadius={12} href={withHttps(url)} target="_blank" id={`venom-id-${title}-link`}>
-          <ImageLink url={image} alt={title} />
+          <ImageLink url={String(image)} alt={title} />
         </ChakraLink>
       )}
 
