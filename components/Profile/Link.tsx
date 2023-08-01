@@ -51,7 +51,7 @@ export default function Link({ type, icon, title, url, image, content }: Props) 
         </ChakraLink>
       )}
 
-      {type === 'ipfs image' && <ImageLink url={image} alt={title} />}
+      {type === 'ipfs image' && <ImageLink url={String(image)} alt={title} />}
 
       {type === 'youtube video' && (
         <Box borderRadius={12} py={4}>
