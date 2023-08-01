@@ -11,7 +11,7 @@ import {
   Flex,
   useMediaQuery,
   Center,
-  Spinner,
+  useColorMode,
   Box,
   Link,
 } from '@chakra-ui/react';
@@ -28,7 +28,7 @@ import {
   VENOMSCAN_NFT,
 } from 'core/utils/constants';
 import { useAtom } from 'jotai';
-import { jsonAtom, nftJsonAtom } from 'core/atoms';
+import { jsonAtom, nftJsonAtom, colorModeAtom } from 'core/atoms';
 import Links from 'components/Profile/Links';
 
 interface Attribute {
@@ -40,6 +40,8 @@ const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const [json, setJson] = useAtom(jsonAtom);
+  const [colorM, setColorM] = useAtom(colorModeAtom);
+  const { colorMode, toggleColorMode } = useColorMode();
   const [nftJson, setNftJson] = useAtom(nftJsonAtom);
   const [isLoading, setIsLoading] = useState(true);
   const [nameDontExist, setNameDontExist] = useState(false);
@@ -94,6 +96,9 @@ const LinkPage: NextPage = () => {
           console.log(jsonUrl);
           const res = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
           setJson(res.data);
+          if (res.data.lightMode) {
+            colorMode !== 'light' && toggleColorMode();
+          }
           console.log(res.data);
           setIsLoading(false);
         } catch (error) {
@@ -223,9 +228,7 @@ const LinkPage: NextPage = () => {
           </>
         )}
 
-        {isLoading && (
-         <ProfileSkeleton notMobile={notMobile}/>
-        )}
+        {isLoading && <ProfileSkeleton notMobile={notMobile} />}
 
         {nameDontExist && (
           <Center width={'100%'} height={150} flexDir={'column'} gap={4}>

@@ -5,18 +5,20 @@ import { CollectionContract } from 'abi/CollectionContract';
 import React, { useEffect, useState, useContext } from 'react';
 import {
   Button,
+  Box,
   Container,
   Heading,
   Text,
   Flex,
   useMediaQuery,
   Center,
-  Spinner,
+  useColorMode,
   Link,
 } from '@chakra-ui/react';
 import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { Avatar, Socials } from 'components/Profile';
+import { Avatar, Socials, ProfileSkeleton, Links } from 'components/Profile';
+
 import {
   BTCSCAN_ADDRESS,
   ETHERSCAN_ADDRESS,
@@ -26,7 +28,6 @@ import {
   CONTRACT_ADDRESS,
   SITE_URL,
 } from 'core/utils/constants';
-import Links from 'components/Profile/Links';
 
 interface Attribute {
   trait_type: string;
@@ -36,6 +37,7 @@ interface Attribute {
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const { colorMode, toggleColorMode } = useColorMode();
   const origin =
     typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
 
@@ -50,7 +52,6 @@ const LinkPage: NextPage = () => {
     lineIcons: false,
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState(null);
 
   async function getInfoByName(_name: string) {
     try {
@@ -69,6 +70,12 @@ const LinkPage: NextPage = () => {
       setIsLoading(false);
     }
   }
+
+  useEffect(()=> {
+    if(colorMode !== 'dark'){
+      toggleColorMode();
+    }
+  },[colorMode])
 
   useEffect(() => {
     async function getProfileJson() {
@@ -104,7 +111,7 @@ const LinkPage: NextPage = () => {
         placeContent="center"
         placeItems="center"
         minH="95vh">
-        {!isLoading ? (
+        {!isLoading && json.name !== '' && (
           <>
             <Avatar url={json.avatar} alt={json.name + 'avatar image'} />
             <Heading fontWeight="bold" fontSize="2xl" mt={2}>
@@ -142,17 +149,21 @@ const LinkPage: NextPage = () => {
                 </Link>
               )}
             </Flex>
-            <Text fontWeight="light" fontSize={notMobile ? 'xl' : 'lg'} my={8} textAlign={'center'}>
-              {json.bio}
-            </Text>
-            <Links json={json} />
-            <Socials json={json} />
+            <Box width={notMobile ? 'md' : '100%'}>
+              <Text
+                fontWeight="light"
+                fontSize={notMobile ? 'xl' : 'lg'}
+                my={8}
+                textAlign={'center'}>
+                {json.bio}
+              </Text>
+              <Links json={json} />
+              <Socials json={json} />
+            </Box>
           </>
-        ) : (
-          <Center width={'100%'} height={150}>
-            <Spinner size="lg" />
-          </Center>
         )}
+
+        {isLoading && <ProfileSkeleton notMobile={notMobile} />}
       </Container>
     </>
   );
