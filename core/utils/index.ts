@@ -11,6 +11,6 @@ const capFirstLetter = (str: string) => {
       .join(' ');
     return String(final);
   };
-const withHttps = (url) => url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `https://${nonSchemmaUrl}`);
+const withHttps = (url:string) => url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `https://${nonSchemmaUrl}`);
 
 export { http, truncAddress, sleep, capFirstLetter, withHttps };
