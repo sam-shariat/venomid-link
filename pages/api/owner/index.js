@@ -24,11 +24,12 @@ async function getClient() {
 export default async function handler(req, res) {
   try {
     console.log(req.query)
-    if(!req.query.name){
-      res.status(202).json({status:'error',message:'name param is required'});
+    if(!req.query.ownerAddress){
+      res.status(202).json({status:'error',message:'ownerAddress(string) param is required'});
       process.exit(1);
     };
 
+    const ownerAddress = req.query.ownerAddress;
     const withDetails = req.query.withDetails ? true : false ;
 
     const client = await getClient();
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS,
     });
 
-    let response = await collection.runLocal('getInfoByName', { name: String(req.query.name) });
+    let response = await collection.runLocal('getPrimaryName', { _owner: ownerAddress });
     
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
@@ -69,7 +70,7 @@ export default async function handler(req, res) {
     
   } catch (err) {
     console.error(err);
-    res.status(202).json({status:'error',message:'name does not exist'});
-      
+    res.status(202).json({status:'error',message:'owner does not own a venom id'});
+    
   }
 }
