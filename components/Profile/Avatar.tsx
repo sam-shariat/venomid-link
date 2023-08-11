@@ -25,7 +25,7 @@ const Avatar = ({url,alt} : Props) => {
       onDragEnd={(e, info) => {}}
       borderRadius={"100%"}
       whileTap={{ cursor: 'grabbing' }}
-      src={url}
+      src={url ? url : '/logos/vidicon.jpg'}
       width="3xs"
       //boxShadow={url.includes('.png') || url.includes('.gif') || url.includes('.svg') ? "none" : "0 0 20px #00000070"}
       my={10}

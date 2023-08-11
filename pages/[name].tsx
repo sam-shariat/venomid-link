@@ -30,6 +30,7 @@ import {
 import { useAtom } from 'jotai';
 import { jsonAtom, nftJsonAtom, colorModeAtom } from 'core/atoms';
 import Links from 'components/Profile/Links';
+import { NextSeo } from 'next-seo';
 
 interface Attribute {
   trait_type: string;
@@ -137,15 +138,13 @@ const LinkPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>
-          {json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE}
-        </title>
-        <meta
-          name="description"
-          content={`${
-            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
-          }`}
-        />
+        {/* {json !== undefined && !isLoading && (
+          <NextSeo
+            title={json.name !== '' ? json.name : SITE_TITLE}
+            description={json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+          />
+        )} */}
+        <title>{json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} | {json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}</title>
         <link
           rel="icon"
           href={
@@ -154,7 +153,7 @@ const LinkPage: NextPage = () => {
               : '/logos/vidicon.svg'
           }
         />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"
           content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
@@ -165,7 +164,7 @@ const LinkPage: NextPage = () => {
             json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
           }
         />
-        <meta name="twitter:image" content={`${origin}/api/avatar?name=${name}`} />
+        <meta name="twitter:image" content={`${SITE_URL}api/avatar?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 

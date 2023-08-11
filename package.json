@@ -23,6 +23,8 @@
     "@eversdk/core": "^1.43.3",
     "@eversdk/lib-node": "^1.43.3",
     "@eversdk/lib-web": "^1.43.3",
+    "@fontsource/lato": "^5.0.8",
+    "@fontsource/poppins": "^5.0.8",
     "@vercel/analytics": "^1.0.1",
     "axios": "^1.4.0",
     "copy-webpack-plugin": "^11.0.0",

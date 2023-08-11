@@ -4,6 +4,8 @@ import { mode } from '@chakra-ui/theme-tools';
 import { useAtomValue } from 'jotai';
 import { localeAtom } from 'core/atoms';
 import { Direction, Locale } from 'translations';
+import '@fontsource/poppins';
+import '@fontsource/lato';
 
 interface IThemeProvider {
   children: ReactElement;
@@ -18,6 +20,19 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
     useSystemColorMode: false
   };
 
+  const fonts = {
+    heading: `'Poppins', sans-serif`,
+    body: `'Lato', sans-serif`,
+  };
+
+  const components = {
+    Button: {
+      baseStyle:{
+        fontFamily : `'Poppins', sans-serif`
+      }
+    }
+  }
+
   const styles = {
     global: (props: ThemeExtension) => ({
       body: {
@@ -26,7 +41,7 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
     }),
   };
 
-  const theme = extendTheme({ config, styles, direction });
+  const theme = extendTheme({ config, styles, direction, fonts, components });
 
   return (
     <ChakraProvider theme={theme}>

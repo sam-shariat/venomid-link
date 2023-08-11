@@ -1,5 +1,5 @@
 export const SITE_URL = "https://venomid.link/"
-export const SITE_TITLE = "VenomID Link"
+export const SITE_TITLE = "Venom ID Profile"
 export const SITE_DESCRIPTION = "Your entire virtual identity in the blockchain in one simple link"
 export const SITE_FULL_DESCRIPTION = "Venom IDentities (VID) serve as secure and easy-to-use domain names for managing your online presence. Venom IDentities (VID) are user-friendly solution to streamline your virtual identity management on the Venom blockchain. With VID, you can easily assign human-readable names to your blockchain and non-blockchain resources, such as Venom and Ethereum addresses, Social Media handles, website URLs, and more. VID enables these resources to be effectively managed and accessed via one, simple name."
 export const SITE_CLAIM_URL = "https://venomid.network/"
