@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
       {/* <TonClientContextProvider config={config}> */}
-      <VenomConfig initVenomConnect={initVenomConnect}>
+      <VenomConfig initVenomConnect={initVenomConnect as any}>
         <Layout>
           <Component {...pageProps} />
           <Analytics />
