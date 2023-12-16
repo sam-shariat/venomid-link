@@ -1,4 +1,4 @@
-import { CONTRACT_ADDRESS } from 'core/utils/constants';
+import { CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1 } from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
@@ -40,12 +40,25 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS,
     });
 
+    const collectionv1 = new Account(CollectionContract, {
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS_V1,
+    });
+
     let response = await collection.runLocal('getInfoByName', { name: String(req.query.name) });
+    let nftAddress ;
+    if(response.decoded.output.value0.name !== 'notfound'){
+      nftAddress = response.decoded.output.value0.nftAddress;
+    } else {
+      let responsev1 = await collectionv1.runLocal('getInfoByName', { name: String(req.query.name) });
+      nftAddress = responsev1.decoded.output.value0.nftAddress;
+    }
     
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
       client,
-      address: response.decoded.output.value0.nftAddress,
+      address: nftAddress,
     });
 
     let responseJson = await nft.runLocal('getJson', { answerId: 0 });
