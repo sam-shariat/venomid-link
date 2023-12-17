@@ -4,29 +4,52 @@ import Layout from 'components/Layout';
 import { useDirectionSetter } from 'core/lib/hooks/use-directionSetter';
 import { VenomConfig } from 'venom-react-hooks';
 import { initVenomConnect } from 'components/venomConnect/configure';
-// import { TonClientContextProvider } from 'components/Provider/TonProvider';
-// import { ClientConfig } from "@eversdk/core"
-import '../styles/globals.css';
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+  embeddedWallet,
+  trustWallet,
+  zerionWallet,
+  rainbowWallet,
+} from '@thirdweb-dev/react';
 import { Analytics } from '@vercel/analytics/react';
+import '../styles/globals.css';
+import { Ethereum, Polygon, Arbitrum, Binance, Goerli, Zksync } from '@thirdweb-dev/chains';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useDirectionSetter();
-  // const config: ClientConfig = {
-  //   network: {
-  //     endpoints: ['https://dashboard.evercloud.dev/projects/01f6cad0488345d28df37ee824c9de7f/endpoints'],
-  //   },
-  // };
 
   return (
     <ThemeProvider>
-      {/* <TonClientContextProvider config={config}> */}
       <VenomConfig initVenomConnect={initVenomConnect as any}>
-        <Layout>
-          <Component {...pageProps} />
-          <Analytics />
-        </Layout>
+        <ThirdwebProvider
+          supportedChains={[Ethereum, Polygon, Arbitrum, Binance, Goerli, Zksync]}
+          supportedWallets={[
+            embeddedWallet({
+              auth: {
+                options: ['email', 'google', 'apple', 'facebook'],
+              },
+            }),
+            metamaskWallet({ recommended: true }),
+            trustWallet(),
+            rainbowWallet(),
+            walletConnect(),
+            zerionWallet(),
+            coinbaseWallet(),
+          ]}
+          authConfig={{
+            authUrl: '/api/auth',
+            domain: process.env.NEXT_PUBLIC_SITE_URL || "localhost:3000",
+          }}
+          clientId={process.env.NEXT_PUBLIC_THIRDWEB_ID}>
+          <Layout>
+            <Component {...pageProps} />
+            <Analytics />
+          </Layout>
+        </ThirdwebProvider>
       </VenomConfig>
-      {/* </TonClientContextProvider> */}
     </ThemeProvider>
   );
 }

@@ -2,10 +2,16 @@ import { type ReactElement } from 'react';
 import { ChakraProvider, extendTheme, type ThemeExtension } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import { useAtomValue } from 'jotai';
-import { localeAtom } from 'core/atoms';
+import { fontAtom, localeAtom } from 'core/atoms';
 import { Direction, Locale } from 'translations';
 import '@fontsource/poppins';
 import '@fontsource/lato';
+import '@fontsource/pixelify-sans';
+import '@fontsource/jost';
+import '@fontsource/playfair-display';
+import '@fontsource/space-mono';
+import { buttonTheme } from './Theme/Button';
+import { colors } from './Theme/Colors';
 
 interface IThemeProvider {
   children: ReactElement;
@@ -13,6 +19,7 @@ interface IThemeProvider {
 
 const ThemeProvider = ({ children }: IThemeProvider) => {
   const locale = useAtomValue(localeAtom);
+  const font = useAtomValue(fontAtom);
   const direction = getDirection(locale);
 
   const config = {
@@ -21,16 +28,12 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
   };
 
   const fonts = {
-    heading: `'Poppins', sans-serif`,
-    body: `'Lato', sans-serif`,
+    heading: font,
+    body: font,
   };
 
   const components = {
-    Button: {
-      baseStyle:{
-        fontFamily : `'Poppins', sans-serif`
-      }
-    }
+    Button: buttonTheme
   }
 
   const styles = {
@@ -41,7 +44,7 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
     }),
   };
 
-  const theme = extendTheme({ config, styles, direction, fonts, components });
+  const theme = extendTheme({ config, styles, direction, fonts, components, colors });
 
   return (
     <ChakraProvider theme={theme}>

@@ -14,23 +14,61 @@ import {
   useColorMode,
   Box,
   Link,
+  Stack,
 } from '@chakra-ui/react';
-import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar, Socials, ProfileSkeleton } from 'components/Profile';
 import {
-  BTCSCAN_ADDRESS,
-  ETHERSCAN_ADDRESS,
+  bioAtom,
+  btcAtom,
+  lightModeAtom,
+  ethAtom,
+  avatarAtom,
+  nameAtom,
+  jsonAtom,
+  socialsArrayAtom,
+  nftContractAtom,
+  linksArrayAtom,
+  useLineIconsAtom,
+  titleAtom,
+  subtitleAtom,
+  horizontalSocialAtom,
+  addressAtom,
+  socialButtonsAtom,
+  isConnectedAtom,
+  bgColorAtom,
+  connectedAccountAtom,
+  ipfsGatewayAtom,
+  walletsArrayAtom,
+  jsonHashAtom,
+  walletButtonsAtom,
+  roundAtom,
+  buttonBgColorAtom,
+  variantAtom,
+  fontAtom,
+  tourStepAtom,
+  nftJsonAtom,
+  avatarShapeAtom,
+  colorModeAtom,
+} from 'core/atoms';
+import {
   SITE_DESCRIPTION,
+  SITE_PROFILE_URL,
+  SITE_TITLE,
+  IPFS_URLS,
+  BUTTON_BG_COLORS,
+  BUTTON_ROUNDS,
+  BUTTON_VARIANTS,
+  BG_COLORS,
+  FONTS,
   SITE_URL,
   SITE_CLAIM_URL,
-  SITE_TITLE,
-  VENOMSCAN_NFT,
 } from 'core/utils/constants';
-import { useAtom } from 'jotai';
-import { jsonAtom, nftJsonAtom, colorModeAtom } from 'core/atoms';
+import { useAtom, useAtomValue } from 'jotai';
 import Links from 'components/Profile/Links';
 import { NextSeo } from 'next-seo';
+import Wallets from 'components/Profile/Wallets';
+import Footer from 'components/Layout/Footer';
 
 interface Attribute {
   trait_type: string;
@@ -39,7 +77,33 @@ interface Attribute {
 
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
+  const [bio, setBio] = useAtom(bioAtom);
+  const [lightMode, setLightMode] = useAtom(lightModeAtom);
+  const [ipfsGateway, setIpfsGateway] = useAtom(ipfsGatewayAtom);
+  const [retries, setRetries] = useState<number>(0);
+  const connected = useAtomValue(isConnectedAtom);
+  const tourStep = useAtomValue(tourStepAtom);
+  const connectedAccount = useAtomValue(connectedAccountAtom);
+  const [venom, setVenom] = useAtom(addressAtom);
+  const [btc, setBtc] = useAtom(btcAtom);
+  const [eth, setEth] = useAtom(ethAtom);
+  const links = useAtomValue(linksArrayAtom);
+  const socials = useAtomValue(socialsArrayAtom);
+  const wallets = useAtomValue(walletsArrayAtom);
+  const [lineIcons, setLineIcons] = useAtom(useLineIconsAtom);
+  const [bgColor, setBgColor] = useAtom(bgColorAtom);
+  const [round, setRound] = useAtom(roundAtom);
+  const [buttonBgColor, setButtonBgColor] = useAtom(buttonBgColorAtom);
+  const [variant, setVariant] = useAtom(variantAtom);
+  const [font, setFont] = useAtom(fontAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const [avatar, setAvatar] = useAtom(avatarAtom);
+  const [avatarShape, setAvatarShape] = useAtom(avatarShapeAtom);
+  const [socialIcons, setSocialIcons] = useAtom(horizontalSocialAtom);
+  const [socialButtons, setSocialButtons] = useAtom(socialButtonsAtom);
+  const [walletButtons, setWalletButtons] = useAtom(walletButtonsAtom);
+  const [title, setTitle] = useAtom(titleAtom);
+  const [subtitle, setSubtitle] = useAtom(subtitleAtom);
   const [json, setJson] = useAtom(jsonAtom);
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -100,20 +164,48 @@ const LinkPage: NextPage = () => {
           if (res.data.lightMode) {
             colorMode !== 'light' && toggleColorMode();
           }
+          //setName(String(nftJson.name));
+          setVenom(connectedAccount);
+          setTitle(res.data.title ?? '');
+          setSubtitle(res.data.subtitle ?? '');
+          setBio(res.data.bio);
+          setBtc(res.data.btcAddress);
+          setEth(res.data.ethAddress);
+          setAvatar(res.data.avatar);
+          setAvatarShape(res.data.avatarShape ?? 'circle');
+          setSocialIcons(res.data.socialIcons ?? true);
+          setSocialButtons(res.data.socialButtons ?? true);
+          setWalletButtons(res.data.waletButtons ?? true);
+          setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
+          setLineIcons(res.data?.styles?.lineIcons ?? false);
+          setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[0].lightMode);
+          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[2]);
+          setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
+          setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
+          setFont(res.data?.styles?.font ?? FONTS[0]);
           console.log(res.data);
           setIsLoading(false);
         } catch (error) {
           console.log('error getting json file');
           setJson({
-            name: name,
-            venomAddress: owner,
+            name: nftJson.name,
+            venomAddress: connectedAccount,
             btcAddress: '',
             ethAddress: '',
-            bio: nftJson.nftJson.description,
-            avatar: nftJson.nftJson.preview.source,
-            socials: {},
-            links: [],
+            title: '',
+            subtitle: '',
+            bio: '',
+            avatar: '',
+            avatarNft: '',
             lineIcons: false,
+            lightMode: BG_COLORS[0].lightMode,
+            socialIcons: true,
+            socialButtons: false,
+            walletButtons: true,
+            showAllNfts: false,
+            bgColor: BG_COLORS[0].color,
+            links: [],
+            socials: {},
           });
         }
       } else {
@@ -122,12 +214,21 @@ const LinkPage: NextPage = () => {
           venomAddress: owner,
           btcAddress: '',
           ethAddress: '',
-          bio: nftJson.nftJson.description,
+          bio: '',
           avatar: nftJson.nftJson.preview.source,
           socials: {},
           links: [],
           lineIcons: false,
         });
+
+        setVenom(connectedAccount);
+        setBio('');
+        setBtc('');
+        setEth('');
+        setAvatar('');
+        setTitle('');
+        setSubtitle('');
+        setIsLoading(false);
       }
     }
 
@@ -144,7 +245,10 @@ const LinkPage: NextPage = () => {
             description={json.bio !== '' ? json.bio : SITE_DESCRIPTION}
           />
         )} */}
-        <title>{json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} | {json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}</title>
+        <title>
+          {json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} |{' '}
+          {json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+        </title>
         <link
           rel="icon"
           href={
@@ -170,60 +274,117 @@ const LinkPage: NextPage = () => {
 
       <Container
         as="main"
-        maxW="container.sm"
+        maxW="100%"
         display="grid"
         placeContent="center"
         placeItems="center"
+        bg={bgColor}
+        bgSize={'cover'}
+        bgRepeat={'no-repeat'}
+        bgPosition={'center'}
+        py={12}
         minH="95vh">
         {!isLoading && json.name !== '' && !nameDontExist && (
           <>
-            <Avatar url={json.avatar} alt={json.name + 'avatar image'} />
-            <Heading fontWeight="bold" fontSize="2xl" mt={2}>
-              {json.name}
-            </Heading>
-            <Flex mt={6} direction={notMobile ? 'row' : 'column'} gap={2}>
-              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank">
-                <Button
-                  variant="solid"
-                  backgroundColor="blackAlpha.300"
-                  width={notMobile ? 'auto' : '100%'}>
-                  <VenomFoundation /> Venom Address
-                </Button>
-              </Link>
-              {json.btcAddress && (
-                <Link href={BTCSCAN_ADDRESS + json.btcAddress} target="_blank">
-                  <Button
-                    variant="solid"
-                    backgroundColor="blackAlpha.300"
-                    width={notMobile ? 'auto' : '100%'}>
-                    <BTC />
-                    BTC Address
-                  </Button>
-                </Link>
-              )}
-              {json.ethAddress && (
-                <Link href={ETHERSCAN_ADDRESS + json.ethAddress} target="_blank">
-                  <Button
-                    variant="solid"
-                    backgroundColor="blackAlpha.300"
-                    width={notMobile ? 'auto' : '100%'}>
-                    <ETH />
-                    ETH Address
-                  </Button>
-                </Link>
-              )}
-            </Flex>
-            <Box width={notMobile ? 'md' : '100%'}>
-              <Text
-                fontWeight="light"
-                fontSize={notMobile ? 'xl' : 'lg'}
-                my={8}
-                textAlign={'center'}>
-                {json.bio}
-              </Text>
-              <Links json={json} />
-              <Socials json={json} />
-            </Box>
+            <Container
+              as="main"
+              width={['100%', '100%', 'md', 'lg', 'xl', '2xl']}
+              display="flex"
+              flexDir={'column'}
+              gap={4}
+              placeContent="center"
+              placeItems="center"
+              fontFamily={font}
+              color={!lightMode ? 'var(--white)' : 'var(--dark1)'}
+              minH="95vh">
+              <Flex direction="column" justify={'center'} align={'center'} gap={2} width="100%">
+                {(!notMobile) && (
+                  <Stack mt={6} textAlign="center" w={'100%'}>
+                    <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
+                      {json.title}
+                    </Heading>
+                    <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
+                      {json.subtitle}
+                    </Heading>
+                  </Stack>
+                )}
+                <Flex gap={8} mt={notMobile ? 4 : 0} align={'center'} justify={'center'} w={'100%'}>
+                  <Box maxW={['200px', '200px', '200px', '220px']}>
+                    <Avatar
+                      my={6}
+                      url={json.avatar}
+                      alt={json.name + 'avatar image'}
+                      shape={avatarShape}
+                      shadow="none"
+                    />
+                  </Box>
+                  {notMobile && (
+                    <Stack>
+                      <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
+                        {json.title}
+                      </Heading>
+                      <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
+                        {json.subtitle}
+                      </Heading>
+                      <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
+                        {json.name}
+                      </Heading>
+                      {/* <Button
+                            my={1}
+                            borderRadius={'25'}
+                            variant={'outline'}
+                            leftIcon={<RiMessage3Line />}>
+                            Message
+                          </Button> */}
+                    </Stack>
+                  )}
+                </Flex>
+                {(!notMobile) && (
+                  <>
+                    <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
+                      {json.name}
+                    </Heading>
+                    {/* <Button
+                          borderRadius={'25'}
+                          variant={'outline'}
+                          leftIcon={<RiMessage3Line />}>
+                          Message
+                        </Button> */}
+                  </>
+                )}
+
+                {socialIcons && <Socials json={json} onlyIcons />}
+
+                {walletButtons && (
+                  <Wallets
+                    json={json}
+                    color={
+                      !lightMode ? 'var(--chakra-colors-gray-100)' : 'var(--chakra-colors-gray-800)'
+                    }
+                  />
+                )}
+
+                <Stack width={'100%'} gap={2}>
+                  {json.bio && json.bio.length > 0 && (
+                    <Text
+                      fontWeight="normal"
+                      fontSize={notMobile ? 'xl' : 'lg'}
+                      my={4}
+                      textAlign={'center'}>
+                      {json.bio}
+                    </Text>
+                  )}
+                  <Links
+                    json={json}
+                    color={
+                      !lightMode ? 'var(--chakra-colors-gray-100)' : 'var(--chakra-colors-gray-800)'
+                    }
+                  />
+
+                  {socialButtons && <Socials json={json} />}
+                </Stack>
+              </Flex>
+            </Container>
           </>
         )}
 
@@ -237,6 +398,8 @@ const LinkPage: NextPage = () => {
             </Button>
           </Center>
         )}
+        
+      <Footer />
       </Container>
     </>
   );

@@ -1,61 +1,225 @@
 :root {
   --darkGradient: radial-gradient(
     farthest-corner at 60% 55%,
-    #201e1d 10%,
+    #1e201d 10%,
     #241925 45%,
     #261d24 60%,
     #1e2823 90%
   );
+  
   --lightGradient: radial-gradient(
     farthest-corner at 60% 55%,
-    #e5dedc 10%,
-    #e7e1e7 45%,
-    #ebe6ea 60%,
-    #dfe5e2 90%
+    #ebe3e0 10%,
+    #e0dbe0 45%,
+    #e4e4e4 60%,
+    #dddddd 90%
   );
+
   --lightLinearGradient: linear-gradient(
     to right,
     #e5dedc 10%,
     #e7e1e7 45%,
-    #ebe6ea 60%,
+    #fff4ff 60%,
     #dfe5e2 90%
   );
+
+  --venomGradient: radial-gradient(
+    circle farthest-corner at 40% 30%,
+    #2f8359 30%,
+    #1e6441 65%
+  );
+
   --white: #f3f3f3;
-  --dark: #101212;
+  --light: #f5f5f5;
+  --whiteAlpha: #f3f3f340;
+  --dark: #161618;
+  --darkAlpha: #16161850;
+  --dark0: #111111;
+  --dark1:rgb(32, 32, 33);
+  --dark2:rgb(50, 52, 54);
+  --gray: #9c9a95;
   --lightGrey: #d5d5d5;
   --red1: #c84949;
+  --venom00: #99f0c4;
   --venom0: #4acf8d;
+  --venom: #30875b;
   --venom1: #43bb7f;
   --venom2: #3aa16e;
   --venom3: #30875b;
-  --purple0: #9c4acf;
-  --purple1: #8b43bb;
-  --purple2: #8b3aa1;
-  --purple3: #763087;
+  --purple0: #7951e9;
+  --purple1: #6343bb;
+  --purple2: #503aa1;
+  --purple: #544ba2;
+  --purple3: #393087;
+  --purpleGradient: radial-gradient(circle farthest-corner at 40% 30%, #666fea 0%, #544ba2 100%);
+  --orange: #e9924b;
+  --orangeGradient: radial-gradient(circle farthest-corner at 40% 30%, #ff9035  0%, #ff6f2c 100%);
+  --yellow: #e9df4b;
+  --yellowGradient: radial-gradient(circle farthest-corner at 40% 30%, #f5ec6a  0%, #c9be2d 100%);
+  --red: #e94b4b;
+  --redGradient: radial-gradient(circle farthest-corner at 40% 30%, #e94b4b  0%, #af4343 100%);
   --blue0: #00c8f0;
   --blue1: #00b8dd;
+  --blue: #00b8dd;
   --blue2: #0098b6;
   --blue3: #00849e;
+  --blueGradient: radial-gradient(circle farthest-corner at 40% 30%, #4cdbff  0%, #00aaf8 100%);
+  --bg1Gradient: url("/bgs/bg1.jpg") center ;
+  --bg1: #272727;
+  --bg2Gradient: url("/bgs/bg2.jpg") center;
+  --bg2: #e6e6e6;
+  --bg3Gradient: url("/bgs/bg3.jpg") center;
+  --bg3: #272727;
+
 }
 
 * {
   scroll-behavior: smooth;
 }
 
-body {
+body, div {
   scrollbar-color: #19191b #383838 !important;
   scrollbar-width: thin !important;
 }
 
-body::-webkit-scrollbar {
+iframe {
+  border-radius: 16px;
+}
+
+body::-webkit-scrollbar, div::-webkit-scrollbar {
   width: 12px;
 }
 
-body::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track, div::-webkit-scrollbar-track {
   background-color: #19191b;
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb , div::-webkit-scrollbar-thumb {
   background-color: #383838;
   border-radius: 100px;
+}
+
+.swagger-ui .opblock.opblock-get {
+  background: rgb(213 221 229);
+  border-color: #61affe;
+}
+
+.swagger-ui {
+  color: var(--dark);
+  background-color: var(--white);
+  border-radius: 12px;
+  font-family: 'Poppins',sans-serif !important /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */;
+}
+
+
+.tour , .introjs-tooltipReferenceLayer *{
+  color: #161618;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 500;
+  font-size: large;
+}
+
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+@media only screen and (max-width: 900px) {
+  .hljs {
+    font-size: small;
+    padding: 8px;
+  }
+}
+
+.hljs {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  overflow: auto;
+  padding: 0px 24px;
+  color: #abb2bf;
+  background: #282c34;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #98c379;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
 }

@@ -36,7 +36,6 @@ export default function Header() {
   useEffect(()=> {
     console.log(colorMode + " is " + colorM)
     if(colorMode !== colorM){
-      
       toggleColorMode();
     }
   },[colorMode])

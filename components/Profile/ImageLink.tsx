@@ -1,4 +1,6 @@
-import { Image , Spinner, Center, useMediaQuery } from '@chakra-ui/react';
+import { Image, Spinner, Center, useMediaQuery } from '@chakra-ui/react';
+import { roundAtom } from 'core/atoms';
+import { useAtomValue } from 'jotai';
 
 interface Props {
   url: string;
@@ -7,23 +9,26 @@ interface Props {
 }
 const ImageLink = ({ url, alt, loading }: Props) => {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const round = useAtomValue(roundAtom);
 
   return (
     <>
       {url ? (
         <Image
-          borderRadius={12}
+          borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16}
           src={url}
-          width={notMobile ? 'md' : '100%'}
-          boxShadow="0 0 10px #00000030"
+          width={'100%'}
+          my={2}
           alt={alt ? alt : 'Venom ID Image Link'}
           textAlign={'center'}
         />
       ) : (
         <>
-          {loading && <Center width={'100%'} height={150}>
-            <Spinner size="lg" />
-          </Center>}
+          {loading && (
+            <Center width={'100%'} height={150}>
+              <Spinner size="lg" />
+            </Center>
+          )}
         </>
       )}
     </>

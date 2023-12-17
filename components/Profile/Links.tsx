@@ -2,16 +2,17 @@ import Link from './Link';
 import { Stack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { SocialIcon } from 'components/logos';
+import { LinkIcon } from 'components/logos';
 import { linksArrayAtom } from 'core/atoms';
 import { capFirstLetter } from 'core/utils';
 import { CustomLink } from 'types';
 
 interface Props {
   json: any;
+  color?: string;
 }
 
-export default function Links({ json }: Props) {
+export default function Links({ json, color }: Props) {
   const [linksArray, setLinksArray] = useAtom(linksArrayAtom);
 
   useEffect(() => {
@@ -24,26 +25,30 @@ export default function Links({ json }: Props) {
           url: link.url,
           image: link.image,
           content: link.content,
+          styles: link.styles
         });
       });
     }
     setLinksArray(_links);
-  }, [json]);
+  }, []);
 
   return (
     <>
-      <Stack my={10} gap={2}>
+      {linksArray.length > 0 && <Stack gap={3} w={'100%'} align={'center'}>
         {linksArray.map((item, index) => (
           <Link
             key={`item-${item.type}-${item.title}`}
             title={capFirstLetter(item.title)}
             url={String(item.url)}
             type={item.type}
+            color={color ? color : 'default'}
+            icon={<LinkIcon key={item.type === 'simple link' ? item.title + '-' +String(item?.styles?.icon) : item.title + '-' +item.type} type={item.type === 'simple link' ? String(item?.styles?.icon) : item.type} line color={color ? color : 'default'} size={item.styles?.size === 'sm' ? '24' : item.styles?.size === 'md' ? '28' : '36'} />}
             image={item.image}
             content={item.content}
+            styles={item.styles}
           />
         ))}
-      </Stack>
+      </Stack>}
     </>
   );
 }
