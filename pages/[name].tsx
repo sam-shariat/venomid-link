@@ -188,7 +188,7 @@ const LinkPage: NextPage = () => {
         } catch (error) {
           console.log('error getting json file');
           setJson({
-            name: nftJson.name,
+            name: nftJson.nftJson.name,
             venomAddress: connectedAccount,
             btcAddress: '',
             ethAddress: '',
@@ -205,7 +205,16 @@ const LinkPage: NextPage = () => {
             showAllNfts: false,
             bgColor: BG_COLORS[0].color,
             links: [],
-            socials: {}
+            socials: {},
+            styles : {
+              lineIcons: false,
+              lightMode: BG_COLORS[0].lightMode,
+              bgColor: BG_COLORS[0].color,
+              buttonBgColor: BUTTON_BG_COLORS[2],
+              round: BUTTON_ROUNDS[1],
+              variant: BUTTON_VARIANTS[0],
+              font: FONTS[0]
+            }
           });
   
           setVenom(connectedAccount);
@@ -230,7 +239,7 @@ const LinkPage: NextPage = () => {
         }
       } else {
         setJson({
-          name: nftJson.name,
+          name: nftJson.nftJson.name,
           venomAddress: connectedAccount,
           btcAddress: '',
           ethAddress: '',
@@ -247,7 +256,16 @@ const LinkPage: NextPage = () => {
           showAllNfts: false,
           bgColor: BG_COLORS[0].color,
           links: [],
-          socials: {}
+          socials: {},
+          styles : {
+            lineIcons: false,
+            lightMode: BG_COLORS[0].lightMode,
+            bgColor: BG_COLORS[0].color,
+            buttonBgColor: BUTTON_BG_COLORS[2],
+            round: BUTTON_ROUNDS[1],
+            variant: BUTTON_VARIANTS[0],
+            font: FONTS[0]
+          }
         });
 
         setVenom(connectedAccount);
