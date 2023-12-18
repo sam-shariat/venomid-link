@@ -281,12 +281,12 @@ const HomePage: NextPage = () => {
         bgRepeat={'no-repeat'}
         py={12}
         bgPosition={'center'}
-        minH="95vh">
+        minH="100vh">
         {!isLoading && json.name !== '' && !nameDontExist && (
           <>
             <Container
               as="main"
-              width={['100%', '100%', 'md', 'lg', 'xl', '2xl']}
+              width={['100%', '100%', 'md', 'lg', 'xl']}
               display="flex"
               flexDir={'column'}
               gap={4}

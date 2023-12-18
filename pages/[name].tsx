@@ -282,23 +282,21 @@ const LinkPage: NextPage = () => {
         bgSize={'cover'}
         bgRepeat={'no-repeat'}
         bgPosition={'center'}
-        py={12}
-        minH="95vh">
+        pt={12}>
         {!isLoading && json.name !== '' && !nameDontExist && (
           <>
             <Container
-              as="main"
-              width={['100%', '100%', 'md', 'lg', 'xl', '2xl']}
+              minH="100vh"
+              width={['100%', '100%', 'md', 'lg', 'xl']}
               display="flex"
               flexDir={'column'}
               gap={4}
               placeContent="center"
               placeItems="center"
               fontFamily={font}
-              color={!lightMode ? 'var(--white)' : 'var(--dark1)'}
-              minH="95vh">
+              color={!lightMode ? 'var(--white)' : 'var(--dark1)'}>
               <Flex direction="column" justify={'center'} align={'center'} gap={2} width="100%">
-                {(!notMobile) && (
+                {!notMobile && (
                   <Stack mt={6} textAlign="center" w={'100%'}>
                     <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
                       {json.title}
@@ -339,7 +337,7 @@ const LinkPage: NextPage = () => {
                     </Stack>
                   )}
                 </Flex>
-                {(!notMobile) && (
+                {!notMobile && (
                   <>
                     <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
                       {json.name}
@@ -388,18 +386,22 @@ const LinkPage: NextPage = () => {
           </>
         )}
 
-        {isLoading && <ProfileSkeleton notMobile={notMobile} />}
+        {!isLoading && (
+          <Container width={['100%', '100%', 'md', 'lg', 'xl']} p={4}>
+            <ProfileSkeleton notMobile={notMobile} />
+          </Container>
+        )}
 
         {nameDontExist && (
-          <Center width={'100%'} height={150} flexDir={'column'} gap={4}>
+          <Center width={'100%'} height={'70vh'} flexDir={'column'} gap={4}>
             Venom ID {name} Does Not Exist
             <Button as={Link} href={SITE_CLAIM_URL}>
               Claim {name}.VID Now
             </Button>
           </Center>
         )}
-        
-      <Footer />
+
+        <Footer />
       </Container>
     </>
   );

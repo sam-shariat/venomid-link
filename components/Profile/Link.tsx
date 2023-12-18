@@ -24,7 +24,7 @@ import {
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Tweet } from 'react-twitter-widgets';
 import ReactPlayer from 'react-player/lazy';
-import { AVAILABLE_LINKS } from 'core/utils/constants';
+import { AVAILABLE_LINKS, SITE_PROFILE_URL, SITE_URL } from 'core/utils/constants';
 import Donate from './Donate';
 import Pay from './Pay';
 import EmbedModal from './EmbedModal';
@@ -148,21 +148,19 @@ export default function Link({ type, icon, title, url, image, content, styles, c
         : null} */}
 
       {type === 'youtube video' && (
-        <Box>
-          <AspectRatio ratio={16 / 9} maxW={notMobile ? 'md' : '100%'}>
-            <iframe
-              src={`https://www.youtube.com/embed/${url.match(reg)?.at(1)}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              onLoad={() => setIsLoading(false)}
-              title={title}
-              style={{
-                borderRadius: round === 'none' ? 0 : round === 'md' ? 8 : 16,
-                backgroundColor: lightMode ? 'white' : 'black',
-              }}
-            />
-          </AspectRatio>
+        <Box w={'100%'}>
+          <ReactPlayer
+            url={url}
+            config={{
+              youtube: {
+                embedOptions: { origin: SITE_URL },
+              },
+            }}
+            onReady={() => setIsLoading(false)}
+            width={'100%'}
+            height={styles?.size === 'lg' ? '420px' : styles?.size === 'md' ? '306px' : '160px'}
+            style={{ borderRadius: round === 'none' ? 0 : round === 'md' ? 8 : 16 }}
+          />{' '}
         </Box>
       )}
 
@@ -177,7 +175,12 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           <Tweet
             tweetId={String(url.match(reg)?.at(2))}
             onLoad={() => setIsLoading(false)}
-            options={{ theme: lightMode ? 'light' : 'dark', width: '100%', height: '200px' }}
+            options={{
+              theme: lightMode ? 'light' : 'dark',
+              height: '200px',
+              maxWidth: '100%',
+              width: '100%',
+            }}
           />
           {isLoading && <Skeleton width={'100%'} rounded={'lg'} height={'200px'} />}
         </Box>

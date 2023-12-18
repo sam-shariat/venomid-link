@@ -8,7 +8,7 @@ interface Props {
 export default function ProfileSkeleton({ notMobile }: Props) {
   return (
     <>
-      <Stack justifyContent="center" alignItems="center" my={2} width={notMobile ? 'md' : 'xs'}>
+      <Stack justifyContent="center" alignItems="center" width={'100%'}>
         {!notMobile && <Skeleton height={'26px'} width={'160px'} mt={10}/>}
         {!notMobile && <Skeleton height={'20px'} width={'180px'} />}
         <HStack gap={10}>
@@ -21,11 +21,11 @@ export default function ProfileSkeleton({ notMobile }: Props) {
         </HStack>
         {!notMobile && <Skeleton width={'120px'} mt={2} height={'22px'} />}
         <Stack gap={2} mt={'30px !important'}>
-          <Skeleton height={'42px'} width={'md'} borderRadius={12} />
-          <Skeleton height={'42px'} width={'md'} borderRadius={12} />
-          <Skeleton height={'42px'} width={'md'} borderRadius={12} />
+          <Skeleton height={'42px'} width={['xs','sm','md']} borderRadius={12} />
+          <Skeleton height={'42px'} width={['xs','sm','md']} borderRadius={12} />
+          <Skeleton height={'42px'} width={['xs','sm','md']} borderRadius={12} />
         </Stack>
-        <SkeletonText height="100px" width={notMobile ? 'md' : '100%'} mt={'40px !important'} />
+        <SkeletonText height="100px" width={['xs','sm','md']} mt={'40px !important'} />
       </Stack>
     </>
   );
