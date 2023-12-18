@@ -165,7 +165,7 @@ const LinkPage: NextPage = () => {
             colorMode !== 'light' && toggleColorMode();
           }
           //setName(String(nftJson.name));
-          setVenom(connectedAccount);
+          setVenom(owner);
           setTitle(res.data.title ?? '');
           setSubtitle(res.data.subtitle ?? '');
           setBio(res.data.bio);
