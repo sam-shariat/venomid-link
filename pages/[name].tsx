@@ -196,7 +196,7 @@ const LinkPage: NextPage = () => {
             subtitle: '',
             bio: '',
             avatar: '',
-            avatarNft: '',
+            avatarShape: 'circle',
             lineIcons: false,
             lightMode: BG_COLORS[0].lightMode,
             socialIcons: true,
@@ -205,20 +205,49 @@ const LinkPage: NextPage = () => {
             showAllNfts: false,
             bgColor: BG_COLORS[0].color,
             links: [],
-            socials: {},
+            socials: {}
           });
+  
+          setVenom(connectedAccount);
+          setBio('');
+          setBtc('');
+          setEth('');
+          setAvatar('');
+          setTitle('');
+          setSubtitle('');
+          setAvatarShape('circle');
+          setSocialIcons(true);
+          setSocialButtons(true);
+          setWalletButtons(true);
+          setBgColor(BG_COLORS[0].color);
+          setLineIcons(false);
+          setLightMode(BG_COLORS[0].lightMode);
+          setButtonBgColor(BUTTON_BG_COLORS[2]);
+          setRound(BUTTON_ROUNDS[1]);
+          setVariant(BUTTON_VARIANTS[0]);
+          setFont(FONTS[0]);
+          setIsLoading(false);
         }
       } else {
         setJson({
-          name: name,
-          venomAddress: owner,
+          name: nftJson.name,
+          venomAddress: connectedAccount,
           btcAddress: '',
           ethAddress: '',
+          title: '',
+          subtitle: '',
           bio: '',
-          avatar: nftJson.nftJson.preview.source,
-          socials: {},
-          links: [],
+          avatar: '',
+          avatarShape: 'circle',
           lineIcons: false,
+          lightMode: BG_COLORS[0].lightMode,
+          socialIcons: true,
+          socialButtons: false,
+          walletButtons: true,
+          showAllNfts: false,
+          bgColor: BG_COLORS[0].color,
+          links: [],
+          socials: {}
         });
 
         setVenom(connectedAccount);
@@ -228,6 +257,17 @@ const LinkPage: NextPage = () => {
         setAvatar('');
         setTitle('');
         setSubtitle('');
+        setAvatarShape('circle');
+        setSocialIcons(true);
+        setSocialButtons(true);
+        setWalletButtons(true);
+        setBgColor(BG_COLORS[0].color);
+        setLineIcons(false);
+        setLightMode(BG_COLORS[0].lightMode);
+        setButtonBgColor(BUTTON_BG_COLORS[2]);
+        setRound(BUTTON_ROUNDS[1]);
+        setVariant(BUTTON_VARIANTS[0]);
+        setFont(FONTS[0]);
         setIsLoading(false);
       }
     }
@@ -282,6 +322,7 @@ const LinkPage: NextPage = () => {
         bgSize={'cover'}
         bgRepeat={'no-repeat'}
         bgPosition={'center'}
+        minH="100vh"
         pt={12}>
         {!isLoading && json.name !== '' && !nameDontExist && (
           <>
