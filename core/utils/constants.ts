@@ -11,8 +11,10 @@ export const VENOMSCAN_NFT = 'https://testnet.venomscan.com/accounts/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
 export const ETHERSCAN_ADDRESS = 'https://etherscan.io/address/';
 export const CONTRACT_ADDRESS =
-  '0:0f158efd58c06ff2f84726425de63d3deb4037d2c621ccd552cec61d6b6ee5bd';
+  '0:5ecadfe4afcf90452bc448b5dabffeca63939bfce866f248d9493f57e748aff3';
 export const CONTRACT_ADDRESS_V1 =
+  '0:0f158efd58c06ff2f84726425de63d3deb4037d2c621ccd552cec61d6b6ee5bd';
+export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
 export const ZERO_ADDRESS = '0:0000000000000000000000000000000000000000000000000000000000000000';
 export const DONATE_VALUES: any = {
