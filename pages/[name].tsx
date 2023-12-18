@@ -386,7 +386,7 @@ const LinkPage: NextPage = () => {
           </>
         )}
 
-        {!isLoading && (
+        {isLoading && (
           <Container width={['100%', '100%', 'md', 'lg', 'xl']} p={4}>
             <ProfileSkeleton notMobile={notMobile} />
           </Container>
