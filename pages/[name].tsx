@@ -216,6 +216,10 @@ const LinkPage: NextPage = () => {
               font: FONTS[0]
             }
           });
+
+          if (colorMode === 'light') {
+            toggleColorMode();
+          }
   
           setVenom(connectedAccount);
           setBio('');
@@ -286,6 +290,11 @@ const LinkPage: NextPage = () => {
         setRound(BUTTON_ROUNDS[1]);
         setVariant(BUTTON_VARIANTS[0]);
         setFont(FONTS[0]);
+
+        if (colorMode === 'light') {
+          toggleColorMode();
+        }
+        
         setIsLoading(false);
       }
     }
@@ -415,9 +424,6 @@ const LinkPage: NextPage = () => {
                 {walletButtons && (
                   <Wallets
                     json={json}
-                    color={
-                      !lightMode ? 'var(--chakra-colors-gray-100)' : 'var(--chakra-colors-gray-800)'
-                    }
                   />
                 )}
 
