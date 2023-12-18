@@ -147,7 +147,7 @@ const LinkPage: NextPage = () => {
 
   useEffect(() => {
     async function initUI() {
-      console.log(nftJson);
+      //console.log(nftJson);
       if (nftJson?.status === 'error') {
         setNameDontExist(true);
         return;
@@ -158,7 +158,7 @@ const LinkPage: NextPage = () => {
       )?.value;
       if (jsonUrl) {
         try {
-          console.log(jsonUrl);
+          //console.log(jsonUrl);
           const res = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
           setJson(res.data);
           if (res.data.lightMode) {
@@ -183,10 +183,10 @@ const LinkPage: NextPage = () => {
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
-          console.log(res.data);
+          //console.log(res.data);
           setIsLoading(false);
         } catch (error) {
-          console.log('error getting json file');
+          //console.log('error getting json file');
           setJson({
             name: nftJson.nftJson.name,
             venomAddress: connectedAccount,
@@ -221,7 +221,7 @@ const LinkPage: NextPage = () => {
             toggleColorMode();
           }
   
-          setVenom(connectedAccount);
+          setVenom(owner);
           setBio('');
           setBtc('');
           setEth('');
@@ -272,7 +272,7 @@ const LinkPage: NextPage = () => {
           }
         });
 
-        setVenom(connectedAccount);
+        setVenom(owner);
         setBio('');
         setBtc('');
         setEth('');
