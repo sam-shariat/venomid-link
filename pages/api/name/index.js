@@ -23,13 +23,13 @@ async function getClient() {
 
 export default async function handler(req, res) {
   try {
-    console.log(req.query)
-    if(!req.query.name){
-      res.status(202).json({status:'error',message:'name param is required'});
+    console.log(req.query);
+    if (!req.query.name) {
+      res.status(202).json({ status: 'error', message: 'name param is required' });
       process.exit(1);
-    };
+    }
 
-    const withDetails = req.query.withDetails ? true : false ;
+    const withDetails = req.query.withDetails ? true : false;
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
@@ -53,19 +53,27 @@ export default async function handler(req, res) {
     });
 
     let response = await collection.runLocal('getInfoByName', { name: String(req.query.name) });
-    let nftAddress ;
-    if(response.decoded.output.value0.name !== 'notfound'){
+    let nftAddress;
+    let nftData;
+    if (response.decoded.output.value0.name !== 'notfound') {
       nftAddress = response.decoded.output.value0.nftAddress;
+      nftData = response.decoded.output.value0;
     } else {
-      let responsev1 = await collectionv1.runLocal('getInfoByName', { name: String(req.query.name) });
-      if(responsev1.decoded.output.value0.name !== 'notfound'){
+      let responsev1 = await collectionv1.runLocal('getInfoByName', {
+        name: String(req.query.name)
+      });
+      if (responsev1.decoded.output.value0.name !== 'notfound') {
         nftAddress = responsev1.decoded.output.value0.nftAddress;
+        nftData = responsev1.decoded.output.value0;
       } else {
-        let responsev2 = await collectionv2.runLocal('getInfoByName', { name: String(req.query.name) });
+        let responsev2 = await collectionv2.runLocal('getInfoByName', {
+          name: String(req.query.name)
+        });
         nftAddress = responsev2.decoded.output.value0.nftAddress;
+        nftData = responsev2.decoded.output.value0;
       }
     }
-    
+
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
       client,
@@ -78,22 +86,34 @@ export default async function handler(req, res) {
 
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
 
-    
-    if(withDetails){
-        if (jsonUrl) {
-            const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl)); 
-            res.status(200).json({nftData: response.decoded.output.value0, nftJson: JSON.parse(responseJson.decoded.output.json), nftDetails: result.data });
-        } else {
-            res.status(200).json({nftData: response.decoded.output.value0, nftJson: JSON.parse(responseJson.decoded.output.json) });
-            
-        }
+    if (withDetails) {
+      if (jsonUrl) {
+        const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
+        res
+          .status(200)
+          .json({
+            nftData: nftData,
+            nftJson: JSON.parse(responseJson.decoded.output.json),
+            nftDetails: result.data,
+          });
+      } else {
+        res
+          .status(200)
+          .json({
+            nftData: nftData,
+            nftJson: JSON.parse(responseJson.decoded.output.json),
+          });
+      }
     } else {
-        res.status(200).json({nftData: response.decoded.output.value0, nftJson: JSON.parse(responseJson.decoded.output.json) });
+      res
+        .status(200)
+        .json({
+          nftData: nftData,
+          nftJson: JSON.parse(responseJson.decoded.output.json),
+        });
     }
-    
   } catch (err) {
     console.error(err);
-    res.status(202).json({status:'error',message:'name does not exist'});
-      
+    res.status(202).json({ status: 'error', message: 'name does not exist' });
   }
 }
