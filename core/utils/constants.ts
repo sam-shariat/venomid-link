@@ -36,8 +36,14 @@ export const MARKETPLACE_URLS: any = {
 
 export const ETHERSCAN_URLS: any = {
   venomtestnet: 'https://testnet.venomscan.com/accounts/',
+  venom: 'https://testnet.venomscan.com/accounts/',
+  bitcoin: 'https://blockchair.com/bitcoin/address/',
+  tron: 'https://tronscan.org/#/address/',
+  avalanche: 'https://snowtrace.io/address/',
   ethereum: 'https://etherscan.io/address/',
   polygon: 'https://polygonscan.com/address/',
+  binance: 'https://bscscan.com/address/',
+  solana: 'https://solscan.io/account/',
   arbitrum: 'https://arbiscan.io/address/',
   optimism: 'https://optimistic.etherscan.io/address/',
 };
