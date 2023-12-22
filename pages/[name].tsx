@@ -179,7 +179,7 @@ const LinkPage: NextPage = () => {
           setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
           setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[0].lightMode);
-          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[2]);
+          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[0]);
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
@@ -189,7 +189,7 @@ const LinkPage: NextPage = () => {
           //console.log('error getting json file');
           setJson({
             name: nftJson.nftJson.name,
-            venomAddress: connectedAccount,
+            venomAddress: owner,
             btcAddress: '',
             ethAddress: '',
             title: '',
@@ -210,7 +210,7 @@ const LinkPage: NextPage = () => {
               lineIcons: false,
               lightMode: BG_COLORS[0].lightMode,
               bgColor: BG_COLORS[0].color,
-              buttonBgColor: BUTTON_BG_COLORS[2],
+              buttonBgColor: BUTTON_BG_COLORS[0],
               round: BUTTON_ROUNDS[1],
               variant: BUTTON_VARIANTS[0],
               font: FONTS[0]
@@ -235,7 +235,7 @@ const LinkPage: NextPage = () => {
           setBgColor(BG_COLORS[0].color);
           setLineIcons(false);
           setLightMode(BG_COLORS[0].lightMode);
-          setButtonBgColor(BUTTON_BG_COLORS[2]);
+          setButtonBgColor(BUTTON_BG_COLORS[0]);
           setRound(BUTTON_ROUNDS[1]);
           setVariant(BUTTON_VARIANTS[0]);
           setFont(FONTS[0]);
@@ -244,7 +244,7 @@ const LinkPage: NextPage = () => {
       } else {
         setJson({
           name: nftJson.nftJson.name,
-          venomAddress: connectedAccount,
+          venomAddress: owner,
           btcAddress: '',
           ethAddress: '',
           title: '',
@@ -265,7 +265,7 @@ const LinkPage: NextPage = () => {
             lineIcons: false,
             lightMode: BG_COLORS[0].lightMode,
             bgColor: BG_COLORS[0].color,
-            buttonBgColor: BUTTON_BG_COLORS[2],
+            buttonBgColor: BUTTON_BG_COLORS[0],
             round: BUTTON_ROUNDS[1],
             variant: BUTTON_VARIANTS[0],
             font: FONTS[0]
@@ -286,7 +286,7 @@ const LinkPage: NextPage = () => {
         setBgColor(BG_COLORS[0].color);
         setLineIcons(false);
         setLightMode(BG_COLORS[0].lightMode);
-        setButtonBgColor(BUTTON_BG_COLORS[2]);
+        setButtonBgColor(BUTTON_BG_COLORS[0]);
         setRound(BUTTON_ROUNDS[1]);
         setVariant(BUTTON_VARIANTS[0]);
         setFont(FONTS[0]);

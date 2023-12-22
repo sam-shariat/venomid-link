@@ -113,13 +113,14 @@ const HomePage: NextPage = () => {
   const origin =
     typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
 
-  async function getInfoByName(_name: string) {
+  async function getInfo(_name: string) {
     try {
       //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
-      await fetch('/api/name/?name=' + _name)
+      await fetch('/api/nft/?nftAddress=' + _name)
         .then((res) => res.json())
         .then((jsonData) => {
           setNftJson(jsonData);
+          console.log(jsonData)
         })
         .catch((e) => {
           console.log(e);
@@ -134,7 +135,7 @@ const HomePage: NextPage = () => {
   useEffect(() => {
     async function getProfileJson() {
       setIsLoading(true);
-      await getInfoByName('venomid');
+      await getInfo('0:eb9718b16d39a4001e376b1a677817d9c401f5f3fc84cf8f32033334d3587a4a');
       setIsLoading(false);
     }
 
@@ -150,7 +151,7 @@ const HomePage: NextPage = () => {
         setNameDontExist(true);
         return;
       }
-      const owner = nftJson.nftData.owner;
+      const owner = '0:d1785eeee9473196ebd70d5c3469062a2ed0a247bc7033d402ab3486267c99b7';
       const jsonUrl = nftJson.nftJson.attributes?.find(
         (att: Attribute) => att.trait_type === 'DATA'
       )?.value;
@@ -163,7 +164,7 @@ const HomePage: NextPage = () => {
             colorMode !== 'light' && toggleColorMode();
           }
           //setName(String(nftJson.name));
-          setVenom(connectedAccount);
+          setVenom(owner);
           setTitle(res.data.title ?? '');
           setSubtitle(res.data.subtitle ?? '');
           setBio(res.data.bio);
@@ -177,7 +178,7 @@ const HomePage: NextPage = () => {
           setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
           setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[0].lightMode);
-          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[2]);
+          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[0]);
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
@@ -205,6 +206,24 @@ const HomePage: NextPage = () => {
             links: [],
             socials: {},
           });
+          setVenom(owner);
+          setBio('');
+          setBtc('');
+          setEth('');
+          setAvatar('');
+          setTitle('');
+          setSubtitle('');
+          setAvatarShape('circle');
+          setSocialIcons(true);
+          setSocialButtons(true);
+          setWalletButtons(true);
+          setBgColor(BG_COLORS[0].color);
+          setLineIcons(false);
+          setLightMode(BG_COLORS[0].lightMode);
+          setButtonBgColor(BUTTON_BG_COLORS[0]);
+          setRound(BUTTON_ROUNDS[1]);
+          setVariant(BUTTON_VARIANTS[0]);
+          setFont(FONTS[0]);
         }
       } else {
         setJson({
@@ -219,13 +238,24 @@ const HomePage: NextPage = () => {
           lineIcons: false,
         });
 
-        setVenom(connectedAccount);
+        setVenom(owner);
         setBio('');
         setBtc('');
         setEth('');
         setAvatar('');
         setTitle('');
         setSubtitle('');
+        setAvatarShape('circle');
+        setSocialIcons(true);
+        setSocialButtons(true);
+        setWalletButtons(true);
+        setBgColor(BG_COLORS[0].color);
+        setLineIcons(false);
+        setLightMode(BG_COLORS[0].lightMode);
+        setButtonBgColor(BUTTON_BG_COLORS[0]);
+        setRound(BUTTON_ROUNDS[1]);
+        setVariant(BUTTON_VARIANTS[0]);
+        setFont(FONTS[0]);
         setIsLoading(false);
       }
     }
@@ -296,7 +326,7 @@ const HomePage: NextPage = () => {
               color={!lightMode ? 'var(--white)' : 'var(--dark1)'}
               minH="95vh">
               <Flex direction="column" justify={'center'} align={'center'} gap={2} width="100%">
-                {(!notMobile) && (
+                {!notMobile && (
                   <Stack mt={6} textAlign="center" w={'100%'}>
                     <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
                       {json.title}
@@ -337,7 +367,7 @@ const HomePage: NextPage = () => {
                     </Stack>
                   )}
                 </Flex>
-                {(!notMobile) && (
+                {!notMobile && (
                   <>
                     <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
                       {json.name}
