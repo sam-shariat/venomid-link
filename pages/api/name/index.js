@@ -1,4 +1,5 @@
 import { CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, CONTRACT_ADDRESS_V2 } from 'core/utils/constants';
+import { sql } from '@vercel/postgres';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
@@ -23,13 +24,15 @@ async function getClient() {
 
 export default async function handler(req, res) {
   try {
-    console.log(req.query);
+    //console.log(req.query);
     if (!req.query.name) {
       res.status(202).json({ status: 'error', message: 'name param is required' });
       process.exit(1);
     }
 
     const withDetails = req.query.withDetails ? true : false;
+    const name = String(req.query.name).toLowerCase() + '.VID';
+    const _name = String(req.query.name).toLowerCase();
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
@@ -46,33 +49,37 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS_V1,
     });
 
-    const collectionv2 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V2,
-    });
+    // const collectionv2 = new Account(CollectionContract, {
+    //   signer: signerKeys(keys),
+    //   client,
+    //   address: CONTRACT_ADDRESS_V2,
+    // });
 
-    let response = await collection.runLocal('getInfoByName', { name: String(req.query.name) });
+    const { rows } = await sql`SELECT * FROM vids WHERE name = ${name};`;
+    //console.log(rows[0]);
     let nftAddress;
-    let nftData;
-    if (response.decoded.output.value0.name !== 'notfound') {
-      nftAddress = response.decoded.output.value0.nftAddress;
-      nftData = response.decoded.output.value0;
+    let owner;
+    if (rows.length > 0) {
+      nftAddress = String(rows[0].address)
+      owner = String(rows[0].owner);
     } else {
-      let responsev1 = await collectionv1.runLocal('getInfoByName', {
-        name: String(req.query.name)
+      let response = await collection.runLocal('getInfoByName', {
+        name: String(_name),
       });
-      if (responsev1.decoded.output.value0.name !== 'notfound') {
-        nftAddress = responsev1.decoded.output.value0.nftAddress;
-        nftData = responsev1.decoded.output.value0;
+      if (response.decoded.output.value0.name !== 'notfound') {
+        nftAddress = response.decoded.output.value0.nftAddress;
+        owner = response.decoded.output.value0.owner;
       } else {
-        let responsev2 = await collectionv2.runLocal('getInfoByName', {
-          name: String(req.query.name)
+        let responsev1 = await collectionv1.runLocal('getInfoByName', {
+          name: String(_name),
         });
-        nftAddress = responsev2.decoded.output.value0.nftAddress;
-        nftData = responsev2.decoded.output.value0;
+        nftAddress = responsev1.decoded.output.value0.nftAddress;
+        owner = responsev1.decoded.output.value0.owner;
       }
     }
+
+    //console.log('address : ',nftAddress);
+
 
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
@@ -89,28 +96,22 @@ export default async function handler(req, res) {
     if (withDetails) {
       if (jsonUrl) {
         const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
-        res
-          .status(200)
-          .json({
-            nftData: nftData,
-            nftJson: JSON.parse(responseJson.decoded.output.json),
-            nftDetails: result.data,
-          });
+        res.status(200).json({
+          owner: owner,
+          nftJson: JSON.parse(responseJson.decoded.output.json),
+          nftDetails: result.data,
+        });
       } else {
-        res
-          .status(200)
-          .json({
-            nftData: nftData,
-            nftJson: JSON.parse(responseJson.decoded.output.json),
-          });
-      }
-    } else {
-      res
-        .status(200)
-        .json({
-          nftData: nftData,
+        res.status(200).json({
+          owner: owner,
           nftJson: JSON.parse(responseJson.decoded.output.json),
         });
+      }
+    } else {
+      res.status(200).json({
+        owner: owner,
+        nftJson: JSON.parse(responseJson.decoded.output.json),
+      });
     }
   } catch (err) {
     console.error(err);

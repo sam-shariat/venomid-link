@@ -152,7 +152,7 @@ const LinkPage: NextPage = () => {
         setNameDontExist(true);
         return;
       }
-      const owner = nftJson.nftData.owner;
+      const owner = nftJson.owner;
       const jsonUrl = nftJson.nftJson.attributes?.find(
         (att: Attribute) => att.trait_type === 'DATA'
       )?.value;
@@ -161,9 +161,6 @@ const LinkPage: NextPage = () => {
           //console.log(jsonUrl);
           const res = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
           setJson(res.data);
-          if (res.data.lightMode) {
-            colorMode !== 'light' && toggleColorMode();
-          }
           //setName(String(nftJson.name));
           setVenom(owner);
           setTitle(res.data.title ?? '');
@@ -217,10 +214,7 @@ const LinkPage: NextPage = () => {
             }
           });
 
-          if (colorMode === 'light') {
-            toggleColorMode();
-          }
-  
+          
           setVenom(owner);
           setBio('');
           setBtc('');
@@ -289,12 +283,7 @@ const LinkPage: NextPage = () => {
         setButtonBgColor(BUTTON_BG_COLORS[0]);
         setRound(BUTTON_ROUNDS[1]);
         setVariant(BUTTON_VARIANTS[0]);
-        setFont(FONTS[0]);
-
-        if (colorMode === 'light') {
-          toggleColorMode();
-        }
-        
+        setFont(FONTS[0]);        
         setIsLoading(false);
       }
     }
@@ -303,6 +292,23 @@ const LinkPage: NextPage = () => {
       initUI();
     }
   }, [nftJson]);
+
+
+  useEffect(()=> {
+    //console.log(lightMode);
+    //console.log(colorMode);
+    if (lightMode) {
+      if(colorMode === 'dark'){
+        toggleColorMode();
+      }
+    } else {
+      if(colorMode === 'light'){
+        toggleColorMode();
+      }
+    }
+  },[lightMode]);
+
+  
   return (
     <>
       <Head>
@@ -324,7 +330,8 @@ const LinkPage: NextPage = () => {
               : '/logos/vidicon.svg'
           }
         />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`${SITE_URL}api/og?name=${name}`} />
         <meta
           name="twitter:title"
           content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
@@ -335,7 +342,7 @@ const LinkPage: NextPage = () => {
             json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
           }
         />
-        <meta name="twitter:image" content={`${SITE_URL}api/avatar?name=${name}`} />
+        <meta property="og:image" content={`${SITE_URL}api/og?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
@@ -356,6 +363,7 @@ const LinkPage: NextPage = () => {
             <Container
               minH="100vh"
               width={['100%', '100%', 'md', 'lg', 'xl']}
+              minWidth={['xs', 'sm', 'md', 'lg', 'xl']}
               display="flex"
               flexDir={'column'}
               gap={4}

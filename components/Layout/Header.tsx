@@ -33,12 +33,12 @@ export default function Header() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  useEffect(()=> {
-    console.log(colorMode + " is " + colorM)
-    if(colorMode !== colorM){
-      toggleColorMode();
-    }
-  },[colorMode])
+  // useEffect(()=> {
+  //   console.log(colorMode + " is " + colorM)
+  //   if(colorMode !== colorM){
+  //     toggleColorMode();
+  //   }
+  // },[colorMode])
   
   return (
     <Box

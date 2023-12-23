@@ -274,8 +274,8 @@ const HomePage: NextPage = () => {
           />
         )} */}
         <title>
-          {json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} |{' '}
-          {json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+          {SITE_TITLE} |{' '}
+          {SITE_DESCRIPTION}
         </title>
         <link
           rel="icon"
@@ -288,12 +288,12 @@ const HomePage: NextPage = () => {
         <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"
-          content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
+          content={SITE_TITLE}
         />
         <meta
           name="twitter:description"
           content={
-            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+            SITE_DESCRIPTION
           }
         />
         <meta name="twitter:image" content={`${SITE_URL}api/avatar?name=${name}`} />

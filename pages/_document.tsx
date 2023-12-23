@@ -15,12 +15,7 @@ class Document extends NextDocument {
   render() {
     return (
       <Html>
-        <Head>
-          <script
-            async
-            src="https://vid-analytics.vercel.app/script.js"
-            data-website-id={process.env.NEXT_PUBLIC_UMAMI_KEY}></script>
-        </Head>
+        <Head/>
         <body>
           <ColorModeScript />
           <Main />
