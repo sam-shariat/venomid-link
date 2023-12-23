@@ -7,7 +7,7 @@ export const config = {
 };
  
 export default async function handler(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  const { searchParams } = request.nextUrl;
   const name = searchParams.get('name');
   if (!name) {
     return new ImageResponse(<>Venom ID &quot;Not Found&quot;</>, {
