@@ -203,18 +203,17 @@ const LinkPage: NextPage = () => {
             bgColor: BG_COLORS[0].color,
             links: [],
             socials: {},
-            styles : {
+            styles: {
               lineIcons: false,
               lightMode: BG_COLORS[0].lightMode,
               bgColor: BG_COLORS[0].color,
               buttonBgColor: BUTTON_BG_COLORS[0],
               round: BUTTON_ROUNDS[1],
               variant: BUTTON_VARIANTS[0],
-              font: FONTS[0]
-            }
+              font: FONTS[0],
+            },
           });
 
-          
           setVenom(owner);
           setBio('');
           setBtc('');
@@ -255,15 +254,15 @@ const LinkPage: NextPage = () => {
           bgColor: BG_COLORS[0].color,
           links: [],
           socials: {},
-          styles : {
+          styles: {
             lineIcons: false,
             lightMode: BG_COLORS[0].lightMode,
             bgColor: BG_COLORS[0].color,
             buttonBgColor: BUTTON_BG_COLORS[0],
             round: BUTTON_ROUNDS[1],
             variant: BUTTON_VARIANTS[0],
-            font: FONTS[0]
-          }
+            font: FONTS[0],
+          },
         });
 
         setVenom(owner);
@@ -283,7 +282,7 @@ const LinkPage: NextPage = () => {
         setButtonBgColor(BUTTON_BG_COLORS[0]);
         setRound(BUTTON_ROUNDS[1]);
         setVariant(BUTTON_VARIANTS[0]);
-        setFont(FONTS[0]);        
+        setFont(FONTS[0]);
         setIsLoading(false);
       }
     }
@@ -293,22 +292,20 @@ const LinkPage: NextPage = () => {
     }
   }, [nftJson]);
 
-
-  useEffect(()=> {
+  useEffect(() => {
     //console.log(lightMode);
     //console.log(colorMode);
     if (lightMode) {
-      if(colorMode === 'dark'){
+      if (colorMode === 'dark') {
         toggleColorMode();
       }
     } else {
-      if(colorMode === 'light'){
+      if (colorMode === 'light') {
         toggleColorMode();
       }
     }
-  },[lightMode]);
+  }, [lightMode]);
 
-  
   return (
     <>
       <Head>
@@ -331,10 +328,9 @@ const LinkPage: NextPage = () => {
           }
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={`${SITE_URL}api/og?name=${name}`} />
         <meta
           name="twitter:title"
-          content={json !== undefined && !isLoading && json.name != '' ? json.name : SITE_TITLE}
+          content={name + '.VID'}
         />
         <meta
           name="twitter:description"
@@ -342,7 +338,7 @@ const LinkPage: NextPage = () => {
             json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
           }
         />
-        <meta property="og:image" content={`${SITE_URL}api/og?name=${name}`} />
+        <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
@@ -429,11 +425,7 @@ const LinkPage: NextPage = () => {
 
                 {socialIcons && <Socials json={json} onlyIcons />}
 
-                {walletButtons && (
-                  <Wallets
-                    json={json}
-                  />
-                )}
+                {walletButtons && <Wallets json={json} />}
 
                 <Stack width={'100%'} gap={2}>
                   {json.bio && json.bio.length > 0 && (

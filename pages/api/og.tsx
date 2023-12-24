@@ -1,51 +1,84 @@
 import { ImageResponse } from '@vercel/og';
 // eslint-disable-next-line @next/next/no-server-import-in-page
 import { NextRequest } from 'next/server';
- 
+
 export const config = {
-  runtime: 'edge',
+  runtime: 'experimental-edge',
 };
- 
-export default async function handler(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
-  const name = searchParams.get('name');
-  if (!name) {
-    return new ImageResponse(<>Venom ID &quot;Not Found&quot;</>, {
-      width: 1200,
-      height: 630,
-    });
-  }
- 
+
+const OgImageHandler = async (req: NextRequest) => {
+  const { searchParams } = new URL(req.url);
+  const name = searchParams.get('name') || 'Venomid';
+  const nft = await fetch('https://venomid.link/api/name?withDetails=1&name=' + name);
+  const nftJson = await nft.json();
+  console.log(nft)
+  const title = nftJson.nftDetails ? nftJson.nftDetails.title : '';
+  const subtitle = nftJson.nftDetails ? nftJson.nftDetails.subtitle : '';
+  const lightMode = nftJson.nftDetails ? nftJson.nftDetails.lightMode : false;
+  // const blob = await response.blob();
+  // const url = URL.createObjectURL(blob);
+  //console.log(url)
   return new ImageResponse(
     (
       <div
         style={{
-          display: 'flex',
-          fontSize: 60,
-          color: 'black',
-          background: '#f6f6f6',
+          background: lightMode ? '#f5f5f5' : 'radial-gradient(farthest-corner at 60% 55%,#1e201d 10%,#241925 45%, #261d24 60%, #1e2823 90%)',
           width: '100%',
           height: '100%',
-          paddingTop: 50,
-          flexDirection: 'column',
-          justifyContent: 'center',
+          textAlign: 'center',
+          alignContent: 'center',
           alignItems: 'center',
-        }}
-      >
+          justifyContent: 'center',
+          flexDirection: 'row',
+          display: 'flex',
+        }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          width="256"
-          height="256"
-          src={`https://venomid.link/api/avatar/?name=${name}`}
-          style={{
-            borderRadius: 128,
-          }}
+          alt={name + ' Avatar Image'}
+          width={300}
+          height={300}
+          src={'https://venomid.link/api/avatar?name=' + name}
+          style={{ margin: '0 75px', borderRadius: '100%' }}
         />
-        <p>{name}.VID</p>
+        <div
+          style={{
+            flexDirection: 'column',
+            display: 'flex',
+          }}>
+            {title !== '' && <p
+            style={{
+              fontSize: 40,
+              fontWeight: 'bolder',
+              lineHeight: 1.2,
+              color: lightMode ? '#161618' : '#f5f5f5'
+            }}>
+            {title}
+          </p>}
+          {subtitle !== '' && <p
+            style={{
+              fontSize: 30,
+              lineHeight: 1.2,
+              color: lightMode ? '#444444' : '#acacac'
+            }}>
+            {subtitle}
+          </p>}
+          <p
+            style={{
+              fontSize: 36,
+              lineHeight: 1.2,
+              color: lightMode ? '#161618' : '#f5f5f5'
+            }}>
+            {name}.VID
+          </p>
+          
+        </div>
       </div>
     ),
     {
       width: 1200,
-      height: 630,
-    },
+      height: 600,
+    }
   );
-}
+};
+
+export default OgImageHandler;
