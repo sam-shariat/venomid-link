@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import axios from 'axios';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
@@ -315,10 +315,16 @@ const LinkPage: NextPage = () => {
             description={json.bio !== '' ? json.bio : SITE_DESCRIPTION}
           />
         )} */}
-        <title>
-          {json !== undefined && !isLoading && json.name !== '' ? json.name : SITE_TITLE} |{' '}
-          {json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}
-        </title>
+        {json !== undefined && !isLoading ? (
+          <title>
+            {json.name !== '' ? json.name : SITE_TITLE} |{' '}
+            {json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+          </title>
+        ) : (
+          <title>
+            {SITE_TITLE} | {SITE_DESCRIPTION}
+          </title>
+        )}
         <link
           rel="icon"
           href={
@@ -327,18 +333,19 @@ const LinkPage: NextPage = () => {
               : '/logos/vidicon.svg'
           }
         />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content={name + '.VID'}
-        />
-        <meta
-          name="twitter:description"
-          content={
-            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
-          }
-        />
-        <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
+        {name.length > 0 && (
+          <>
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={name + '.VID'} />
+            <meta
+              name="twitter:description"
+              content={
+                json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+              }
+            />
+            <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
+          </>
+        )}
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 

@@ -20,7 +20,6 @@ const Layout = ({ children }: Props) => {
     <>
     
       {/* <Header/> */}
-      <Seo />
       {children}
       {/* <Footer /> */}
     </>

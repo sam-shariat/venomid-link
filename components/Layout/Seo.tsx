@@ -17,7 +17,7 @@ export function Seo() {
     <DefaultSeo
       defaultTitle={SITE_TITLE}
       titleTemplate={`%s | ${SITE_DESCRIPTION}`}
-      description={SITE_FULL_DESCRIPTION}
+      description={SITE_DESCRIPTION}
       canonical={href}
       themeColor={'#101212'}
       defaultOpenGraphImageWidth={512}
@@ -26,7 +26,7 @@ export function Seo() {
         type: 'website',
         siteName: SITE_TITLE,
         url: origin,
-        description: SITE_FULL_DESCRIPTION,
+        description: SITE_DESCRIPTION,
         defaultImageHeight: 512,
         defaultImageWidth: 512,
         title: SITE_TITLE,
