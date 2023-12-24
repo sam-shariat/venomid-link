@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import axios from 'axios';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
@@ -75,7 +75,27 @@ interface Attribute {
   value: string;
 }
 
-const LinkPage: NextPage = () => {
+interface LinkPageProps {
+  name: string;
+  nftJson: any;
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { query } = context;
+  const name = query.name ? String(query.name) : '';
+
+  const res = await fetch(SITE_URL+ 'api/name/?name=' + name)
+  const nftJson = await res.json();
+
+  return {
+    props: {
+      name,
+      nftJson
+    },
+  };
+}
+
+const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson }) => {
   const { t } = useTranslate();
   const [bio, setBio] = useAtom(bioAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
@@ -107,51 +127,54 @@ const LinkPage: NextPage = () => {
   const [json, setJson] = useAtom(jsonAtom);
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
-  const [nftJson, setNftJson] = useAtom(nftJsonAtom);
+  //const [nftJson, setNftJson] = useAtom(nftJsonAtom);
   const [isLoading, setIsLoading] = useState(true);
   const [nameDontExist, setNameDontExist] = useState(false);
-  const router = useRouter();
-  const name = router.query.name ? String(router.query.name) : '';
+  //const router = useRouter();
+  //const name = router.query.name ? String(router.query.name) : '';
   const origin =
     typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
 
-  async function getInfoByName(_name: string) {
-    try {
-      //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
-      await fetch('/api/name/?name=' + _name)
-        .then((res) => res.json())
-        .then((jsonData) => {
-          setNftJson(jsonData);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } catch (e) {
-      console.log('error loading name');
-      setIsLoading(false);
-      return 'error';
-    }
-  }
+  // async function getInfoByName(_name: string) {
+  //   try {
+  //     //const res = await axios.get(SITE_PROFILE_URL + 'api/name/?name=' + _name);
+  //     await fetch('/api/name/?name=' + _name)
+  //       .then((res) => res.json())
+  //       .then((jsonData) => {
+  //         setNftJson(jsonData);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   } catch (e) {
+  //     console.log('error loading name');
+  //     setIsLoading(false);
+  //     return 'error';
+  //   }
+  // }
 
-  useEffect(() => {
-    async function getProfileJson() {
-      setIsLoading(true);
-      await getInfoByName(name);
-      setIsLoading(false);
-    }
+  // useEffect(() => {
+  //   async function getProfileJson() {
+  //     setIsLoading(true);
+  //     await getInfoByName(name);
+  //     setIsLoading(false);
+  //   }
 
-    if (name.length > 2) {
-      getProfileJson();
-    }
-  }, [name]);
+  //   if (name.length > 2) {
+  //     getProfileJson();
+  //   }
+  // }, [name]);
 
   useEffect(() => {
     async function initUI() {
       //console.log(nftJson);
       if (nftJson?.status === 'error') {
+        setIsLoading(false);
+        setLightMode(false);
         setNameDontExist(true);
         return;
       }
+      setIsLoading(true)
       const owner = nftJson.owner;
       const jsonUrl = nftJson.nftJson.attributes?.find(
         (att: Attribute) => att.trait_type === 'DATA'
@@ -315,16 +338,10 @@ const LinkPage: NextPage = () => {
             description={json.bio !== '' ? json.bio : SITE_DESCRIPTION}
           />
         )} */}
-        {json !== undefined && !isLoading ? (
-          <title>
-            {json.name !== '' ? json.name : SITE_TITLE} |{' '}
-            {json.bio !== '' ? json.bio : SITE_DESCRIPTION}
-          </title>
-        ) : (
-          <title>
-            {SITE_TITLE} | {SITE_DESCRIPTION}
-          </title>
-        )}
+        <title>
+          {json !== undefined && json.name !== '' ? json.name : SITE_TITLE} | {' '}
+          {json !== undefined && json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+        </title>
         <link
           rel="icon"
           href={
@@ -333,19 +350,18 @@ const LinkPage: NextPage = () => {
               : '/logos/vidicon.svg'
           }
         />
-        {name.length > 0 && (
-          <>
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={name + '.VID'} />
-            <meta
-              name="twitter:description"
-              content={
-                json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
-              }
-            />
-            <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
-          </>
-        )}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={name + '.VID'}
+        />
+        <meta
+          name="twitter:description"
+          content={
+            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+          }
+        />
+        <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 

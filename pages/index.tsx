@@ -68,7 +68,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import Links from 'components/Profile/Links';
 import { NextSeo } from 'next-seo';
 import Wallets from 'components/Profile/Wallets';
-import { Seo } from 'components/Layout/Seo';
 
 interface Attribute {
   trait_type: string;
@@ -286,7 +285,18 @@ const HomePage: NextPage = () => {
               : '/logos/vidicon.svg'
           }
         />
-        <Seo />
+        <meta name="twitter:card" content="summary" />
+        <meta
+          name="twitter:title"
+          content={SITE_TITLE}
+        />
+        <meta
+          name="twitter:description"
+          content={
+            SITE_DESCRIPTION
+          }
+        />
+        <meta name="twitter:image" content={`${SITE_URL}api/avatar?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
