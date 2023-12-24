@@ -362,6 +362,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson }) => {
           }
         />
         <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
+        <meta property="twitter:image" content={`https://venomid.link/api/og?name=${name}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
