@@ -339,7 +339,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson }) => {
           />
         )} */}
         <title>
-          {`${name}.VID | ${nftJson !== undefined && nftJson.bio !== '' ? json.bio : SITE_DESCRIPTION}`}
+          {`${name}.VID${nftJson !== undefined && nftJson.bio !== '' ? ' | ' +json.bio : ' | ' +SITE_DESCRIPTION}`}
         </title>
         <link
           rel="icon"
