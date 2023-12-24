@@ -7,7 +7,7 @@ export default function Footer() {
   const round = useAtomValue(roundAtom);
   const {colorMode} = useColorMode();
   return (
-    <Box as="footer" width={['100%', '100%', 'md', 'lg', 'xl']} py={4} backgroundColor={colorMode === 'light' ? 'whiteAlpha.200' : 'blackAlpha.200'} my={12} rounded={round}>
+    <Box as="footer" width={['100%', '100%', 'md', 'lg', 'xl']} py={4} color={colorMode === 'light' ? 'var(--dark)' : 'var(--light)'} backgroundColor={colorMode === 'light' ? 'whiteAlpha.200' : 'blackAlpha.200'} my={12} rounded={round}>
       <Container gap={1} maxW="container.md" display="flex" justifyContent="center" alignItems={'center'}>
         <Text>Powered By</Text>
         <Logo />
