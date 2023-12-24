@@ -84,13 +84,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { query } = context;
   const name = query.name ? String(query.name) : '';
 
-  const res = await fetch(SITE_URL+ 'api/name/?name=' + name)
+  const res = await fetch(SITE_URL + 'api/name/?name=' + name);
   const nftJson = await res.json();
 
   return {
     props: {
       name,
-      nftJson
+      nftJson,
     },
   };
 }
@@ -174,7 +174,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson }) => {
         setNameDontExist(true);
         return;
       }
-      setIsLoading(true)
+      setIsLoading(true);
       const owner = nftJson.owner;
       const jsonUrl = nftJson.nftJson.attributes?.find(
         (att: Attribute) => att.trait_type === 'DATA'
@@ -339,26 +339,22 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson }) => {
           />
         )} */}
         <title>
-          {json !== undefined && json.name !== '' ? json.name : SITE_TITLE} | {' '}
-          {json !== undefined && json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+          {name}.VID | {nftJson !== undefined && nftJson.bio !== '' ? json.bio : SITE_DESCRIPTION}
         </title>
         <link
           rel="icon"
           href={
-            json !== undefined && !isLoading && json.avatar !== ''
-              ? json.avatar
+            nftJson !== undefined && nftJson.avatar !== ''
+              ? nftJson.avatar
               : '/logos/vidicon.svg'
           }
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content={name + '.VID'}
-        />
+        <meta name="twitter:title" content={name + '.VID'} />
         <meta
           name="twitter:description"
           content={
-            json !== undefined && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+            nftJson !== undefined && nftJson.bio !== '' ? json.bio : SITE_DESCRIPTION
           }
         />
         <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />

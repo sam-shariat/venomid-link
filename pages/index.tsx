@@ -274,8 +274,7 @@ const HomePage: NextPage = () => {
           />
         )} */}
         <title>
-          {SITE_TITLE} |{' '}
-          {SITE_DESCRIPTION}
+          {`${SITE_TITLE} | ${SITE_DESCRIPTION}`}
         </title>
         <link
           rel="icon"

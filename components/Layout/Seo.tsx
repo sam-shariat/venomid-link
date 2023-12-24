@@ -15,8 +15,6 @@ export function Seo() {
     typeof window !== 'undefined' && window.location.href ? window.location.href : SITE_URL;
   return (
     <DefaultSeo
-      defaultTitle={SITE_TITLE}
-      titleTemplate={`%s | ${SITE_DESCRIPTION}`}
       description={SITE_DESCRIPTION}
       canonical={href}
       themeColor={'#101212'}
