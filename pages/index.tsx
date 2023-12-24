@@ -296,7 +296,7 @@ const HomePage: NextPage = () => {
             SITE_DESCRIPTION
           }
         />
-        <meta name="twitter:image" content={`${SITE_URL}api/avatar?name=${name}`} />
+        <meta name="twitter:image" content={`${SITE_URL}logos/vid.png`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
