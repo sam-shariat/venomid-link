@@ -1,8 +1,10 @@
 const SID = require('@siddomains/sidjs').default;
-const Name = require('@siddomains/sidjs').getResolverContract;
 const SIDfunctions = require('@siddomains/sidjs');
 const rpc = require('@siddomains/sidjs/dist/constants/rpc');
 const ethers = require('ethers');
+import fs from 'fs';
+import path from 'path';
+import axios from 'axios';
 
 let sid;
 
@@ -17,7 +19,10 @@ export default async function handler(req, res) {
 
     const provider = new ethers.providers.JsonRpcProvider(rpc.apis.bsc_mainnet);
     sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress('56') });
+
+
     const avatar = await sid.name(name).getText('avatar');
+    console.log(avatar)
 
     if (avatar) {
       const imageBuffer = await axios.get(String(avatar), {
@@ -40,6 +45,7 @@ export default async function handler(req, res) {
         .send(imageBuffer);
     }
   } catch (err) {
+    console.log(err)
     const defaultImage = path.resolve('.', 'public/logos/vidavatar.jpg');
     const imageBuffer = fs.readFileSync(defaultImage);
     res
