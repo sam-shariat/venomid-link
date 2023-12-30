@@ -1,12 +1,6 @@
 import { ImageResponse } from '@vercel/og';
 // eslint-disable-next-line @next/next/no-server-import-in-page
-import { NextRequest } from 'next/server';
-const SID = require('@siddomains/sidjs').default      
-const SIDfunctions = require('@siddomains/sidjs')
-const rpc = require('@siddomains/sidjs/dist/constants/rpc')                                                                                                                                                                                
-const ethers = require('ethers')                                                                                                                
-
-let sid ;
+import { NextRequest } from 'next/server';                                                                                                       
 
 export const config = {
   runtime: 'experimental-edge',
@@ -15,17 +9,9 @@ export const config = {
 const OgImageHandler = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const name = searchParams.get('name') || 'Venomid';
-
-  const provider = new ethers.providers.JsonRpcProvider(rpc.apis.bsc_mainnet)
-  sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress('56') })
-
-  let avatar = await sid.name(name).getText('avatar');
-  // if(!avatar){
-  //   avatar = await sid.name(name).getText('avatar');
-  // }
-  const avatarUrl = avatar;
-  const title = await sid.name(name).getText('name');
-  const subtitle = await sid.name(name).getText('location');
+  const avatar = searchParams.get('avatar') || '';
+  const title = searchParams.get('title') || '';
+  const subtitle = searchParams.get('subtitle') || '';
   const lightMode = false //nftJson.nftDetails ? nftJson.nftDetails.lightMode : false;
   
   return new ImageResponse(
@@ -47,7 +33,7 @@ const OgImageHandler = async (req: NextRequest) => {
           alt={name + ' Avatar Image'}
           width={300}
           height={300}
-          src={avatarUrl}
+          src={avatar}
           style={{ margin: '0 75px', borderRadius: '100%' }}
         />
         <div
@@ -78,7 +64,7 @@ const OgImageHandler = async (req: NextRequest) => {
               lineHeight: 1.1,
               color: lightMode ? '#161618' : '#f5f5f5'
             }}>
-            {name}.vid
+            {name}
           </p>
           
         </div>

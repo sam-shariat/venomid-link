@@ -80,11 +80,14 @@ interface Attribute {
   value: string;
 }
 
-interface LinkPageProps {
+interface SIDLinkPageProps {
   name: string;
   nftJson: any;
   title: string;
   description: string;
+  _titleName: string;
+  _subtitle: string;
+  _avatar: string;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -102,19 +105,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         name,
         error,
         _title,
-        _description,
+        _description
       },
     };
   }
   let bio = await web3Name.getDomainRecord({ name: name, key: 'bio' });
-  let avatar: string | null | undefined = await web3Name.getDomainRecord({ name: name, key: 'avatar' });
+  let __avatar: string | null | undefined = await web3Name.getDomainRecord({ name: name, key: 'avatar' });
   let avatarShape = 'circle'
-  if(!avatar){
-    avatar = await web3Name.getDomainAvatar({name: name, key: 'avatar'});
+  if(!__avatar){
+    __avatar = await web3Name.getDomainAvatar({name: name, key: 'avatar'});
     avatarShape = 'round'
   }
-  let titleName = await web3Name.getDomainRecord({ name: name, key: 'name' });
-  let subtitle = await web3Name.getDomainRecord({ name: name, key: 'location' });
+  const avatar = __avatar;
+  const titleName = await web3Name.getDomainRecord({ name: name, key: 'name' });
+  const subtitle = await web3Name.getDomainRecord({ name: name, key: 'location' });
   let url = await web3Name.getDomainRecord({ name: name, key: 'url' });
   let twitter = await web3Name.getDomainRecord({ name: name, key: 'com.twitter' });
   let telegram = await web3Name.getDomainRecord({ name: name, key: 'org.telegram' });
@@ -165,11 +169,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       nftJson,
       title,
       description,
+      titleName,
+      subtitle,
+      avatar
     },
   };
 }
 
-const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }) => {
+const SIDLinkPage: NextPage<SIDLinkPageProps> = ({ name, nftJson, title, description, _titleName, _subtitle, _avatar }) => {
   const { t } = useTranslate();
   const [bio, setBio] = useAtom(bioAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
@@ -412,13 +419,13 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
 
         <meta name="og:title" content={title} />
         <meta name="og:description" content={description} />
-        <meta property="og:image" content={`https://venomid.link/api/sidog?name=${name}`} />
+        <meta property="og:image" content={`https://venomid.link/api/sidog?name=${name}&title=${_titleName}&subtitle=${_subtitle}&avatar=${_avatar}`} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
 
-        <meta property="twitter:image" content={`https://venomid.link/api/sidog?name=${name}`} />
+        <meta property="twitter:image" content={`https://venomid.link/api/sidog?name=${name}&title=${_titleName}&subtitle=${_subtitle}&avatar=${_avatar}`} />
         {/* <link rel="icon" type="image/png" href="/logos/vidicon.png" /> */}
         <link rel="icon" href={avatar ? avatar : '/logos/vidicon.png'} />
       </Head>
@@ -553,4 +560,4 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
   );
 };
 
-export default LinkPage;
+export default SIDLinkPage;
