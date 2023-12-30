@@ -42,13 +42,7 @@ export default function Socials({ json, color, onlyIcons, title }: Props) {
                 title={capFirstLetter(item.key)}
                 onlyIcon={_onlyIcons}
                 color={color ? color : undefined}
-                url={
-                  item.key === 'email'
-                    ? 'mailto:' + String(item.value)
-                    : item.key === 'phone'
-                    ? 'tel://' + String(item.value)
-                    : withHttps(String(item.value))
-                }
+                url={String(item.value)}
               />
             )
         )}

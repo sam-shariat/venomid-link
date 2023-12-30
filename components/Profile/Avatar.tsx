@@ -72,8 +72,8 @@ const Avatar = ({
       dragElastic={0.5}
       borderRadius={shape !== 'hex' ? (shape === 'circle' ? '100%' : shape === 'round' ? 16 : 0) : 0}
       whileTap={{ cursor: 'grabbing' }}
-      key={avatarUrl.length > 10 ? avatarUrl : '/logos/vidavatar.svg'}
-      src={avatarUrl.length > 10 ? avatarUrl : '/logos/vidavatar.svg'}
+      key={avatarUrl && avatarUrl.length > 10 ? avatarUrl : '/logos/vidavatar.svg'}
+      src={avatarUrl && avatarUrl.length > 10 ? avatarUrl : '/logos/vidavatar.svg'}
       width="100%"
       maxH={maxH ? maxH : 'auto'}
       boxShadow={shadow ? shadow : 'none'}

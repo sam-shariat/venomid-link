@@ -23,7 +23,7 @@ async function getClient() {
 
 export default async function handler(req, res) {
   try {
-    console.log(req.query);
+    //console.log(req.query);
     if (!req.query.nftAddress) {
       res.status(202).json({ status: 'error', message: 'nftAddress param is required' });
       process.exit(1);

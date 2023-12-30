@@ -120,13 +120,13 @@ const HomePage: NextPage = () => {
         .then((res) => res.json())
         .then((jsonData) => {
           setNftJson(jsonData);
-          console.log(jsonData)
+          //console.log(jsonData);
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
         });
     } catch (e) {
-      console.log('error loading name');
+      //console.log('error loading name');
       setIsLoading(false);
       return 'error';
     }
@@ -146,7 +146,7 @@ const HomePage: NextPage = () => {
 
   useEffect(() => {
     async function initUI() {
-      console.log(nftJson);
+      //console.log(nftJson);
       if (nftJson?.status === 'error') {
         setNameDontExist(true);
         return;
@@ -157,7 +157,7 @@ const HomePage: NextPage = () => {
       )?.value;
       if (jsonUrl) {
         try {
-          console.log(jsonUrl);
+          //console.log(jsonUrl);
           const res = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
           setJson(res.data);
           if (res.data.lightMode) {
@@ -182,10 +182,10 @@ const HomePage: NextPage = () => {
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
-          console.log(res.data);
+          //console.log(res.data);
           setIsLoading(false);
         } catch (error) {
-          console.log('error getting json file');
+          //console.log('error getting json file');
           setJson({
             name: nftJson.name,
             venomAddress: connectedAccount,
@@ -273,30 +273,17 @@ const HomePage: NextPage = () => {
             description={json.bio !== '' ? json.bio : SITE_DESCRIPTION}
           />
         )} */}
-        <title>
-          {`${SITE_TITLE} | ${SITE_DESCRIPTION}`}
-        </title>
-        <link
-          rel="icon"
-          href={
-            json !== undefined && !isLoading && json.avatar !== ''
-              ? json.avatar
-              : '/logos/vidicon.svg'
-          }
-        />
+        <title>{`${SITE_TITLE} | ${SITE_DESCRIPTION}`}</title>
+        <meta name="description" content={SITE_DESCRIPTION} />
         <meta name="twitter:card" content="summary" />
-        <meta
-          name="twitter:title"
-          content={SITE_TITLE}
-        />
-        <meta
-          name="twitter:description"
-          content={
-            SITE_DESCRIPTION
-          }
-        />
+        <meta name="twitter:title" content={SITE_TITLE} />
+        <meta name="twitter:description" content={SITE_DESCRIPTION} />
         <meta name="twitter:image" content={`${SITE_URL}logos/vid.png`} />
+        <meta name="og:title" content={SITE_TITLE} />
+        <meta name="og:description" content={SITE_DESCRIPTION} />
+        <meta name="og:image" content={`${SITE_URL}logos/vid.png`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
+        <link rel="icon" href={'/logos/vidicon.svg'} />
       </Head>
 
       <Container

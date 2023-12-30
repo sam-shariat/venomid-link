@@ -1,6 +1,12 @@
 import { ImageResponse } from '@vercel/og';
 // eslint-disable-next-line @next/next/no-server-import-in-page
 import { NextRequest } from 'next/server';
+const SID = require('@siddomains/sidjs').default      
+const SIDfunctions = require('@siddomains/sidjs')
+const rpc = require('@siddomains/sidjs/dist/constants/rpc')                                                                                                                                                                                
+const ethers = require('ethers')                                                                                                                
+
+let sid ;
 
 export const config = {
   runtime: 'experimental-edge',
@@ -9,15 +15,19 @@ export const config = {
 const OgImageHandler = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const name = searchParams.get('name') || 'Venomid';
-  const nft = await fetch('https://venomid.link/api/name?withDetails=1&name=' + name);
-  const nftJson = await nft.json();
-  //console.log(nft)
-  const title = nftJson.nftDetails ? nftJson.nftDetails.title : '';
-  const subtitle = nftJson.nftDetails ? nftJson.nftDetails.subtitle : '';
-  const lightMode = nftJson.nftDetails ? nftJson.nftDetails.lightMode : false;
-  // const blob = await response.blob();
-  // const url = URL.createObjectURL(blob);
-  //console.log(url)
+
+  const provider = new ethers.providers.JsonRpcProvider(rpc.apis.bsc_mainnet)
+  sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress('56') })
+
+  let avatar = await sid.name(name).getText('avatar');
+  // if(!avatar){
+  //   avatar = await sid.name(name).getText('avatar');
+  // }
+  const avatarUrl = avatar;
+  const title = await sid.name(name).getText('name');
+  const subtitle = await sid.name(name).getText('location');
+  const lightMode = false //nftJson.nftDetails ? nftJson.nftDetails.lightMode : false;
+  
   return new ImageResponse(
     (
       <div
@@ -37,7 +47,7 @@ const OgImageHandler = async (req: NextRequest) => {
           alt={name + ' Avatar Image'}
           width={300}
           height={300}
-          src={'https://venomid.link/api/avatar?name=' + name}
+          src={avatarUrl}
           style={{ margin: '0 75px', borderRadius: '100%' }}
         />
         <div

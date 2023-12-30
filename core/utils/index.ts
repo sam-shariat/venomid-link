@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BaseNftJson } from './nft';
 import { truncAddress } from './stringUtils';
+import { SOCIAL_URLS } from './constants';
 //import crypto from 'crypto';
 
 const sleep = async (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -246,6 +247,26 @@ const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+const getUrl = (type: string, url: string): string => {
+  switch (type) {
+    case 'email':
+    case 'phone':
+    case 'skype':
+      return url.includes(SOCIAL_URLS[type]) ? url : SOCIAL_URLS[type] + url;
+
+    case 'substack':
+    case 'slack':
+      return url.includes(SOCIAL_URLS[type].slice(0, -1))
+        ? withHttps(url)
+        : withHttps(url + '.' + SOCIAL_URLS[type]);
+
+    default:
+      return url.includes(SOCIAL_URLS[type].slice(0, -1))
+        ? withHttps(url)
+        : withHttps(SOCIAL_URLS[type] + url);
+  }
+};
+
 export {
   withHttps,
   base64ToBlob,
@@ -262,4 +283,5 @@ export {
   getRandomNumber,
   isValidVenomAddress,
   isValidSignHash,
+  getUrl,
 };

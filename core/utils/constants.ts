@@ -2,10 +2,12 @@ import { BgColorItem, BgImageItem, LinkType } from 'types';
 
 export const SITE_URL = 'https://venomid.link/';
 export const SITE_TITLE = 'Venom ID Profile';
+export const SPACE_ID_TITLE = 'Space ID Profile';
 export const SITE_DESCRIPTION = 'Your entire virtual identity in the blockchain in one simple link';
 export const SITE_FULL_DESCRIPTION =
   'Venom IDentities (VID) serve as secure and easy-to-use domain names for managing your online presence. Venom IDentities (VID) are user-friendly solution to streamline your virtual identity management on the Venom blockchain. With VID, you can easily assign human-readable names to your blockchain and non-blockchain resources, such as Venom and Ethereum addresses, Social Media handles, website URLs, and more. VID enables these resources to be effectively managed and accessed via one, simple name.';
 export const SITE_CLAIM_URL = 'https://venomid.network/';
+export const SITE_SPACE_ID_URL = 'https://space.id/';
 export const SITE_PROFILE_URL = 'https://venomid.link/';
 export const VENOMSCAN_NFT = 'https://testnet.venomscan.com/accounts/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
@@ -132,3 +134,39 @@ export const AVAILABLE_LINKS: LinkType[] = [
   { type: 'contact form', av: false, reg: '' },
   { type: 'contact info', av: false, reg: '' },
 ];
+
+export const SOCIAL_URLS: any = {
+  twitter: 'twitter.com/',
+  linkedin: 'linkedin.com/in/',
+  github: 'github.com/',
+  medium: 'medium.com/',
+  youtube: 'youtube.com/',
+  instagram: 'instagram.com/',
+  tiktok: 'tiktok.com/',
+  twitch: 'twitch.tv/',
+  snapchat: 'snapchat.com/add/',
+  facebook: 'facebook.com/',
+  dribbble: 'dribbble.com/',
+  pinterest: 'pinterest.com/',
+  soundcloud: 'soundcloud.com/',
+  spotify: 'open.spotify.com/user/',
+  patreon: 'patreon.com/',
+  substack: 'substack.com/',
+  galxe: 'galxe.com/',
+  opensea: 'opensea.io/',
+  zealy: 'zealy.io/c/',
+  ylide: 'hub.ylide.io/project/',
+  amazon: 'amazon.com/gp/profile/eampleuser/',
+  playstore: 'play.google.com/store/apps/developer?id=',
+  appstore: 'apps.apple.com/us/developer/',
+  applemusic: 'music.apple.com/profile/',
+  clubhouse: 'joinclubhouse.com/',
+  etsy: 'etsy.com/shop/',
+  discord: 'discord.gg/',
+  skype: 'skype:',
+  slack: 'slack.com/',
+  telegram: 't.me/',
+  whatsapp: 'wa.me/',
+  phone: 'tel:',
+  email: 'mailto:',
+};

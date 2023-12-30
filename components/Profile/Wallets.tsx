@@ -49,13 +49,7 @@ export default function Wallets({ json, color, onlyIcons }: Props) {
                 title={capFirstLetter(item.key)}
                 onlyIcon={_onlyIcons}
                 color={color ? color : undefined}
-                url={
-                  item.key === 'email'
-                    ? 'mailto:' + String(item.value)
-                    : item.key === 'phone'
-                    ? 'tel://' + String(item.value)
-                    : String(item.value)
-                }
+                url={String(item.value)}
               />
             )
         )}
