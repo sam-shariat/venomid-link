@@ -11,47 +11,41 @@ const main = async(name)=> {
   const provider = new ethers.providers.JsonRpcProvider(rpc.apis.bsc_mainnet)
   sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress('56') })
 
-  const resolverAddress = await sid.name(name).getResolver() // 0x123   
-  const bnb = await sid.name(name).getAddress()
+  //const resolverAddress = await sid.name(name).getResolver() // 0x123   
+  //const bnb = await sid.name(name).getAddress()
   // const arb = await sid.name(name).getAddress(42161)
   // const eth = await sid.name(name).getAddress(1)
-  const nh = SIDfunctions.namehash(name);
-  const text = await sid.name(name).getText('venomid');
+  //const nh = SIDfunctions.namehash(name);
   const avatar = await sid.name(name).getText('avatar');
-  const nickname = await sid.name(name).getText('evm.sid.delegate');
-  const website = await sid.name(name).getText('url');
-  const location = await sid.name(name).getText('location');
-  const bio = await sid.name(name).getText('description');
-  const notice = await sid.name(name).getText('notice');
-  const keywords = await sid.name(name).getText('keywords');
-  const twitter = await sid.name(name).getText('com.twitter');
-  const github = await sid.name(name).getText('com.github');
-  const discord = await sid.name(name).getText('com.discord');
-  const telegram = await sid.name(name).getText('org.telegram');
-  const email = await sid.name(name).getText('email');
+  const title = await sid.name(name).getText('name');
+  //const website = await sid.name(name).getText('url');
+  const subtitle = await sid.name(name).getText('location');
+  // const bio = await sid.name(name).getText('description');
+  // const twitter = await sid.name(name).getText('com.twitter');
+  // const github = await sid.name(name).getText('com.github');
+  // const discord = await sid.name(name).getText('com.discord');
+  // const telegram = await sid.name(name).getText('org.telegram');
+  // const email = await sid.name(name).getText('email');
   const json = {
-    resolver : resolverAddress,
-    nameHash : nh,
-    venomid: text,
-    wallets : {
-      // arbitrum: arb,
-      // ethereum: eth,
-      binance: bnb
-    },
-    socials: {
-      twitter,
-      telegram,
-      github,
-      discord,
-      email
-    },
+    nftDetails: {
+    //   resolver : resolverAddress,
+    // nameHash : nh,
+    // wallets : {
+    //   binance: bnb
+    // },
+    // socials: {
+    //   twitter,
+    //   telegram,
+    //   github,
+    //   discord,
+    //   email
+    // },
     avatar:avatar,
-    title: nickname,
-    website,
-    location,
-    bio,
-    notice,
-    keywords
+    title: title,
+    subtitle: subtitle,
+    //website,
+    //bio
+    }
   }
   //console.log("name: %s, address: %s", name, address)
   // const setRec = await sid.name(name).setText('venomid','QmQqqv9BuYeMNx2S1o3UGUFp87JLQDQCyTK8Hc9pH9bmPw/0')

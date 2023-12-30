@@ -1,6 +1,6 @@
 import { ImageResponse } from '@vercel/og';
 // eslint-disable-next-line @next/next/no-server-import-in-page
-import { NextRequest } from 'next/server';                                                                                                       
+import { NextRequest } from 'next/server';
 
 export const config = {
   runtime: 'experimental-edge',
@@ -9,11 +9,15 @@ export const config = {
 const OgImageHandler = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const name = searchParams.get('name') || 'Venomid';
-  const avatar = searchParams.get('avatar') || '';
-  const title = searchParams.get('title') || '';
-  const subtitle = searchParams.get('subtitle') || '';
-  const lightMode = false //nftJson.nftDetails ? nftJson.nftDetails.lightMode : false;
-  
+  const nft = await fetch('https://venomid.link/api/nft/sid?name=' + name);
+  const nftJson = await nft.json();
+  //console.log(nft)
+  const title = nftJson.nftDetails ? nftJson.nftDetails.title : '';
+  const subtitle = nftJson.nftDetails ? nftJson.nftDetails.subtitle : '';
+  const lightMode = nftJson.nftDetails ? nftJson.nftDetails.lightMode : false;
+  // const blob = await response.blob();
+  // const url = URL.createObjectURL(blob);
+  //console.log(url)
   return new ImageResponse(
     (
       <div
@@ -33,7 +37,7 @@ const OgImageHandler = async (req: NextRequest) => {
           alt={name + ' Avatar Image'}
           width={300}
           height={300}
-          src={avatar}
+          src={'https://venomid.link/api/avatar/sid?name=' + name}
           style={{ margin: '0 75px', borderRadius: '100%' }}
         />
         <div

@@ -85,9 +85,6 @@ interface SIDLinkPageProps {
   nftJson: any;
   title: string;
   description: string;
-  _titleName: string;
-  _subtitle: string;
-  _avatar: string;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -109,7 +106,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-  let bio = await web3Name.getDomainRecord({ name: name, key: 'bio' });
+  let bio = await web3Name.getDomainRecord({ name: name, key: 'description' });
   let __avatar: string | null | undefined = await web3Name.getDomainRecord({ name: name, key: 'avatar' });
   let avatarShape = 'circle'
   if(!__avatar){
@@ -168,15 +165,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       name,
       nftJson,
       title,
-      description,
-      titleName,
-      subtitle,
-      avatar
+      description
     },
   };
 }
 
-const SIDLinkPage: NextPage<SIDLinkPageProps> = ({ name, nftJson, title, description, _titleName, _subtitle, _avatar }) => {
+const SIDLinkPage: NextPage<SIDLinkPageProps> = ({ name, nftJson, title, description}) => {
   const { t } = useTranslate();
   const [bio, setBio] = useAtom(bioAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
@@ -419,13 +413,13 @@ const SIDLinkPage: NextPage<SIDLinkPageProps> = ({ name, nftJson, title, descrip
 
         <meta name="og:title" content={title} />
         <meta name="og:description" content={description} />
-        <meta property="og:image" content={`https://venomid.link/api/sidog?name=${name}&title=${_titleName}&subtitle=${_subtitle}&avatar=${_avatar}`} />
+        <meta property="og:image" content={`https://venomid.link/api/sidog?name=${name}`} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
 
-        <meta property="twitter:image" content={`https://venomid.link/api/sidog?name=${name}&title=${_titleName}&subtitle=${_subtitle}&avatar=${_avatar}`} />
+        <meta property="twitter:image" content={`https://venomid.link/api/sidog?name=${name}`} />
         {/* <link rel="icon" type="image/png" href="/logos/vidicon.png" /> */}
         <link rel="icon" href={avatar ? avatar : '/logos/vidicon.png'} />
       </Head>
