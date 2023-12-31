@@ -89,7 +89,7 @@ interface SIDLinkPageProps {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { query } = context;
-  const name = query.name ? String(query.name) : '';
+  const name = query.name ? String(query.name).toLowerCase() : '';
   let _title = capFirstLetter(name);
   let _description = SITE_DESCRIPTION;
 
