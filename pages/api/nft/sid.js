@@ -11,7 +11,7 @@ let _name
 
 const main = async(name)=> {
   const symbol = name.slice(-3);
-  console.log(RPCs[symbol]);
+  //console.log(RPCs[symbol]);
   const provider = new ethers.providers.JsonRpcProvider(RPCs[symbol].rpc)
   sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress(RPCs[symbol].id) })
 
