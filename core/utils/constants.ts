@@ -170,3 +170,10 @@ export const SOCIAL_URLS: any = {
   phone: 'tel:',
   email: 'mailto:',
 };
+
+export const RPCs: any = {
+  eth: { rpc: 'https://ethereum.rpc.thirdweb.com', id: '1' },
+  bnb: { rpc: 'https://binance.rpc.thirdweb.com', id: '56' },
+  arb: { rpc: 'https://arbitrum.rpc.thirdweb.com', id: '42161' },
+  manta: { rpc: 'https://manta-pacific.rpc.thirdweb.com', id: '169' },
+};

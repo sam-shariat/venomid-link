@@ -2,14 +2,18 @@ const SID = require('@siddomains/sidjs').default
 const Name = require('@siddomains/sidjs').getResolverContract    
 const SIDfunctions = require('@siddomains/sidjs')
 const rpc = require('@siddomains/sidjs/dist/constants/rpc')                                                                                                                                                                                
-const ethers = require('ethers')                                                                                                                
+const ethers = require('ethers')         
+import { RPCs } from 'core/utils/constants';
+                                                                                                   
 
 let sid 
 let _name 
 
 const main = async(name)=> {
-  const provider = new ethers.providers.JsonRpcProvider(rpc.apis.bsc_mainnet)
-  sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress('56') })
+  const symbol = name.slice(-3);
+  console.log(RPCs[symbol]);
+  const provider = new ethers.providers.JsonRpcProvider(RPCs[symbol].rpc)
+  sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress(RPCs[symbol].id) })
 
   //const resolverAddress = await sid.name(name).getResolver() // 0x123   
   //const bnb = await sid.name(name).getAddress()

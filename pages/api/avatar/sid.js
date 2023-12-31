@@ -5,6 +5,7 @@ const ethers = require('ethers');
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import { RPCs } from 'core/utils/constants';
 
 let sid;
 
@@ -17,12 +18,13 @@ export default async function handler(req, res) {
 
     const name = req.query.name;
 
-    const provider = new ethers.providers.JsonRpcProvider(rpc.apis.bsc_mainnet);
-    sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress('56') });
-
+    const symbol = name.slice(-3);
+    console.log(RPCs[symbol]);
+    const provider = new ethers.providers.JsonRpcProvider(RPCs[symbol].rpc);
+    sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress(RPCs[symbol].id) });
 
     const avatar = await sid.name(name).getText('avatar');
-    console.log(avatar)
+    console.log(avatar);
 
     if (avatar) {
       const imageBuffer = await axios.get(String(avatar), {
@@ -45,7 +47,7 @@ export default async function handler(req, res) {
         .send(imageBuffer);
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     const defaultImage = path.resolve('.', 'public/logos/vidavatar.jpg');
     const imageBuffer = fs.readFileSync(defaultImage);
     res
