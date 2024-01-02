@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       process.exit(1);
     }
 
-    const name = req.query.name;
+    const name = String(req.query.name).toLowerCase();
 
     const symbol = name.slice(-3);
     //console.log(RPCs[symbol]);
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     sid = new SID({ provider, sidAddress: SIDfunctions.getSidAddress(RPCs[symbol].id) });
 
     const avatar = await sid.name(name).getText('avatar');
-    console.log(avatar);
+    //console.log(avatar);
 
     if (avatar) {
       const imageBuffer = await axios.get(String(avatar), {

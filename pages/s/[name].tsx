@@ -63,6 +63,8 @@ import {
   FONTS,
   SITE_URL,
   SITE_CLAIM_URL,
+  SITE_SPACE_ID_URL,
+  SPACE_ID_TITLE,
 } from 'core/utils/constants';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import Links from 'components/Profile/Links';
@@ -70,13 +72,15 @@ import { NextSeo } from 'next-seo';
 import Wallets from 'components/Profile/Wallets';
 import Footer from 'components/Layout/Footer';
 import { capFirstLetter } from 'core/utils';
+import { createWeb3Name } from '@web3-name-sdk/core';
+import { CustomLink } from 'types';
 
 interface Attribute {
   trait_type: string;
   value: string;
 }
 
-interface LinkPageProps {
+interface SIDLinkPageProps {
   name: string;
   nftJson: any;
   title: string;
@@ -85,51 +89,88 @@ interface LinkPageProps {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { query } = context;
-  let _name = query.name ? String(query.name) : '';
-  const name = _name.toLowerCase().includes('.vid') ? _name.slice(0,-4) : _name;
-  let _title = capFirstLetter(name + '.vid');
+  const name = query.name ? String(query.name).toLowerCase() : '';
+  let _title = capFirstLetter(name);
   let _description = SITE_DESCRIPTION;
 
-  const res = await fetch(SITE_URL + 'api/name/?withDetails=1&name=' + name);
-  const nftJson = await res.json();
-  let _nftJson = nftJson.nftDetails;
-  if (_nftJson) {
-    if (_nftJson.title && _nftJson.title.length > 2) {
-      _title = _nftJson.title;
-    }
-
-    if (_nftJson.subtitle && _nftJson.subtitle.length > 1) {
-      _title += ' | ' + _nftJson.subtitle;
-    }
-
-    if (_title.indexOf('|') < 0 && _nftJson.bio && _nftJson.bio.length > 1) {
-      //console.log('adding bio')
-      _title += ' | ' + _nftJson.bio;
-    }
-
-    if (_nftJson.bio && _nftJson.bio.length > 1) {
-      _description = _nftJson.bio;
-    }
+  const web3Name = createWeb3Name();
+  let owner = await web3Name.getAddress(name);
+  if(!owner){
+    let error = {status: 'error'};
+    return {
+      props: {
+        name,
+        error,
+        _title,
+        _description
+      },
+    };
+  }
+  let bio = await web3Name.getDomainRecord({ name: name, key: 'description' });
+  let __avatar: string | null | undefined = await web3Name.getDomainRecord({ name: name, key: 'avatar' });
+  let avatarShape = 'circle'
+  if(!__avatar){
+    __avatar = await web3Name.getDomainAvatar({name: name, key: 'avatar'});
+    avatarShape = 'round'
+  }
+  const avatar = __avatar;
+  const titleName = await web3Name.getDomainRecord({ name: name, key: 'name' });
+  const subtitle = await web3Name.getDomainRecord({ name: name, key: 'location' });
+  let url = await web3Name.getDomainRecord({ name: name, key: 'url' });
+  let twitter = await web3Name.getDomainRecord({ name: name, key: 'com.twitter' });
+  let telegram = await web3Name.getDomainRecord({ name: name, key: 'org.telegram' });
+  let github = await web3Name.getDomainRecord({ name: name, key: 'com.github' });
+  let discord = await web3Name.getDomainRecord({ name: name, key: 'com.discord' });
+  let email = await web3Name.getDomainRecord({ name: name, key: 'email' });
+  let symbol = name.slice(-3).toLowerCase();
+  let walletName = symbol === 'arb' ? 'arbitrum' : symbol === 'bnb' ? 'binance' : symbol === 'inj' ? 'injective' : symbol === 'eth' ? 'ethereum' : symbol;
+  let wallets = [{key : walletName, value: owner}];
+  let walletsObj: any = {};
+    wallets.map((wallet) => {
+      walletsObj[wallet['key']] = wallet['value'];
+    });
+  const socials = {twitter,telegram,github,discord,email};
+  let links: CustomLink[] = [];
+  if (url && url.length > 5) {
+    links.push({ title: 'Website', url: url, type: 'simple link', image: '', content: '', styles: {size : 'md', icon: 'RiLinksLine'} });
   }
 
-  _title += ' | ' + SITE_TITLE;
+  let _nftDetails = { name, title: titleName, subtitle: subtitle, avatar : avatar, avatarShape, bio : bio, links: links, socials: socials, wallets : walletsObj };
+  let _nftJson = { name };
+  const nftJson = { owner, nftJson: _nftJson, nftDetails: _nftDetails };
+  if (_nftDetails.title && _nftDetails.title.length > 2) {
+    _title = _nftDetails.title;
+  }
+
+  if (_nftDetails.subtitle && _nftDetails.subtitle.length > 1) {
+    _title += ' | ' + _nftDetails.subtitle;
+  }
+
+  if (_title.indexOf('|') < 0 && _nftDetails.bio && _nftDetails.bio.length > 1) {
+    //console.log('adding bio')
+    _title += ' | ' + _nftDetails.bio;
+  }
+
+  if (_nftDetails.bio && _nftDetails.bio.length > 1) {
+    _description = _nftDetails.bio;
+  }
+
+  _title += ' | ' + SPACE_ID_TITLE;
 
   const title = _title;
   const description = _description;
-
-
 
   return {
     props: {
       name,
       nftJson,
       title,
-      description,
+      description
     },
   };
 }
 
-const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }) => {
+const SIDLinkPage: NextPage<SIDLinkPageProps> = ({ name, nftJson, title, description}) => {
   const { t } = useTranslate();
   const [bio, setBio] = useAtom(bioAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
@@ -211,7 +252,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
       if (jsonUrl) {
         try {
           //console.log(jsonUrl);
-          const res = { data : jsonUrl}
+          const res = { data: jsonUrl };
           setJson(res.data);
           //setName(String(nftJson.name));
           setVenom(owner);
@@ -227,7 +268,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
           setWalletButtons(res.data.waletButtons ?? true);
           setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
-          setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[8].lightMode);
+          setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[0].lightMode);
           setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[2]);
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
@@ -289,7 +330,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
       } else {
         setJson({
           name: nftJson.nftJson.name,
-          venomAddress: owner,
+          bnbAddress: owner,
           btcAddress: '',
           ethAddress: '',
           title: '',
@@ -372,20 +413,15 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
 
         <meta name="og:title" content={title} />
         <meta name="og:description" content={description} />
-        <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
+        <meta property="og:image" content={`https://venomid.link/api/sidog?name=${name}`} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
 
-        <meta property="twitter:image" content={`https://venomid.link/api/og?name=${name}`} />
+        <meta property="twitter:image" content={`https://venomid.link/api/sidog?name=${name}`} />
         {/* <link rel="icon" type="image/png" href="/logos/vidicon.png" /> */}
-        <link
-          rel="icon"
-          href={
-            avatar ? avatar : '/logos/vidicon.png'
-          }
-        />
+        <link rel="icon" href={avatar ? avatar : '/logos/vidicon.png'} />
       </Head>
 
       <Flex
@@ -481,9 +517,9 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
 
         {nameDontExist && (
           <Center width={'100%'} height={'70vh'} flexDir={'column'} gap={4}>
-            Venom ID {name} Does Not Exist
-            <Button as={Link} href={SITE_CLAIM_URL}>
-              Claim {name}.VID Now
+            Space ID {name} Does Not Exist
+            <Button as={Link} href={SITE_SPACE_ID_URL}>
+              Claim {name} Now
             </Button>
           </Center>
         )}
@@ -494,4 +530,4 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
   );
 };
 
-export default LinkPage;
+export default SIDLinkPage;
