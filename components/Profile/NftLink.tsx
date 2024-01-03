@@ -66,7 +66,7 @@ const NftLink = ({ url, title, link, address, styles, alt, loading, color }: Pro
           align={'center'}
           justify={'center'}     
           width={'100%'}
-          bgColor={'blackAlpha.200'}>
+          bgColor={lightMode ? 'blackAlpha.200' : 'whiteAlpha.200'}>
           <>
             {type === 'normal' ? (
               <Image
