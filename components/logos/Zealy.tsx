@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, useColorMode } from '@chakra-ui/react';
 interface Props {
   color?: string;
+  size?: any;
 }
 
 function ZealyLogo({ color }: Props) {

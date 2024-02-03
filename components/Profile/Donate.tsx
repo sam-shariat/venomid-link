@@ -16,24 +16,16 @@ import {
   TabList,
   Tab,
   TabPanels,
-  TabPanel,
-  Select,
-  Link,
-  RadioGroup,
-  Radio,
-  ButtonGroup,
+  TabPanel
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { RiCheckLine, RiShuffleLine } from 'react-icons/ri';
+import { RiCheckLine } from 'react-icons/ri';
 import { useAtom, useAtomValue } from 'jotai';
 import {
-  addressAtom,
-  btcAtom,
   buttonBgColorAtom,
-  ethAtom,
+  fontAtom,
   isConnectedAtom,
   lightModeAtom,
-  networkAtom,
   openModalAtom,
   roundAtom,
   variantAtom,
@@ -71,6 +63,7 @@ export default function Donate({ title, content, style }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const lightMode = useAtomValue(lightModeAtom);
   const round = useAtomValue(roundAtom);
+  const font = useAtomValue(fontAtom);
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
   const connected = useAtomValue(isConnectedAtom);
@@ -146,6 +139,7 @@ export default function Donate({ title, content, style }: Props) {
         rounded={round}
         variant={variant}
         colorScheme={buttonBg}
+        key={`donate-button-action`}
         color={getColor(variant, buttonBg, lightMode)}
         width={'100%'}
         gap={2}
@@ -155,15 +149,15 @@ export default function Donate({ title, content, style }: Props) {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.500" backdropFilter="auto" backdropBlur={'6px'} />
-        <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'}>
+        <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'} fontFamily={font} color={lightMode ? 'var(--dark1)' : 'white'}>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Tabs variant={'soft-rounded'} colorScheme={'gray'}>
+            <Tabs variant={'soft-rounded'} colorScheme={colorMode === 'light' ? "blackAlpha" : 'whiteAlpha'}>
               <TabList justifyContent={'center'} >
-                {venom && <Tab onClick={() => setValue('1 VENOM')}><Text color={'gray.400'} key={'venom-tab'}>Venom</Text></Tab>}
-                {eth && <Tab onClick={() => setValue('0.001 ETH')}><Text color={'gray.400'} key={'eth-tab'}>Ethereum</Text></Tab>}
-                {btc && <Tab onClick={() => setValue('0.0001 BTC')}><Text color={'gray.400'} key={'btc-tab'}>Bitcoin</Text></Tab>}
+                {venom && <Tab gap={2} onClick={() => setValue('1 VENOM')} justifyContent={'center'}><LinkIcon type='venom' size='24'/>Venom</Tab>}
+                {eth && <Tab gap={2} onClick={() => setValue('0.001 ETH')} ><LinkIcon type='ethereum' size='24'/>Ethereum</Tab>}
+                {btc && <Tab gap={2} onClick={() => setValue('0.0001 BTC')} ><LinkIcon type='bitcoin' size='24'/>Bitcoin</Tab>}
               </TabList>
 
               <TabPanels>

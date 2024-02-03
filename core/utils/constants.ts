@@ -25,6 +25,13 @@ export const DONATE_VALUES: any = {
   bitcoin: ['0.0001 BTC', '0.001 BTC', '0.005 BTC'],
   paypal: ['1 USD', '10 USD', '50 USD'],
 };
+export const IPFS_IMAGE_URI = 'https://ipfs';
+
+export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
+export const MAX_NAME_LENGTH = 63;
+export const MIN_NAME_LENGTH = 0;
+export const EARLY_ADOPTERS_CONTRACT_ADDRESS = '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';
+export const IPFS_IO_URL = 'https://ipfs.io/ipfs/';
 export const SOCIAL_TWITTER = 'venomid_network';
 export const TWITTER_URL = 'https://twitter.com/';
 export const GITHUB_URL = 'https://github.com/samshariat/venomidapp-manage';

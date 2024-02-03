@@ -1,6 +1,7 @@
 import { useColorMode, Box } from '@chakra-ui/react';
 interface Props {
   color?: string;
+  size?: any;
 }
 function Ylide({ color }: Props) {
   const { colorMode } = useColorMode();

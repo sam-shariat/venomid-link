@@ -43,7 +43,7 @@ export default function ConnectButton() {
     setVenomContract(_venomContract);
     // @ts-ignore: Unreachable code error
     const { value0 } = await _venomContract?.methods.getPrimaryName({ _owner: new Address(address) }).call();
-    console.log(value0);
+    //console.log(value0);
     if (value0) {
       setPrimaryName(value0);
     }
@@ -53,7 +53,7 @@ export default function ConnectButton() {
     async function checkPrimary() {
       if (account && isConnected && provider) {
         if (!provider?.isInitialized) {
-          console.log('provider not ready');
+          //console.log('provider not ready');
           await sleep(1000);
           checkPrimary();
           return;

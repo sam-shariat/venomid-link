@@ -75,7 +75,7 @@ export default async function handler(req, res) {
       }
     }
 
-    console.log('address : ', nftAddress);
+    //console.log('address : ', nftAddress);
 
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),

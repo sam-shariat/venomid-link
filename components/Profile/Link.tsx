@@ -50,6 +50,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
   const [isLoading, setIsLoading] = useState(true);
+  //console.log(type, title);
 
   return (
     <>
@@ -67,12 +68,14 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           id={`venom-id-${title}-link`}>
           <Button
             size={styles?.size === 'sm' ? 'md' : 'lg'}
-            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'md'}
-            height={styles?.size === 'lg' ? '68px' : styles?.size === 'md' ? '48px' : '40px'}
+            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'mg'}
+            height={styles?.size === 'lg' ? '80px' : styles?.size === 'md' ? '64px' : '44px'}
             rounded={round}
             variant={variant}
             colorScheme={buttonBg}
             color={getColor(variant, buttonBg, lightMode)}
+            placeContent={'center'}
+            placeItems={'center'}
             width={'100%'}>
             {icon}
             <Text px={2}>{title}</Text>
@@ -175,12 +178,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           <Tweet
             tweetId={String(url.match(reg)?.at(2))}
             onLoad={() => setIsLoading(false)}
-            options={{
-              theme: lightMode ? 'light' : 'dark',
-              height: '200px',
-              maxWidth: '100%',
-              width: '100%',
-            }}
+            options={{ theme: lightMode ? 'light' : 'dark', width: '100%', height: '200px' }}
           />
           {isLoading && <Skeleton width={'100%'} rounded={'lg'} height={'200px'} />}
         </Box>
@@ -198,7 +196,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
               }}
               width={'100%'}
               height={styles?.size === 'lg' ? '320px' : styles?.size === 'md' ? '160px' : '80px'}
-              style={{ borderRadius: round === 'none' ? 0 : round === 'md' ? 8 : 16 }}
+              style={{ borderRadius: round === 'none' ? '0px' : round === 'md' ? '8px' : '16px' }}
             />
           }
         </Box>

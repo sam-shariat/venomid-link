@@ -6,6 +6,7 @@ import { LinkIcon } from 'components/logos';
 import { linksArrayAtom } from 'core/atoms';
 import { capFirstLetter } from 'core/utils';
 import { CustomLink } from 'types';
+import { IPFS_IMAGE_URI } from 'core/utils/constants';
 
 interface Props {
   json: any;
@@ -42,7 +43,7 @@ export default function Links({ json, color }: Props) {
             url={String(item.url)}
             type={item.type}
             color={color ? color : 'default'}
-            icon={<LinkIcon key={item.type === 'simple link' ? item.title + '-' +String(item?.styles?.icon) : item.title + '-' +item.type} type={item.type === 'simple link' ? String(item?.styles?.icon) : item.type} line color={color ? color : 'default'} size={item.styles?.size === 'sm' ? '24' : item.styles?.size === 'md' ? '28' : '36'} />}
+            icon={<LinkIcon key={item.type === 'simple link' ? item.title + '-' +String(item?.styles?.icon) : item.title + '-' +item.type} type={item.type === 'simple link' ? String(item?.styles?.icon) : item.type} line color={color ? color : 'default'} size={String(item?.styles?.icon).includes(IPFS_IMAGE_URI) ? item.styles?.size : item.styles?.size === 'sm' ? '24' : item.styles?.size === 'md' ? '28' : '36'} />}
             image={item.image}
             content={item.content}
             styles={item.styles}

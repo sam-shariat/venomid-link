@@ -29,6 +29,7 @@ import { RiCheckLine, RiShuffleLine } from 'react-icons/ri';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   buttonBgColorAtom,
+  fontAtom,
   isConnectedAtom,
   lightModeAtom,
   openModalAtom,
@@ -66,6 +67,7 @@ export default function Pay({ title, content, style }: Props) {
   const eth = style?.eth;
   const btc = style?.btc;
   const success = content;
+  const font = useAtomValue(fontAtom);
   const round = useAtomValue(roundAtom);
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
@@ -134,25 +136,26 @@ export default function Pay({ title, content, style }: Props) {
         size="lg"
         rounded={round}
         variant={variant}
+        key={`pay-button-action`}
         colorScheme={buttonBg}
         color={getColor(variant, buttonBg, lightMode)}
-        minWidth={'100%'}
+        width={'100%'}
         gap={2}
         onClick={onOpen}>
-        <LinkIcon type="pay" line color={lightMode ? 'var(--dark1)' : 'var(--white)'} />
+        <LinkIcon type="pay" line color={lightMode ? 'var(--dark1)' : 'var(--white)'} key={`pay-icon-${lightMode}`}/>
         {title}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.500" backdropFilter="auto" backdropBlur={'6px'} />
-        <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'}>
+        <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'} fontFamily={font} color={lightMode ? 'var(--dark1)' : 'white'}>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Tabs variant={'soft-rounded'} colorScheme="gray">
-              <TabList justifyContent={'center'}>
-                <Tab onClick={() => setValue(1)}><Text color={'gray.400'} >Venom</Text></Tab>
-                {eth && <Tab onClick={() => setValue(0.001)}><Text color={'gray.400'} >Ethereum</Text></Tab>}
-                {btc && <Tab onClick={() => setValue(0.0001)}><Text color={'gray.400'} >Bitcoin</Text></Tab>}
+            <Tabs variant={'soft-rounded'} colorScheme={colorMode === 'light' ? "blackAlpha" : 'whiteAlpha'}>
+              <TabList justifyContent={'center'} >
+                {venom && <Tab gap={2} onClick={() => setValue(1)} justifyContent={'center'}><LinkIcon type='venom' size='24'/>Venom</Tab>}
+                {eth && <Tab gap={2} onClick={() => setValue(0.001)} ><LinkIcon type='ethereum' size='24'/>Ethereum</Tab>}
+                {btc && <Tab gap={2} onClick={() => setValue(0.0001)} ><LinkIcon type='bitcoin' size='24'/>Bitcoin</Tab>}
               </TabList>
 
               <TabPanels>
@@ -212,7 +215,7 @@ export default function Pay({ title, content, style }: Props) {
                         colorScheme="green"
                         size={'lg'}
                         isLoading={isPaying}>
-                        {sdk?.wallet.isConnected() ? title : `Connect Wallet`}
+                        {sdk?.wallet.isConnected() ? 'Pay' : `Connect Wallet`}
                       </Button>
                       {paySuccessful && !isPaying && <Text color="green">{success}</Text>}
                       <Text>or Scan the QR Code below</Text>

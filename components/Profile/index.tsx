@@ -5,5 +5,6 @@ import Links from './Links';
 import SocialLink from './SocialLink';
 import Socials from './Socials';
 import ProfileSkeleton from './ProfileSkeleton';
+import Wallets from './Wallets';
 
-export { ImageLink, Avatar, Link, Socials , ProfileSkeleton, Links, SocialLink}
+export { ImageLink, Avatar, Link, Socials , ProfileSkeleton, Links, SocialLink, Wallets}
