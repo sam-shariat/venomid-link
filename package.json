@@ -72,6 +72,8 @@
     "viem": "^1.21.1"
   },
   "devDependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@types/node": "^17.0.23",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "18.0.0",

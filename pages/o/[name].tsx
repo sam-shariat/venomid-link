@@ -90,7 +90,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let _title = capFirstLetter(name + '.vid');
   let _description = SITE_DESCRIPTION;
 
-  const res = await fetch(SITE_URL + 'api/name/?withDetails=1&name=' + name);
+  const res = await fetch(SITE_URL + 'api/o/name/?withDetails=1&name=' + name);
   const nftJson = await res.json();
   let _nftJson = nftJson.nftDetails;
   if (_nftJson) {
@@ -131,7 +131,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }) => {
   const { t } = useTranslate();
-  //console.log(nftJson)
   const [bio, setBio] = useAtom(bioAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
   const [ipfsGateway, setIpfsGateway] = useAtom(ipfsGatewayAtom);
@@ -373,13 +372,13 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
 
         <meta name="og:title" content={title} />
         <meta name="og:description" content={description} />
-        <meta property="og:image" content={`https://venomid.link/api/og?name=${name}`} />
+        <meta property="og:image" content={`https://venomid.link/o/api/og?name=${name}`} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
 
-        <meta property="twitter:image" content={`https://venomid.link/api/og?name=${name}`} />
+        <meta property="twitter:image" content={`https://venomid.link/o/api/og?name=${name}`} />
         {/* <link rel="icon" type="image/png" href="/logos/vidicon.png" /> */}
         <link
           rel="icon"
