@@ -142,19 +142,19 @@ export default async function handler(req, res) {
         const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
         res.status(200).json({
           owner: owner,
-          nftJson: JSON.parse(responseJson.decoded.output.json),
+          nftJson: json,
           nftDetails: result.data,
         });
       } else {
         res.status(200).json({
           owner: owner,
-          nftJson: JSON.parse(responseJson.decoded.output.json),
+          nftJson: json,
         });
       }
     } else {
       res.status(200).json({
         owner: owner,
-        nftJson: JSON.parse(responseJson.decoded.output.json),
+        nftJson: json,
       });
     }
   } catch (err) {

@@ -57,6 +57,7 @@ export default async function handler(req, res) {
     //console.log(certificateAddr.decoded.output.certificate)
 
     let nftAddress = '';
+    let type = '';
 
     try {
       // @ts-ignore: Unreachable code error
@@ -81,6 +82,25 @@ export default async function handler(req, res) {
 
     //console.log('address : ', nftAddress);
 
+    if(nftAddress === ''){
+      if (rows.length > 0) {
+        nftAddress = String(rows[0].address);
+
+      } else {
+        let response = await collection.runLocal('getInfoByName', {
+          name: String(_name),
+        });
+        if (response.decoded.output.value0.name !== 'notfound') {
+          nftAddress = response.decoded.output.value0.nftAddress;
+        } else {
+          let responsev1 = await collectionv1.runLocal('getInfoByName', {
+            name: String(_name),
+          });
+          nftAddress = responsev1.decoded.output.value0.nftAddress;
+        }
+      }
+    };
+
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
       client,
@@ -90,7 +110,12 @@ export default async function handler(req, res) {
     let responseJson = await nft.runLocal('getJson', { answerId: 0 });
     let json = JSON.parse(responseJson.decoded.output.json);
 
-    let jsonUrl = json.hash;
+    let jsonUrl ;
+    if(type === 'domain'){
+      jsonUrl =  json.hash;
+    } else {
+      jsonUrl =  json.attributes?.find((att) => att.trait_type === 'DATA')?.value;
+    }
     //console.log('https://ipfs.io/ipfs/' + jsonUrl);
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
 
