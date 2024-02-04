@@ -3,7 +3,11 @@ import VenomScanIcon from './VenomScan';
 import Zealy from './Zealy';
 import Galxe from './Galxe';
 import Metamask from './Metamask';
-import '@emoji-mart/data/sets/14/native.json';
+import data from '@emoji-mart/data'
+import { init } from 'emoji-mart'
+
+init({ data })
+
 import {
   RiTwitterFill,
   RiTelegramFill,
