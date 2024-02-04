@@ -33,6 +33,7 @@ export default async function handler(req, res) {
 
     const _name = String(req.query.name).toLowerCase();
     const name = _name.toLowerCase().includes('.vid') ? _name.slice(0, -4) : _name;
+    const name_ = String(req.query.name).toLowerCase() + '.VID';
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
@@ -83,7 +84,8 @@ export default async function handler(req, res) {
     //console.log('address : ', nftAddress);
 
     if(nftAddress === ''){
-      const { rows } = await sql`SELECT * FROM vids WHERE name = ${name};`;
+      const { rows } = await sql`SELECT * FROM vids WHERE name = ${name_};`;
+
       if (rows.length > 0) {
         nftAddress = String(rows[0].address);
 
