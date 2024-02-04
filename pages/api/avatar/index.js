@@ -83,6 +83,7 @@ export default async function handler(req, res) {
     //console.log('address : ', nftAddress);
 
     if(nftAddress === ''){
+      const { rows } = await sql`SELECT * FROM vids WHERE name = ${name};`;
       if (rows.length > 0) {
         nftAddress = String(rows[0].address);
 
