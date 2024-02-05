@@ -71,14 +71,7 @@ export default async function handler(req, res) {
         type = 'domain';
       }
     } catch (e) {
-      const defaultImage = path.resolve('.', 'public/logos/vidavatar.jpg');
-      const imageBuffer = fs.readFileSync(defaultImage);
-      res
-        .setHeader('Content-Type', 'image/jpg')
-        .setHeader('Cache-Control', 'public, immutable, no-transform, max-age=31536000')
-        .status(200)
-
-        .send(imageBuffer);
+      
     }
 
     //console.log('address : ', nftAddress);
