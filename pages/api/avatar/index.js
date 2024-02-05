@@ -1,7 +1,13 @@
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
-import { ROOT_CONTRACT_ADDRESS } from 'core/utils/constants';
+import {
+  ROOT_CONTRACT_ADDRESS,
+  CONTRACT_ADDRESS,
+  CONTRACT_ADDRESS_V1,
+  CONTRACT_ADDRESS_V2,
+} from 'core/utils/constants';
+const { CollectionContract } = require('abi/CollectionContract');
 const { RootContract } = require('abi/RootContract');
 const { DomainContract } = require('abi/DomainContract');
 const { NftContract } = require('abi/NftContract');
@@ -70,32 +76,63 @@ export default async function handler(req, res) {
         nftAddress = String(certificateAddr.decoded.output.certificate);
         type = 'domain';
       }
-    } catch (e) {
-      
-    }
+    } catch (e) {}
 
-    //console.log('address : ', nftAddress);
+    const collection = new Account(CollectionContract, {
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS,
+    });
 
-    if(nftAddress === ''){
-      const { rows } = await sql`SELECT * FROM vids WHERE name = ${name_};`;
+    const collectionv1 = new Account(CollectionContract, {
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS_V1,
+    });
 
-      if (rows.length > 0) {
-        nftAddress = String(rows[0].address);
+    const collectionv2 = new Account(CollectionContract, {
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS_V2,
+    });
 
+    if (nftAddress === '') {
+      //const { rows } = await sql`SELECT * FROM vids WHERE name = ${name_};`;
+
+      //if (rows.length > 0) {
+      //  nftAddress = String(rows[0].address);
+      //} else {
+      let response = await collection.runLocal('getInfoByName', {
+        name: String(_name),
+      });
+      if (response.decoded.output.value0.name !== 'notfound') {
+        nftAddress = response.decoded.output.value0.nftAddress;
       } else {
-        let response = await collection.runLocal('getInfoByName', {
+        let responsev1 = await collectionv1.runLocal('getInfoByName', {
           name: String(_name),
         });
-        if (response.decoded.output.value0.name !== 'notfound') {
-          nftAddress = response.decoded.output.value0.nftAddress;
+        if (responsev1.decoded.output.value0.name !== 'notfound') {
+          nftAddress = responsev1.decoded.output.value0.nftAddress;
         } else {
-          let responsev1 = await collectionv1.runLocal('getInfoByName', {
+          let responsev2 = await collectionv2.runLocal('getInfoByName', {
             name: String(_name),
           });
-          nftAddress = responsev1.decoded.output.value0.nftAddress;
+          if (responsev2.decoded.output.value0.name !== 'notfound') {
+            nftAddress = responsev2.decoded.output.value0.nftAddress;
+          } else {
+            const defaultImage = path.resolve('.', 'public/logos/vidavatar.jpg');
+            const imageBuffer = fs.readFileSync(defaultImage);
+            res
+              .setHeader('Content-Type', 'image/jpg')
+              .setHeader('Cache-Control', 'public, immutable, no-transform, max-age=31536000')
+              .status(200)
+
+              .send(imageBuffer);
+          }
         }
       }
-    };
+      //}
+    }
 
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
@@ -106,28 +143,28 @@ export default async function handler(req, res) {
     let responseJson = await nft.runLocal('getJson', { answerId: 0 });
     let json = JSON.parse(responseJson.decoded.output.json);
 
-    let jsonUrl ;
-    if(type === 'domain'){
-      jsonUrl =  json.hash;
+    let jsonUrl;
+    console.log(json);
+    if (type === 'domain') {
+      jsonUrl = json.hash;
     } else {
-      jsonUrl =  json.attributes?.find((att) => att.trait_type === 'DATA')?.value;
+      jsonUrl = json.attributes?.find((att) => att.trait_type === 'DATA')?.value;
     }
-    //console.log('https://ipfs.io/ipfs/' + jsonUrl);
+
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
 
     if (jsonUrl && jsonUrl.indexOf('not set') < 0) {
       const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
-      //console.log(result.data.avatar);
+      console.log(result.data.avatar);
       const imageBuffer = await axios.get(String(result.data.avatar), {
         responseType: 'arraybuffer',
       });
       //console.log(result);
       //res.status(200).json({json:json,jsonUrl:jsonUrl, avatar:result.data.avatar});
       res
+        .status(200)
         .setHeader('Content-Type', 'image/jpg')
         .setHeader('Cache-Control', 'public, immutable, no-transform, max-age=31536000')
-        .status(200)
-
         .send(imageBuffer.data);
     } else {
       const defaultImage = path.resolve('.', 'public/logos/vidavatar.jpg');
