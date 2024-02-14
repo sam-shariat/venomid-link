@@ -66,7 +66,6 @@ export default function Donate({ title, content, style }: Props) {
   const font = useAtomValue(fontAtom);
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
-  const connected = useAtomValue(isConnectedAtom);
   const [autoEth, setAutoEth] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
   const [donateSuccessful, setDonateSuccessful] = useState(false);
@@ -91,7 +90,7 @@ export default function Donate({ title, content, style }: Props) {
   }&gas=42000`;
 
   const btcuri = `bitcoin:${btc}?amount=${value.slice(0, value.indexOf(' '))}&label=donation`;
-  const { login, account } = useConnect();
+  const { login, account, isConnected } = useConnect();
 
   const { run, status } = useSendMessage({
     from: new Address(String(account?.address)),
@@ -103,7 +102,7 @@ export default function Donate({ title, content, style }: Props) {
 
   const donate = async () => {
     if (value.includes('VENOM')) {
-      if (!connected) {
+      if (!isConnected) {
         login();
       } else {
         run();
@@ -149,7 +148,7 @@ export default function Donate({ title, content, style }: Props) {
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.500" backdropFilter="auto" backdropBlur={'6px'} />
-        <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'} fontFamily={font} color={lightMode ? 'var(--dark1)' : 'white'}>
+        <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'} fontFamily={font} color={colorMode === 'light' ? 'var(--dark1)' : 'white'}>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

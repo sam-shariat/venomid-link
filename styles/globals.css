@@ -70,6 +70,12 @@
   --bg2: #e6e6e6;
   --bg3Gradient: url("/bgs/bg3.jpg") center;
   --bg3: #272727;
+  --bg4Gradient: url("/bgs/bg4.svg") center;
+  --bg4: #272727;
+  --bg5Gradient: url("/bgs/bg5.svg") center;
+  --bg5: #272727;
+  --bg6Gradient: url("/bgs/bg6.svg") center;
+  --bg6: #272727;
 
 }
 

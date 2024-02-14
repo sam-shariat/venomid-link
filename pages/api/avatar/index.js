@@ -36,7 +36,7 @@ export default async function handler(req, res) {
       res.status(202).json({ status: 'error', message: 'name param is required' });
       process.exit(1);
     }
-
+  
     const _name = String(req.query.name).toLowerCase();
     const name = _name.toLowerCase().includes('.vid') ? _name.slice(0, -4) : _name;
     const name_ = String(req.query.name).toLowerCase() + '.VID';
@@ -144,7 +144,7 @@ export default async function handler(req, res) {
     let json = JSON.parse(responseJson.decoded.output.json);
 
     let jsonUrl;
-    console.log(json);
+    //console.log(json);
     if (type === 'domain') {
       jsonUrl = json.hash;
     } else {
@@ -155,7 +155,7 @@ export default async function handler(req, res) {
 
     if (jsonUrl && jsonUrl.indexOf('not set') < 0) {
       const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
-      console.log(result.data.avatar);
+      //console.log(result.data.avatar);
       const imageBuffer = await axios.get(String(result.data.avatar), {
         responseType: 'arraybuffer',
       });

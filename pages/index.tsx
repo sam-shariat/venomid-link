@@ -300,8 +300,8 @@ const HomePage: NextPage = () => {
         minH="100vh">
         {!isLoading && json.name !== '' && !nameDontExist && (
           <>
-            <Container
-              as="main"
+            <Flex
+              minH="100vh"
               width={['100%', '100%', 'md', 'lg', 'xl']}
               display="flex"
               flexDir={'column'}
@@ -309,20 +309,9 @@ const HomePage: NextPage = () => {
               placeContent="center"
               placeItems="center"
               fontFamily={font}
-              color={!lightMode ? 'var(--white)' : 'var(--dark1)'}
-              minH="95vh">
-              <Flex direction="column" justify={'center'} align={'center'} gap={2} width="100%">
-                {!notMobile && (
-                  <Stack mt={6} textAlign="center" w={'100%'}>
-                    <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
-                      {json.title}
-                    </Heading>
-                    <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
-                      {json.subtitle}
-                    </Heading>
-                  </Stack>
-                )}
-                <Flex gap={8} mt={notMobile ? 4 : 0} align={'center'} justify={'center'} w={'100%'}>
+              color={!lightMode ? 'var(--white)' : 'var(--dark1)'}>
+              <Flex direction="column" justify={'center'} align={'center'} gap={6} width="100%">
+              <Flex gap={[0,0,8]} mt={notMobile ? 4 : 0} align={'center'} justify={'center'} w={'100%'} flexDir={['column','column','row']}>
                   <Box maxW={['200px', '200px', '200px', '220px']}>
                     <Avatar
                       my={6}
@@ -332,8 +321,8 @@ const HomePage: NextPage = () => {
                       shadow="none"
                     />
                   </Box>
-                  {notMobile && (
-                    <Stack>
+                  
+                    <Stack textAlign={['center','center','left']}>
                       <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
                         {json.title}
                       </Heading>
@@ -351,21 +340,7 @@ const HomePage: NextPage = () => {
                             Message
                           </Button> */}
                     </Stack>
-                  )}
                 </Flex>
-                {!notMobile && (
-                  <>
-                    <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
-                      {json.name}
-                    </Heading>
-                    {/* <Button
-                          borderRadius={'25'}
-                          variant={'outline'}
-                          leftIcon={<RiMessage3Line />}>
-                          Message
-                        </Button> */}
-                  </>
-                )}
 
                 {socialIcons && <Socials json={json} onlyIcons />}
 
@@ -398,7 +373,7 @@ const HomePage: NextPage = () => {
                   {socialButtons && <Socials json={json} />}
                 </Stack>
               </Flex>
-            </Container>
+            </Flex>
           </>
         )}
 

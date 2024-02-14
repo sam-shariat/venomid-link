@@ -24,7 +24,7 @@ import { Address } from 'everscale-inpage-provider';
 import VenomAbi from 'abi/Collection.abi.json';
 import { FaSignOutAlt, FaRegCopy } from 'react-icons/fa';
 import LogoIcon from '../Layout/LogoIcon';
-import { primaryNameAtom, venomContractAddressAtom, venomContractAtom } from 'core/atoms';
+import { isConnectedAtom, primaryNameAtom, venomContractAddressAtom, venomContractAtom } from 'core/atoms';
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
@@ -33,20 +33,14 @@ export default function ConnectButton() {
   const { colorMode } = useColorMode();
   const address = account?.address.toString();
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
+  const [connected, setIsConnected] = useAtom(isConnectedAtom);
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
   const [venomContract, setVenomContract] = useAtom(venomContractAtom);
   const { onCopy } = useClipboard(String(address));
 
   async function getPrimary() {
     if (!provider) return;
-    const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
-    setVenomContract(_venomContract);
-    // @ts-ignore: Unreachable code error
-    const { value0 } = await _venomContract?.methods.getPrimaryName({ _owner: new Address(address) }).call();
-    //console.log(value0);
-    if (value0) {
-      setPrimaryName(value0);
-    }
+    setIsConnected(true);
   }
 
   useEffect(() => {

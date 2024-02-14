@@ -71,7 +71,6 @@ export default function Pay({ title, content, style }: Props) {
   const round = useAtomValue(roundAtom);
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
-  const [connected, setIsConnected] = useAtom(isConnectedAtom);
   const [autoEth, setAutoEth] = useState(false);
   const [isPaying, setisPaying] = useState(false);
   const [paySuccessful, setpaySuccessful] = useState(false);
@@ -94,7 +93,7 @@ export default function Pay({ title, content, style }: Props) {
   const ethuri = `ethereum:${eth}?value=${value * 1e18}&gas=42000`;
 
   const btcuri = `bitcoin:${btc}?amount=${value}&label=payment`;
-  const { login, account } = useConnect();
+  const { login, account, isConnected } = useConnect();
 
   const { run, status } = useSendMessage({
     from: new Address(String(account?.address)),
@@ -104,7 +103,7 @@ export default function Pay({ title, content, style }: Props) {
 
   const sdk = useSDK();
   const payVenom = async () => {
-    if (!connected) {
+    if (!isConnected) {
       login();
     } else {
       run();

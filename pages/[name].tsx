@@ -81,6 +81,7 @@ interface LinkPageProps {
   nftJson: any;
   title: string;
   description: string;
+  avatar: string;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -89,6 +90,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const name = _name.toLowerCase().includes('.vid') ? _name.slice(0,-4) : _name;
   let _title = capFirstLetter(name + '.vid');
   let _description = SITE_DESCRIPTION;
+  let _avatar = 'https://venomid.link/logos/vidicon.png';
 
   const res = await fetch(SITE_URL + 'api/name/?withDetails=1&name=' + name);
   const nftJson = await res.json();
@@ -110,12 +112,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     if (_nftJson.bio && _nftJson.bio.length > 1) {
       _description = _nftJson.bio;
     }
+
+    if (_nftJson.avatar && _nftJson.title.avatar > 10) {
+      _avatar = _nftJson.avatar;
+    }
+
   }
 
   _title += ' | ' + SITE_TITLE;
 
   const title = _title;
   const description = _description;
+  const avatar = _avatar;
 
 
 
@@ -125,11 +133,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       nftJson,
       title,
       description,
+      avatar
     },
   };
 }
 
-const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }) => {
+const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, avatar }) => {
   const { t } = useTranslate();
   //console.log(nftJson)
   const [bio, setBio] = useAtom(bioAtom);
@@ -152,7 +161,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
   const [variant, setVariant] = useAtom(variantAtom);
   const [font, setFont] = useAtom(fontAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const [avatar, setAvatar] = useAtom(avatarAtom);
+  //const [avatar, setAvatar] = useAtom(avatarAtom);
   const [avatarShape, setAvatarShape] = useAtom(avatarShapeAtom);
   const [socialIcons, setSocialIcons] = useAtom(horizontalSocialAtom);
   const [socialButtons, setSocialButtons] = useAtom(socialButtonsAtom);
@@ -221,7 +230,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
           setBio(res.data.bio);
           setBtc(res.data.btcAddress);
           setEth(res.data.ethAddress);
-          setAvatar(res.data.avatar);
+          //setAvatar(res.data.avatar);
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? true);
           setSocialButtons(res.data.socialButtons ?? true);
@@ -271,7 +280,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
           setBio('');
           setBtc('');
           setEth('');
-          setAvatar('');
+          //setAvatar('');
           setTitle('');
           setSubtitle('');
           setAvatarShape('circle');
@@ -322,7 +331,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
         setBio('');
         setBtc('');
         setEth('');
-        setAvatar('');
+        //setAvatar('');
         setTitle('');
         setSubtitle('');
         setAvatarShape('circle');
@@ -383,9 +392,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description }
         {/* <link rel="icon" type="image/png" href="/logos/vidicon.png" /> */}
         <link
           rel="icon"
-          href={
-            avatar ? avatar : '/logos/vidicon.png'
-          }
+          href={json && !isLoading && json.avatar !== '' ? json.avatar : '/logos/vidicon.svg'}
         />
       </Head>
 

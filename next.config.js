@@ -7,15 +7,45 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'ipfs.io',
-        port: '80',
-        pathname: '/ipfs/**',
+        port: '',
+        pathname: '*',
       },
       {
-        hostname: 'nft-cdn.alchemy.com',
         protocol: 'https',
-        port: '80',
-        pathname:'*'
-      }
+        hostname: 'gateway.ipfs.io',
+        port: '',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cf-ipfs.com',
+        port: '',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.pinata.cloud',
+        port: '',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
+        hostname: '10.via0.com',
+        port: '',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ipfs.cf-ipfs.com',
+        port: '',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'nft-cdn.alchemy.com',
+        port: '',
+        pathname: '*',
+      },
     ],
   },
   transpilePackages: ['@eversdk/lib-web','@web3-name-sdk/core'],
