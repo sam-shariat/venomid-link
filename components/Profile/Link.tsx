@@ -174,7 +174,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
       {type === 'payment button' && <Pay title={title} content={String(content)} style={styles} />}
 
       {type === 'tweet' && (
-        <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16}>
+        <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16} maxW={'550px'}>
           <Tweet
             tweetId={String(url.match(reg)?.at(2))}
             onLoad={() => setIsLoading(false)}
