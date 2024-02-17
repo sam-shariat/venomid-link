@@ -306,6 +306,7 @@ const HomePage: NextPage = () => {
               display="flex"
               flexDir={'column'}
               gap={4}
+              fontSize={['lg','lg','xl']}
               placeContent="center"
               placeItems="center"
               fontFamily={font}
