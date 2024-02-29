@@ -28,6 +28,7 @@ import { AVAILABLE_LINKS, SITE_PROFILE_URL, SITE_URL } from 'core/utils/constant
 import Donate from './Donate';
 import Pay from './Pay';
 import EmbedModal from './EmbedModal';
+//import { motion, Variants } from 'framer-motion';
 
 interface Props {
   type: string;
@@ -51,6 +52,25 @@ export default function Link({ type, icon, title, url, image, content, styles, c
   const buttonBg = useAtomValue(buttonBgColorAtom);
   const [isLoading, setIsLoading] = useState(true);
   //console.log(type, title);
+
+  // const cardVariants = (i:number) => {
+  //   const _var: Variants = {
+  //     offscreen: {
+  //       opacity: 0,
+  //       y: 200,
+  //     },
+  //     onscreen: {
+  //       opacity: 1,
+  //       y: 0,
+  //       transition: {
+  //         type: 'spring',
+  //         bounce: 0.4,
+  //         duration: 0.8
+  //       },
+  //     },
+  //   };
+  //   return _var;
+  // };
 
   return (
     <>
@@ -83,7 +103,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
         </ChakraLink>
       )}
 
-      {(type === 'simple text' || type === 'text') && (
+      {(type === 'simple text' || type === 'text paragraph') && (
         <Stack gap={2} w={'100%'}>
           {!content && (
             <Text p={2} fontWeight={'bold'} fontSize="xl" textAlign="center">
@@ -201,6 +221,6 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           }
         </Box>
       )}
-    </>
+      </>
   );
 }

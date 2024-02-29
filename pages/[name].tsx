@@ -216,7 +216,8 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
         return;
       }
       setIsLoading(true);
-      const owner = nftJson.owner;
+      const owner = String(nftJson.nftJson.target).includes('not set') ? nftJson.owner : nftJson.nftJson.target;
+      console.log(nftJson)
       const jsonUrl = nftJson.nftDetails;
       if (jsonUrl) {
         try {
@@ -232,9 +233,9 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setEth(res.data.ethAddress);
           //setAvatar(res.data.avatar);
           setAvatarShape(res.data.avatarShape ?? 'circle');
-          setSocialIcons(res.data.socialIcons ?? true);
-          setSocialButtons(res.data.socialButtons ?? true);
-          setWalletButtons(res.data.waletButtons ?? true);
+          setSocialIcons(res.data.socialIcons ?? false);
+          setSocialButtons(res.data.socialButtons ?? false);
+          setWalletButtons(res.data.waletButtons ?? false);
           setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
           setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[8].lightMode);
@@ -284,9 +285,9 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setTitle('');
           setSubtitle('');
           setAvatarShape('circle');
-          setSocialIcons(true);
-          setSocialButtons(true);
-          setWalletButtons(true);
+          setSocialIcons(false);
+          setSocialButtons(false);
+          setWalletButtons(false);
           setBgColor(BG_COLORS[0].color);
           setLineIcons(false);
           setLightMode(BG_COLORS[0].lightMode);

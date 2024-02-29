@@ -4,6 +4,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { LinkIcon } from 'components/logos';
 import {
   addressAtom,
+  walletButtonsAtom,
   walletsArrayAtom,
 } from 'core/atoms';
 import WalletLink from './WalletLink';
@@ -19,6 +20,7 @@ interface Props {
 export default function Wallets({ json, color, onlyIcons }: Props) {
   const [walletsArray, setWalletsArray] = useAtom(walletsArrayAtom);
   const _onlyIcons = onlyIcons ? onlyIcons : false;
+  const _walletButtons = useAtomValue(walletButtonsAtom);
   const venom = useAtomValue(addressAtom)
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export default function Wallets({ json, color, onlyIcons }: Props) {
       json.wallets[key] && _wallets.push({ key: key, value: json.wallets[key] });
     }
 
-    if (_wallets.length === 0) {
+    if (_wallets.length === 0 && _walletButtons) {
       _wallets.push({ key: 'venom', value: venom });
     }
 
