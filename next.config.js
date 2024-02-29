@@ -46,6 +46,12 @@ const nextConfig = {
         port: '',
         pathname: '*',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '*',
+      }
     ],
   },
   transpilePackages: ['@eversdk/lib-web','@web3-name-sdk/core'],
