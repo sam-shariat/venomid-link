@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#f1f2f3;display:block;z-index:1;position:relative" width="1920" height="1080" preserveAspectRatio="xMidYMid" viewBox="0 0 1920 1080">
     <g transform="translate(960,540) scale(1,1) translate(-960,-540)"><defs>
     <linearGradient id="lg-0.5468341992896812" x1="0" x2="0" y1="0" y2="1">
-      <stop stop-color="#0f0f0f" offset="0.1"></stop>
-      <stop stop-color="#313232" offset="0.55"></stop>
-      <stop stop-color="#3c3d3d" offset="1"></stop>
+      <stop stop-color="#870000" offset="0.1"></stop>
+      <stop stop-color="#190a05" offset="0.55"></stop>
+      <stop stop-color="#190a05" offset="1"></stop>
     </linearGradient>
     <linearGradient id="fg-lg-0.5468341992896812" x1="0" x2="0" y1="0" y2="1">
-      <stop stop-color="#0f0f0f" stop-opacity="1" offset="0.1"></stop>
-      <stop stop-color="#313232" stop-opacity="0.66" offset="0.55"></stop>
-      <stop stop-color="#3c3d3d" stop-opacity="0" offset="1"></stop>
+      <stop stop-color="#b40505" stop-opacity="1" offset="0.1"></stop>
+      <stop stop-color="#870000" stop-opacity="0.66" offset="0.55"></stop>
+      <stop stop-color="#190a05" stop-opacity="0" offset="1"></stop>
     </linearGradient>
     <style type="text/css">
       path { fill: none; stroke: #54625b; stroke-width: 1px }

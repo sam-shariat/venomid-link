@@ -76,7 +76,12 @@
   --bg5: #272727;
   --bg6Gradient: url("/bgs/bg6.svg") center;
   --bg6: #272727;
-
+  --bg7Gradient: url("/bgs/bg7.svg") center;
+  --bg7: #62a8c1;
+  --bg8Gradient: url("/bgs/bg8.svg") center;
+  --bg8: #2bb673;
+  --bg9Gradient: url("/bgs/bg9.svg") center;
+  --bg9: #870000;
 }
 
 * {
