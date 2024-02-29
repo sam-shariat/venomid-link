@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-//import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const nextConfig = {
   reactStrictMode: true,
@@ -52,21 +51,13 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         port: '',
         pathname: '*',
-      }
+      },
     ],
   },
   transpilePackages: ['@web3-name-sdk/core'],
   webpack(config) {
-    //config.output.webassemblyModuleFilename = './public/eversdk.wasm';
+    config.output.webassemblyModuleFilename = './eversdk.node';
     config.experiments = { asyncWebAssembly: true, layers: true };
-    // config.plugins.push(
-    //   new CopyWebpackPlugin([
-    //     {
-    //       from: path.join(__dirname, 'node_modules/@eversdk/lib-node/eversdk'),
-    //       to: path.join(__dirname, '/')
-    //     }
-    //   ])
-    // );
     return config;
   },
   async headers() {
@@ -85,4 +76,4 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+module.exports = nextConfig;
