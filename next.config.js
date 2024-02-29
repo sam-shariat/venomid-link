@@ -54,9 +54,9 @@ const nextConfig = {
       }
     ],
   },
-  transpilePackages: ['@eversdk/lib-web','@web3-name-sdk/core'],
+  transpilePackages: ['@eversdk/lib-node','@web3-name-sdk/core'],
   webpack(config) {
-    config.output.webassemblyModuleFilename = './eversdk.wasm';
+    config.output.webassemblyModuleFilename = './eversdk.node';
     config.experiments = { asyncWebAssembly: true, layers: true };
     return config;
   },
