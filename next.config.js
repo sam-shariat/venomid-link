@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+//import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const nextConfig = {
   reactStrictMode: true,
@@ -54,10 +55,18 @@ const nextConfig = {
       }
     ],
   },
-  transpilePackages: ['@eversdk/lib-web','@web3-name-sdk/core'],
+  transpilePackages: ['@web3-name-sdk/core'],
   webpack(config) {
-    config.output.webassemblyModuleFilename = './eversdk.wasm';
+    //config.output.webassemblyModuleFilename = './public/eversdk.wasm';
     config.experiments = { asyncWebAssembly: true, layers: true };
+    // config.plugins.push(
+    //   new CopyWebpackPlugin([
+    //     {
+    //       from: path.join(__dirname, 'node_modules/@eversdk/lib-node/eversdk'),
+    //       to: path.join(__dirname, '/')
+    //     }
+    //   ])
+    // );
     return config;
   },
   async headers() {
@@ -76,4 +85,4 @@ const nextConfig = {
   }
 };
 
-module.exports = nextConfig;
+export default nextConfig;
