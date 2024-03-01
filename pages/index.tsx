@@ -145,6 +145,20 @@ const HomePage: NextPage = () => {
   }, [name]);
 
   useEffect(() => {
+    //console.log(lightMode);
+    //console.log(colorMode);
+    if (lightMode) {
+      if (colorMode === 'dark') {
+        toggleColorMode();
+      }
+    } else {
+      if (colorMode === 'light') {
+        toggleColorMode();
+      }
+    }
+  }, [lightMode, colorMode]);
+
+  useEffect(() => {
     async function initUI() {
       //console.log(nftJson);
       if (nftJson?.status === 'error') {
