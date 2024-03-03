@@ -235,7 +235,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? false);
           setSocialButtons(res.data.socialButtons ?? false);
-          setWalletButtons(res.data.waletButtons ?? false);
+          setWalletButtons(res.data.WalletButtons ?? false);
           setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
           setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[8].lightMode);
@@ -287,7 +287,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setAvatarShape('circle');
           setSocialIcons(false);
           setSocialButtons(false);
-          setWalletButtons(false);
+          setWalletButtons(true);
           setBgColor(BG_COLORS[0].color);
           setLineIcons(false);
           setLightMode(BG_COLORS[0].lightMode);
