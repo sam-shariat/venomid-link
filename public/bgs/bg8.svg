@@ -8,7 +8,7 @@
     <linearGradient id="fg-lg-0.5468341992896812" x1="0" x2="0" y1="0" y2="1">
       <stop stop-color="#27aa6b" stop-opacity="1" offset="0.1"></stop>
       <stop stop-color="#0d828d" stop-opacity="0.66" offset="0.55"></stop>
-      <stop stop-color="#0d828d" stop-opacity="0" offset="1"></stop>
+      <stop stop-color="#000000" stop-opacity="0" offset="1"></stop>
     </linearGradient>
     <style type="text/css">
       path { fill: none; stroke: #4ff0ff; stroke-width: 1px }

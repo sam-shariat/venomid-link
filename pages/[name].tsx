@@ -63,6 +63,7 @@ import {
   FONTS,
   SITE_URL,
   SITE_CLAIM_URL,
+  BG_IMAGES,
 } from 'core/utils/constants';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import Links from 'components/Profile/Links';
@@ -171,9 +172,9 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
   const [json, setJson] = useAtom(jsonAtom);
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
-  //const [nftJson, setNftJson] = useAtom(nftJsonAtom);
   const [isLoading, setIsLoading] = useState(true);
   const [nameDontExist, setNameDontExist] = useState(false);
+  
   //const router = useRouter();
   //const name = router.query.name ? String(router.query.name) : '';
   // async function getInfoByName(_name: string) {
@@ -235,11 +236,11 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? false);
           setSocialButtons(res.data.socialButtons ?? false);
-          setWalletButtons(res.data.WalletButtons ?? false);
-          setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
+          setWalletButtons(res.data.WalletButtons ?? true);
+          setBgColor(res.data?.styles?.bgColor ?? BG_IMAGES[5].bg);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
-          setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[8].lightMode);
-          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[2]);
+          setLightMode(res.data?.styles?.lightMode ?? BG_IMAGES[7].lightMode);
+          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[1]);
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
@@ -258,19 +259,19 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
             avatar: '',
             avatarShape: 'circle',
             lineIcons: false,
-            lightMode: BG_COLORS[0].lightMode,
+            lightMode: BG_IMAGES[7].lightMode,
             socialIcons: true,
             socialButtons: false,
             walletButtons: true,
             showAllNfts: false,
-            bgColor: BG_COLORS[0].color,
+            bgColor: BG_IMAGES[5].bg,
             links: [],
             socials: {},
             styles: {
               lineIcons: false,
-              lightMode: BG_COLORS[0].lightMode,
-              bgColor: BG_COLORS[0].color,
-              buttonBgColor: BUTTON_BG_COLORS[0],
+              lightMode: BG_IMAGES[7].lightMode,
+              bgColor: BG_IMAGES[5].bg,
+              buttonBgColor: BUTTON_BG_COLORS[1],
               round: BUTTON_ROUNDS[1],
               variant: BUTTON_VARIANTS[0],
               font: FONTS[0],
@@ -288,10 +289,10 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setSocialIcons(false);
           setSocialButtons(false);
           setWalletButtons(true);
-          setBgColor(BG_COLORS[0].color);
+          setBgColor(BG_IMAGES[5].bg);
           setLineIcons(false);
-          setLightMode(BG_COLORS[0].lightMode);
-          setButtonBgColor(BUTTON_BG_COLORS[0]);
+          setLightMode(BG_IMAGES[7].lightMode);
+          setButtonBgColor(BUTTON_BG_COLORS[1]);
           setRound(BUTTON_ROUNDS[1]);
           setVariant(BUTTON_VARIANTS[0]);
           setFont(FONTS[0]);
@@ -314,14 +315,14 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           socialButtons: false,
           walletButtons: true,
           showAllNfts: false,
-          bgColor: BG_COLORS[0].color,
+          bgColor: BG_IMAGES[5].bg,
           links: [],
           socials: {},
           styles: {
             lineIcons: false,
-            lightMode: BG_COLORS[0].lightMode,
-            bgColor: BG_COLORS[0].color,
-            buttonBgColor: BUTTON_BG_COLORS[0],
+            lightMode: BG_IMAGES[7].lightMode,
+            bgColor: BG_IMAGES[5].bg,
+            buttonBgColor: BUTTON_BG_COLORS[1],
             round: BUTTON_ROUNDS[1],
             variant: BUTTON_VARIANTS[0],
             font: FONTS[0],
@@ -339,10 +340,10 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
         setSocialIcons(true);
         setSocialButtons(true);
         setWalletButtons(true);
-        setBgColor(BG_COLORS[0].color);
+        setBgColor(BG_IMAGES[5].bg);
         setLineIcons(false);
-        setLightMode(BG_COLORS[0].lightMode);
-        setButtonBgColor(BUTTON_BG_COLORS[0]);
+        setLightMode(BG_IMAGES[7].lightMode);
+        setButtonBgColor(BUTTON_BG_COLORS[1]);
         setRound(BUTTON_ROUNDS[1]);
         setVariant(BUTTON_VARIANTS[0]);
         setFont(FONTS[0]);
@@ -429,7 +430,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                     <Avatar
                       my={6}
                       url={json.avatar}
-                      alt={json.name + 'avatar image'}
+                      alt={name + 'avatar image'}
                       shape={avatarShape}
                       shadow="none"
                     />
@@ -443,7 +444,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                         {json.subtitle}
                       </Heading>
                       <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
-                        {json.name}
+                        {name}.vid
                       </Heading>
                       {/* <Button
                             my={1}

@@ -188,7 +188,7 @@ const HomePage: NextPage = () => {
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? true);
           setSocialButtons(res.data.socialButtons ?? true);
-          setWalletButtons(res.data.waletButtons ?? true);
+          setWalletButtons(res.data.WalletButtons ?? true);
           setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
           setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[0].lightMode);

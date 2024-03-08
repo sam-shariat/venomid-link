@@ -84,6 +84,12 @@ export const BG_IMAGES: BgImageItem[] = [
   { bg: 'var(--bg1Gradient)', lightMode: false },
   { bg: 'var(--bg3Gradient)', lightMode: false },
   { bg: 'var(--bg2Gradient)', lightMode: true },
+  { bg: 'var(--bg4Gradient)', lightMode: false },
+  { bg: 'var(--bg5Gradient)', lightMode: false },
+  { bg: 'var(--bg6Gradient)', lightMode: false },
+  { bg: 'var(--bg7Gradient)', lightMode: false },
+  { bg: 'var(--bg8Gradient)', lightMode: false },
+  { bg: 'var(--bg9Gradient)', lightMode: false },
 ];
 
 export const LINK_VALIDATION_REGEX =
