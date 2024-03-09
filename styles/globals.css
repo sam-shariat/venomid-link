@@ -1,18 +1,18 @@
 :root {
   --darkGradient: radial-gradient(
     farthest-corner at 60% 55%,
-    #1e201d 10%,
-    #241925 45%,
-    #261d24 60%,
-    #1e2823 90%
+    #1a1b19 10%,
+    #1f191f 45%,
+    #1f1b1f 60%,
+    #1e2421 90%
   );
   
   --lightGradient: radial-gradient(
     farthest-corner at 60% 55%,
     #ebe3e0 10%,
-    #e0dbe0 45%,
+    #ece6ec 45%,
     #e4e4e4 60%,
-    #dddddd 90%
+    #eeeeee 90%
   );
 
   --lightLinearGradient: linear-gradient(
@@ -23,11 +23,22 @@
     #dfe5e2 90%
   );
 
-  --venomGradient: radial-gradient(
-    circle farthest-corner at 40% 30%,
-    #2f8359 30%,
-    #1e6441 65%
+  --venomGradient: linear-gradient(
+    to bottom,
+    #11998e 0%,
+    #32d36f 100%
   );
+
+  --vidGradient: linear-gradient(to right, #2bb673 10%, #10a9b6 90%);
+
+  --grayGradient: linear-gradient(to bottom, #cfdef3 10%, #e0eafc 90%);
+  --darkGradient0: linear-gradient(to bottom, #232526  10%, #414345  90%);
+  --lightGreyGradient: linear-gradient(to bottom, #8e9eab 10%, #eef2f3 90%);
+  --redGradient: linear-gradient(to bottom, #ed213a 0%, #93291e 100%);
+  --yellowGradient: linear-gradient(to bottom, #fffc00  0%, #fffbc0 100%);
+  --orangeGradient: linear-gradient(to bottom,  #f16311  0%,  #f5af19 100%);
+  --purpleGradient: linear-gradient(to bottom, #5e1494 0%, #af4bd6 100%);
+  --blueGradient: linear-gradient(to bottom, #b2fefa 0%, #0ed2f7 100%);
 
   --white: #f3f3f3;
   --light: #f5f5f5;
@@ -41,29 +52,33 @@
   --lightGrey: #d5d5d5;
   --red1: #c84949;
   --venom00: #99f0c4;
-  --venom0: #4acf8d;
-  --venom: #30875b;
-  --venom1: #43bb7f;
-  --venom2: #3aa16e;
-  --venom3: #30875b;
+  --venom0: #2bb673;
+  --venom: #1d7c4e;
+  --venom1: #27aa6b;
+  --venom2: #239960;
+  --venom3: #228a58;
+  --bluevenom00: #4ff0ff;
+  --bluevenom0: #12c9da;
+  --bluevenom1: #10a9b6;
+  --bluevenom2: #0e94a0;
+  --bluevenom3: #0d828d;
+  --purplevenom0: #ff2fff;
+  --purplevenom1: #ff00ff;
+  --purplevenom2: #c900c9;
+  --purplevenom3: #990099;
   --purple0: #7951e9;
   --purple1: #6343bb;
   --purple2: #503aa1;
   --purple: #544ba2;
   --purple3: #393087;
-  --purpleGradient: radial-gradient(circle farthest-corner at 40% 30%, #666fea 0%, #544ba2 100%);
   --orange: #e9924b;
-  --orangeGradient: radial-gradient(circle farthest-corner at 40% 30%, #ff9035  0%, #ff6f2c 100%);
   --yellow: #e9df4b;
-  --yellowGradient: radial-gradient(circle farthest-corner at 40% 30%, #f5ec6a  0%, #c9be2d 100%);
   --red: #e94b4b;
-  --redGradient: radial-gradient(circle farthest-corner at 40% 30%, #e94b4b  0%, #af4343 100%);
   --blue0: #00c8f0;
   --blue1: #00b8dd;
   --blue: #00b8dd;
   --blue2: #0098b6;
   --blue3: #00849e;
-  --blueGradient: radial-gradient(circle farthest-corner at 40% 30%, #4cdbff  0%, #00aaf8 100%);
   --bg1Gradient: url("/bgs/bg1.jpg") center ;
   --bg1: #272727;
   --bg2Gradient: url("/bgs/bg2.jpg") center;

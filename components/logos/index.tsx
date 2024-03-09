@@ -416,7 +416,7 @@ const LinkIcon = ({ type, line, color, size = '28px', rounded = 'sm' }: LinkIcon
         const SelectedIcon = Icons[type as keyof typeof Icons];
         return <SelectedIcon size={size} color={color ? color : undefined} />;
       } else if (type.indexOf(IPFS_IMAGE_URI) === 0) {
-        return <Avatar src={type} size={size} rounded={'none'} borderRadius={'8px'} name='vid' colorScheme='gray' />;
+        return <Avatar src={type} size={size} rounded={'none'} borderRadius={'8px'} color='white' bg={'transparent'} icon={<LinkIcon type={'nft'} color='#fff'/>}/>;
       } else {
         return <EmojiIcon size={parseInt(size)} native={type} />;
       }
