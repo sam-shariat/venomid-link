@@ -58,7 +58,9 @@ const OgImageHandler = async (req: NextRequest) => {
             style={{
               fontSize: 30,
               lineHeight: 1.1,
-              color: lightMode ? '#444444' : '#acacac'
+              color: lightMode ? '#444444' : '#acacac',
+              maxWidth: 450,
+              textAlign: 'left'
             }}>
             {subtitle}
           </p>}
