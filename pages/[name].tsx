@@ -88,8 +88,8 @@ interface LinkPageProps {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { query } = context;
   let _name = query.name ? String(query.name) : '';
-  const name = _name.toLowerCase().includes('.vid') ? _name.slice(0,-4) : _name;
-  let _title = capFirstLetter(name + '.vid');
+  const name = _name.toLowerCase();
+  let _title = capFirstLetter(name);
   let _description = SITE_DESCRIPTION;
   let _avatar = 'https://venomid.link/logos/vidicon.png';
 
@@ -444,7 +444,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                         {json.subtitle}
                       </Heading>
                       <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
-                        {name}.vid
+                        {name}
                       </Heading>
                       {/* <Button
                             my={1}
@@ -493,7 +493,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           <Center width={'100%'} height={'70vh'} flexDir={'column'} gap={4}>
             Venom ID {name} Does Not Exist
             <Button as={Link} href={SITE_CLAIM_URL}>
-              Claim {name}.VID Now
+              Claim {name} Now
             </Button>
           </Center>
         )}
