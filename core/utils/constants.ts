@@ -27,7 +27,8 @@ export const DONATE_VALUES: any = {
 };
 export const IPFS_IMAGE_URI = 'https://ipfs';
 
-export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
+export const ROOT_CONTRACT_ADDRESS = '0:72034dfba65f6d63b362e51add677c0549ff4e5a4e18c943acb54f953bb53660';
+export const TLD = 'venom';
 export const MAX_NAME_LENGTH = 63;
 export const MIN_NAME_LENGTH = 0;
 export const EARLY_ADOPTERS_CONTRACT_ADDRESS = '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';

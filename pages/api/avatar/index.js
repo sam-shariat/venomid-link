@@ -3,9 +3,7 @@ const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
 import {
   ROOT_CONTRACT_ADDRESS,
-  CONTRACT_ADDRESS,
-  CONTRACT_ADDRESS_V1,
-  CONTRACT_ADDRESS_V2,
+  TLD,
 } from 'core/utils/constants';
 const { CollectionContract } = require('abi/CollectionContract');
 const { RootContract } = require('abi/RootContract');
@@ -37,9 +35,9 @@ export default async function handler(req, res) {
       process.exit(1);
     }
   
-    const _name = String(req.query.name).toLowerCase();
-    const name = _name.toLowerCase().includes('.vid') ? _name.slice(0, -4) : _name;
-    const name_ = String(req.query.name).toLowerCase() + '.VID';
+    const name = String(req.query.name).toLowerCase().includes('.venom') ? String(req.query.name).toLowerCase().replace('.venom', '') : String(req.query.name).toLowerCase();
+    const name_ = String(name).includes('.vid') ? String(name).replace('.vid', '') : String(name);
+    const _name = String(name_).toLowerCase();
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
@@ -51,7 +49,7 @@ export default async function handler(req, res) {
     });
 
     let certificateAddr = await root.runLocal('resolve', {
-      path: String(name) + '.vid',
+      path: String(_name) + '.' + TLD,
       answerId: 0,
     });
 
@@ -72,67 +70,13 @@ export default async function handler(req, res) {
         answerId: 0,
       });
 
-      if (String(status.decoded.output.status) === '0') {
+      if (String(status.decoded.output.status)) {
         nftAddress = String(certificateAddr.decoded.output.certificate);
         type = 'domain';
       }
     } catch (e) {}
 
-    const collection = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS,
-    });
-
-    const collectionv1 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V1,
-    });
-
-    const collectionv2 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V2,
-    });
-
-    if (nftAddress === '') {
-      //const { rows } = await sql`SELECT * FROM vids WHERE name = ${name_};`;
-
-      //if (rows.length > 0) {
-      //  nftAddress = String(rows[0].address);
-      //} else {
-      let response = await collection.runLocal('getInfoByName', {
-        name: String(_name),
-      });
-      if (response.decoded.output.value0.name !== 'notfound') {
-        nftAddress = response.decoded.output.value0.nftAddress;
-      } else {
-        let responsev1 = await collectionv1.runLocal('getInfoByName', {
-          name: String(_name),
-        });
-        if (responsev1.decoded.output.value0.name !== 'notfound') {
-          nftAddress = responsev1.decoded.output.value0.nftAddress;
-        } else {
-          let responsev2 = await collectionv2.runLocal('getInfoByName', {
-            name: String(_name),
-          });
-          if (responsev2.decoded.output.value0.name !== 'notfound') {
-            nftAddress = responsev2.decoded.output.value0.nftAddress;
-          } else {
-            const defaultImage = path.resolve('.', 'public/logos/vidavatar.jpg');
-            const imageBuffer = fs.readFileSync(defaultImage);
-            res
-              .setHeader('Content-Type', 'image/jpg')
-              .setHeader('Cache-Control', 'public, immutable, no-transform, max-age=31536000')
-              .status(200)
-
-              .send(imageBuffer);
-          }
-        }
-      }
-      //}
-    }
+    
 
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
