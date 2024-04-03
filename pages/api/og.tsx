@@ -70,7 +70,7 @@ const OgImageHandler = async (req: NextRequest) => {
               lineHeight: 1.1,
               color: lightMode ? '#161618' : '#f5f5f5'
             }}>
-            {name}.vid
+            {name}
           </p>
           
         </div>
