@@ -12,7 +12,7 @@ async function getClient() {
     TonClient.useBinaryLibrary(libNode);
     client = new TonClient({
       network: {
-        endpoints: ['https://gql-testnet.venom.foundation/graphql'],
+        endpoints: ['https://gql.venom.foundation/graphql'],
       },
     });
   }
