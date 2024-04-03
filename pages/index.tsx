@@ -68,6 +68,8 @@ import { useAtom, useAtomValue } from 'jotai';
 import Links from 'components/Profile/Links';
 import { NextSeo } from 'next-seo';
 import Wallets from 'components/Profile/Wallets';
+import AnimateScale from 'components/animate/AnimateScale';
+import AnimateOpacity from 'components/animate/AnimateOpacity';
 
 interface Attribute {
   trait_type: string;
@@ -310,6 +312,7 @@ const HomePage: NextPage = () => {
         bgSize={'cover'}
         bgRepeat={'no-repeat'}
         py={12}
+        transition={'all ease 1s'}
         bgPosition={'center'}
         minH="100vh">
         {!isLoading && json.name !== '' && !nameDontExist && (
@@ -327,6 +330,7 @@ const HomePage: NextPage = () => {
               color={!lightMode ? 'var(--white)' : 'var(--dark1)'}>
               <Flex direction="column" justify={'center'} align={'center'} gap={6} width="100%">
               <Flex gap={[0,0,8]} mt={notMobile ? 4 : 0} align={'center'} justify={'center'} w={'100%'} flexDir={['column','column','row']}>
+                <AnimateScale delay={1}>
                   <Box maxW={['200px', '200px', '200px', '220px']}>
                     <Avatar
                       my={6}
@@ -336,17 +340,24 @@ const HomePage: NextPage = () => {
                       shadow="none"
                     />
                   </Box>
+                  </AnimateScale>
                   
                     <Stack textAlign={['center','center','left']}>
+                      <AnimateOpacity delay={1}>
                       <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
                         {json.title}
                       </Heading>
+                      </AnimateOpacity>
+                      <AnimateOpacity delay={1.3}>
                       <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
                         {json.subtitle}
                       </Heading>
+                      </AnimateOpacity>
+                      <AnimateOpacity delay={1.6}>
                       <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
                         {json.name}
                       </Heading>
+                      </AnimateOpacity>
                       {/* <Button
                             my={1}
                             borderRadius={'25'}
@@ -357,8 +368,10 @@ const HomePage: NextPage = () => {
                     </Stack>
                 </Flex>
 
+                
                 {socialIcons && <Socials json={json} onlyIcons />}
-
+                
+                <AnimateOpacity delay={2}>
                 {walletButtons && (
                   <Wallets
                     json={json}
@@ -367,8 +380,10 @@ const HomePage: NextPage = () => {
                     }
                   />
                 )}
-
+                </AnimateOpacity>
+                
                 <Stack width={'100%'} gap={2}>
+                <AnimateOpacity delay={2.3}>
                   {json.bio && json.bio.length > 0 && (
                     <Text
                       fontWeight="normal"
@@ -378,14 +393,17 @@ const HomePage: NextPage = () => {
                       {json.bio}
                     </Text>
                   )}
+                  </AnimateOpacity>
+                  
                   <Links
                     json={json}
                     color={
                       !lightMode ? 'var(--chakra-colors-gray-100)' : 'var(--chakra-colors-gray-800)'
                     }
                   />
-
+                  <AnimateOpacity delay={2.8}>
                   {socialButtons && <Socials json={json} />}
+                  </AnimateOpacity>
                 </Stack>
               </Flex>
             </Flex>

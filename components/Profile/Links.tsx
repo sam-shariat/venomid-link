@@ -7,6 +7,7 @@ import { linksArrayAtom } from 'core/atoms';
 import { capFirstLetter } from 'core/utils';
 import { CustomLink } from 'types';
 import { IPFS_IMAGE_URI } from 'core/utils/constants';
+import AnimateOpacity from 'components/animate/AnimateOpacity';
 
 interface Props {
   json: any;
@@ -37,7 +38,8 @@ export default function Links({ json, color }: Props) {
   return (
     <>
       {linksArray.length > 0 && <Stack gap={3} w={'100%'} align={'center'}>
-        {linksArray.map((item, index) => (
+        {linksArray.map((item, ind) => (
+          <AnimateOpacity delay={(ind * 0.2) + 2.5} key={`item-animate-${item.type}-${item.title}`}>
           <Link
             key={`item-${item.type}-${item.title}`}
             title={capFirstLetter(item.title)}
@@ -49,7 +51,9 @@ export default function Links({ json, color }: Props) {
             content={item.content}
             styles={item.styles}
           />
+          </AnimateOpacity>
         ))}
+        
       </Stack>}
       
     </>

@@ -10,6 +10,7 @@ import {
 import WalletLink from './WalletLink';
 import { capFirstLetter } from 'core/utils';
 import { ObjectItem } from 'types';
+import AnimateOpacity from 'components/animate/AnimateOpacity';
 
 interface Props {
   json: any;
@@ -44,8 +45,9 @@ export default function Wallets({ json, color, onlyIcons }: Props) {
     <>
       <Flex my={2} flexDirection={_onlyIcons ? 'row' : 'column'} gap={2} w={'100%'}>
         {walletsArray.map(
-          (item) =>
+          (item,ind) =>
             item.key && (
+              <AnimateOpacity delay={(ind * 0.2) + 2}>
               <WalletLink
                 key={`item-${item.key}`}
                 title={capFirstLetter(item.key)}
@@ -53,6 +55,7 @@ export default function Wallets({ json, color, onlyIcons }: Props) {
                 color={color ? color : undefined}
                 url={String(item.value)}
               />
+              </AnimateOpacity>
             )
         )}
       </Flex>

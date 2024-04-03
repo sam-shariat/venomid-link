@@ -6,6 +6,7 @@ import { socialsArrayAtom } from 'core/atoms';
 import SocialLink from './SocialLink';
 import { capFirstLetter, getIconColor, withHttps } from 'core/utils';
 import { ObjectItem } from 'types';
+import AnimateScale from 'components/animate/AnimateScale';
 
 interface Props {
   json: any;
@@ -35,8 +36,9 @@ export default function Socials({ json, color, onlyIcons, title }: Props) {
     <>
       <Flex flexDirection={_onlyIcons ? 'row' : 'column'} gap={2}>
         {socialsArray.map(
-          (item) =>
+          (item,ind) =>
             item.key && (
+              <AnimateScale delay={(ind * 0.2) + 1}>
               <SocialLink
                 key={`item-${item.key}-${title}`}
                 title={capFirstLetter(item.key)}
@@ -44,6 +46,7 @@ export default function Socials({ json, color, onlyIcons, title }: Props) {
                 color={color ? color : undefined}
                 url={String(item.value)}
               />
+              </AnimateScale>
             )
         )}
       </Flex>

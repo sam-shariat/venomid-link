@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   AspectRatio,
   Skeleton,
+  Center,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import NftLink from './NftLink';
@@ -194,6 +195,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
       {type === 'payment button' && <Pay title={title} content={String(content)} style={styles} />}
 
       {type === 'tweet' && (
+        <Center w={'100%'}>
         <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16} maxW={['default','550px']}>
           <Tweet
             tweetId={String(url.match(reg)?.at(2))}
@@ -202,6 +204,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           />
           {isLoading && <Skeleton width={'100%'} rounded={'lg'} height={'200px'} />}
         </Box>
+        </Center>
       )}
 
       {type === 'soundcloud track' && (

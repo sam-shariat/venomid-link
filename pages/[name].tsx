@@ -71,6 +71,8 @@ import { NextSeo } from 'next-seo';
 import Wallets from 'components/Profile/Wallets';
 import Footer from 'components/Layout/Footer';
 import { capFirstLetter } from 'core/utils';
+import AnimateScale from 'components/animate/AnimateScale';
+import AnimateOpacity from 'components/animate/AnimateOpacity';
 
 interface Attribute {
   trait_type: string;
@@ -408,6 +410,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
         bgSize={'cover'}
         bgRepeat={'no-repeat'}
         bgPosition={'center'}
+        transition={'all ease 1s'}
         minH="100vh"
         px={[4,4,0]}
         pt={12}>
@@ -426,6 +429,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
               <Flex direction="column" justify={'center'} align={'center'} gap={6} width="100%">
                
                 <Flex gap={[0,0,8]} mt={notMobile ? 4 : 0} align={'center'} justify={'center'} w={'100%'} flexDir={['column','column','row']}>
+                  <AnimateScale delay={0.5}>
                   <Box maxW={['200px', '200px', '200px', '220px']}>
                     <Avatar
                       my={6}
@@ -435,17 +439,24 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                       shadow="none"
                     />
                   </Box>
+                  </AnimateScale>
                   
                     <Stack textAlign={['center','center','left']}>
+                    <AnimateOpacity delay={0.6}>
                       <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
                         {json.title}
                       </Heading>
+                      </AnimateOpacity>
+                      <AnimateOpacity delay={0.9}>
                       <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
                         {json.subtitle}
                       </Heading>
+                      </AnimateOpacity>
+                      <AnimateOpacity delay={1.2}>
                       <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
-                        {name}
+                        {json.name}
                       </Heading>
+                      </AnimateOpacity>
                       {/* <Button
                             my={1}
                             borderRadius={'25'}
@@ -461,6 +472,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
 
                 <Stack width={'100%'} gap={2}>
                   {json.bio && json.bio.length > 0 && (
+                    <AnimateOpacity delay={2.5}>
                     <Text
                       fontWeight="normal"
                       fontSize={notMobile ? 'xl' : 'lg'}
@@ -468,6 +480,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                       textAlign={'center'}>
                       {json.bio}
                     </Text>
+                    </AnimateOpacity>
                   )}
                   <Links
                     json={json}
@@ -476,7 +489,9 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                     }
                   />
 
+                  <AnimateOpacity delay={3}>
                   {socialButtons && <Socials json={json} />}
+                  </AnimateOpacity>
                 </Stack>
               </Flex>
             </Flex>

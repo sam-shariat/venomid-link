@@ -14,9 +14,9 @@ import {
   zerionWallet,
   rainbowWallet,
 } from '@thirdweb-dev/react';
-import { Analytics } from '@vercel/analytics/react';
 import '../styles/globals.css';
 import { Ethereum, Polygon, Arbitrum, Binance, Goerli, Zksync } from '@thirdweb-dev/chains';
+import { motion } from 'framer-motion';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useDirectionSetter();
@@ -45,8 +45,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           // }}
           clientId={process.env.NEXT_PUBLIC_THIRDWEB_ID}>
           <Layout>
+          <motion.div layout='position'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}>
             <Component {...pageProps} />
-            <Analytics />
+          </motion.div>
+            
           </Layout>
         </ThirdwebProvider>
       </VenomConfig>
