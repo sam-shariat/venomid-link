@@ -20,11 +20,11 @@ export const initVenomConnect = async () => {
               fallback: () =>
                 EverscaleStandaloneClient.create({
                   connection: {
-                    id: 1000,
+                    id: 1,
                     group: 'venom_testnet',
                     type: 'jrpc',
                     data: {
-                      endpoint: 'https://jrpc-testnet.venom.foundation/rpc',
+                      endpoint: 'https://jrpc.venom.foundation/rpc',
                     },
                   },
                 }),

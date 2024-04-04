@@ -9,7 +9,7 @@ export const SITE_FULL_DESCRIPTION =
 export const SITE_CLAIM_URL = 'https://venomid.network/';
 export const SITE_SPACE_ID_URL = 'https://space.id/';
 export const SITE_PROFILE_URL = 'https://venomid.link/';
-export const VENOMSCAN_NFT = 'https://testnet.venomscan.com/accounts/';
+export const VENOMSCAN_NFT = 'https://venomscan.com/accounts/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
 export const ETHERSCAN_ADDRESS = 'https://etherscan.io/address/';
 export const CONTRACT_ADDRESS =
@@ -39,7 +39,7 @@ export const SOCIAL_TWITTER = 'venomid_network';
 export const TWITTER_URL = 'https://twitter.com/';
 export const GITHUB_URL = 'https://github.com/samshariat/venomidapp-manage';
 export const MARKETPLACE_URLS: any = {
-  venomtestnet: 'https://testnet.ventory.gg/nft/',
+  venomtestnet: 'https://ventory.gg/nft/',
   ethereum: 'https://opensea.io/assets/ethereum/',
   polygon: 'https://opensea.io/assets/matic/',
   arbitrum: 'https://opensea.io/assets/arbitrum/',
@@ -47,8 +47,8 @@ export const MARKETPLACE_URLS: any = {
 };
 
 export const ETHERSCAN_URLS: any = {
-  venomtestnet: 'https://testnet.venomscan.com/accounts/',
-  venom: 'https://testnet.venomscan.com/accounts/',
+  venomtestnet: 'https://venomscan.com/accounts/',
+  venom: 'https://venomscan.com/accounts/',
   bitcoin: 'https://blockchair.com/bitcoin/address/',
   tron: 'https://tronscan.org/#/address/',
   avalanche: 'https://snowtrace.io/address/',
