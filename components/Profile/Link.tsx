@@ -89,7 +89,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           id={`venom-id-${title}-link`}>
           <Button
             size={styles?.size === 'sm' ? 'md' : 'lg'}
-            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'mg'}
+            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'md'}
             height={styles?.size === 'lg' ? '80px' : styles?.size === 'md' ? '64px' : '44px'}
             rounded={round}
             variant={variant}
@@ -97,9 +97,10 @@ export default function Link({ type, icon, title, url, image, content, styles, c
             color={getColor(variant, buttonBg, lightMode)}
             placeContent={'center'}
             placeItems={'center'}
+            px={2}
             width={'100%'}>
             {icon}
-            <Text px={2}>{title}</Text>
+            <Text px={2} w={'100%'} textAlign={'center'}>{title}</Text>
           </Button>
         </ChakraLink>
       )}
