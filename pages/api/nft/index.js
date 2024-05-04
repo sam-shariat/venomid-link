@@ -1,4 +1,3 @@
-import { CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, CONTRACT_ADDRESS_V2 } from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
@@ -14,7 +13,7 @@ async function getClient() {
     TonClient.useBinaryLibrary(libNode);
     client = new TonClient({
       network: {
-        endpoints: ['https://gql-testnet.venom.foundation/graphql'],
+        endpoints: ['https://gql.venom.foundation/graphql'],
       },
     });
   }
@@ -45,12 +44,13 @@ export default async function handler(req, res) {
 
     let responseJson = await nft.runLocal('getJson', { answerId: 0 });
     let json = JSON.parse(responseJson.decoded.output.json);
-    let jsonUrl = json.attributes?.find((att) => att.trait_type === 'DATA')?.value;
-
+    
+    let jsonUrl = json.hash;
+    console.log(jsonUrl);
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
 
     if (withDetails) {
-      if (jsonUrl) {
+      if (jsonUrl.includes('not set')) {
         const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
         res
           .status(200)

@@ -96,6 +96,19 @@ export default async function handler(req, res) {
     }
 
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
+    if(json.avatar.indexOf('not set') < 0){
+      const imageBuffer = await axios.get(String(json.avatar), {
+        responseType: 'arraybuffer',
+      });
+      //console.log(result);
+      //res.status(200).json({json:json,jsonUrl:jsonUrl, avatar:result.data.avatar});
+      res
+        .status(200)
+        .setHeader('Content-Type', 'image/jpg')
+        .setHeader('Cache-Control', 'public, immutable, no-transform, max-age=31536000')
+        .send(imageBuffer.data);
+        return;
+    }
 
     if (jsonUrl && jsonUrl.indexOf('not set') < 0) {
       const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));

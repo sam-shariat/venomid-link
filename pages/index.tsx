@@ -137,7 +137,7 @@ const HomePage: NextPage = () => {
   useEffect(() => {
     async function getProfileJson() {
       setIsLoading(true);
-      await getInfo('0:eb9718b16d39a4001e376b1a677817d9c401f5f3fc84cf8f32033334d3587a4a');
+      await getInfo('0:09ce2394cd0a8a6eaa59ac727a31023602fa7ab39ffa221eb2cd459f624a03d2');
       setIsLoading(false);
     }
 
@@ -168,10 +168,9 @@ const HomePage: NextPage = () => {
         return;
       }
       const owner = '0:d1785eeee9473196ebd70d5c3469062a2ed0a247bc7033d402ab3486267c99b7';
-      const jsonUrl = nftJson.nftJson.attributes?.find(
-        (att: Attribute) => att.trait_type === 'DATA'
-      )?.value;
-      if (jsonUrl) {
+      const jsonUrl = nftJson.nftJson.hash;
+      console.log(jsonUrl);
+      if (!jsonUrl.includes('not set')) {
         try {
           //console.log(jsonUrl);
           const res = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
