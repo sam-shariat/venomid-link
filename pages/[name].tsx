@@ -98,6 +98,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const res = await fetch(SITE_URL + 'api/name/?withDetails=1&name=' + name);
   const nftJson = await res.json();
   let _nftJson = nftJson.nftDetails;
+  let _json = nftJson.nftJson;
   if (_nftJson) {
     if (_nftJson.title && _nftJson.title.length > 2) {
       _title = _nftJson.title;
@@ -116,8 +117,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       _description = _nftJson.bio;
     }
 
-    if (_nftJson.avatar && _nftJson.title.avatar > 10) {
-      _avatar = _nftJson.avatar;
+    if (_nftJson.avatar.length > 10 || _json.avatar.length > 10) {
+      _avatar = _json.avatar !== 'not set' ? _json.avatar : _nftJson.avatar;
     }
 
   }
@@ -141,7 +142,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, avatar }) => {
+const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, avatar }: LinkPageProps) => {
   const { t } = useTranslate();
   //console.log(nftJson)
   const [bio, setBio] = useAtom(bioAtom);
@@ -164,7 +165,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
   const [variant, setVariant] = useAtom(variantAtom);
   const [font, setFont] = useAtom(fontAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  //const [avatar, setAvatar] = useAtom(avatarAtom);
+  const [_avatar, setAvatar] = useAtom(avatarAtom);
   const [avatarShape, setAvatarShape] = useAtom(avatarShapeAtom);
   const [socialIcons, setSocialIcons] = useAtom(horizontalSocialAtom);
   const [socialButtons, setSocialButtons] = useAtom(socialButtonsAtom);
@@ -234,7 +235,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setBio(res.data.bio);
           setBtc(res.data.btcAddress);
           setEth(res.data.ethAddress);
-          //setAvatar(res.data.avatar);
+          setAvatar(nftJson.nftJson.avatar !== 'not set' ? nftJson.nftJson.avatar : res.data.avatar);
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? false);
           setSocialButtons(res.data.socialButtons ?? false);
@@ -433,7 +434,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
                   <Box maxW={['200px', '200px', '200px', '220px']}>
                     <Avatar
                       my={6}
-                      url={json.avatar}
+                      url={_avatar}
                       alt={name + 'avatar image'}
                       shape={avatarShape}
                       shadow="none"
