@@ -117,8 +117,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       _description = _nftJson.bio;
     }
 
-    if (_nftJson.avatar.length > 10 || _json.avatar.length > 10) {
-      _avatar = _json.avatar !== 'not set' ? _json.avatar : _nftJson.avatar;
+    if(!String(_json.avatar).includes('not set')){
+      _avatar = _json.avatar;
+    } else {
+      if(_nftJson.avatar && _nftJson.avatar.length > 10){
+        _avatar = _nftJson.avatar;
+      }
     }
 
   }
@@ -235,7 +239,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
           setBio(res.data.bio);
           setBtc(res.data.btcAddress);
           setEth(res.data.ethAddress);
-          setAvatar(nftJson.nftJson.avatar !== 'not set' ? nftJson.nftJson.avatar : res.data.avatar);
+          setAvatar(!String(nftJson.nftJson.avatar).includes('not set') ? nftJson.nftJson.avatar : res.data.avatar);
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? false);
           setSocialButtons(res.data.socialButtons ?? false);
@@ -336,7 +340,7 @@ const LinkPage: NextPage<LinkPageProps> = ({ name, nftJson, title, description, 
         setBio('');
         setBtc('');
         setEth('');
-        //setAvatar('');
+        setAvatar(!String(nftJson.nftJson.avatar).includes('not set') ? nftJson.nftJson.avatar : '');
         setTitle('');
         setSubtitle('');
         setAvatarShape('circle');
