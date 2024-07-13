@@ -137,7 +137,7 @@ const HomePage: NextPage = () => {
   useEffect(() => {
     async function getProfileJson() {
       setIsLoading(true);
-      await getInfo('0:09ce2394cd0a8a6eaa59ac727a31023602fa7ab39ffa221eb2cd459f624a03d2');
+      await getInfo('0:c4b1d9e3ae63e3c46382e14ded9f62b0ae28f198f165c56886e0810d27507c70');
       setIsLoading(false);
     }
 
